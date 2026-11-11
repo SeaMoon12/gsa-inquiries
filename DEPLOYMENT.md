@@ -68,8 +68,19 @@ There are two ways to use your Gemini API Key on GitHub Pages without committing
    ```bash
    git add .
    git commit -m "feat: configure GitHub Pages automated deployment"
-   git push origin master
+   git push origin main
    ```
 2. In your repo, click the **Actions** tab to watch the **Deploy to GitHub Pages** workflow run.
 3. Once completed, your site is live at:
    `https://<your-username>.github.io/<repository-name>/`
+
+---
+
+## 💬 WhatsApp & Social Media Link Previews
+
+When sharing your link in WhatsApp, Discord, Telegram, or LinkedIn, the app automatically displays a rich link card:
+* **Preview Title:** `GSA Campus Question Hub | Google Student Ambassadors`
+* **Description:** Official community Q&A portal with AI question clustering
+* **Preview Image:** Stored at [`assets/preview-banner.jpg`](file:///c:/Users/user/Documents/Coding/Personal/gsa-question-collector/assets/preview-banner.jpg) (1200x630px, optimized to ~65KB to meet WhatsApp's strict <300KB limit)
+* **Favicon:** [`assets/favicon.svg`](file:///c:/Users/user/Documents/Coding/Personal/gsa-question-collector/assets/favicon.svg) featuring the official Google 4-color motif
+* The deployment workflow in `scripts/build-config.js` automatically binds your full GitHub Pages domain to the Open Graph tags at deploy time so WhatsApp's web scraper immediately unfurls the card.
