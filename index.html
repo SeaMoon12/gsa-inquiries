@@ -42,6 +42,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
                     fontFamily: {
@@ -58,10 +59,28 @@
             }
         }
     </script>
+    <!-- Instant Dark Mode Init to prevent white flash -->
+    <script>
+        (function() {
+            try {
+                const savedTheme = localStorage.getItem('gsa_theme');
+                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+                    document.documentElement.classList.add('dark');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                }
+            } catch (e) {}
+        })();
+    </script>
     <style>
         body {
             background-color: #F8FAFC;
             color: #0F172A;
+        }
+        .dark body {
+            background-color: #0B0F19;
+            color: #F8FAFC;
         }
         .google-border-top {
             background: linear-gradient(90deg, #4285F4 0%, #4285F4 25%, #EA4335 25%, #EA4335 50%, #FBBC05 50%, #FBBC05 75%, #34A853 75%, #34A853 100%);
@@ -74,12 +93,21 @@
         .custom-scrollbar::-webkit-scrollbar-track {
             background: #f1f5f9;
         }
+        .dark .custom-scrollbar::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
         .custom-scrollbar::-webkit-scrollbar-thumb {
             background: #cbd5e1;
             border-radius: 9999px;
         }
+        .dark .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #334155;
+        }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover {
             background: #94a3b8;
+        }
+        .dark .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #475569;
         }
         @keyframes floatSlow {
             0%, 100% { transform: translateY(0px) rotate(0deg); }
@@ -105,101 +133,115 @@
         .gsa-sticker-shadow {
             filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.12));
         }
+        .dark .gsa-sticker-shadow {
+            filter: drop-shadow(0 10px 22px rgba(0, 0, 0, 0.55));
+        }
         .gsa-sticker-glow {
             filter: drop-shadow(0 8px 20px rgba(66, 133, 244, 0.3));
         }
+        .dark .gsa-sticker-glow {
+            filter: drop-shadow(0 8px 22px rgba(96, 165, 250, 0.4));
+        }
     </style>
 </head>
-<body class="min-h-screen flex flex-col selection:bg-blue-100 selection:text-blue-900 overflow-x-hidden bg-[#F8FAFC]">
+<body class="min-h-screen flex flex-col selection:bg-blue-100 dark:selection:bg-blue-900 selection:text-blue-900 dark:selection:text-blue-200 overflow-x-hidden bg-[#F8FAFC] dark:bg-[#0B0F19] text-slate-900 dark:text-slate-100 transition-colors duration-200">
 
     <!-- Google 4-Color Top Accent Bar -->
     <div class="google-border-top sticky top-0 z-50"></div>
 
     <!-- Header Navigation -->
-    <header class="bg-white/95 backdrop-blur-md border-b border-slate-200 sticky top-[5px] z-40 shadow-xs">
+    <header class="bg-white/95 dark:bg-[#131B2E]/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800/80 sticky top-[5px] z-40 shadow-xs transition-colors duration-200">
         <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-2">
             <!-- Brand Logo & Title -->
             <div class="flex items-center gap-2.5 sm:gap-3 cursor-pointer min-w-0 group" onclick="switchMainView('public')">
-                <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-white via-slate-50 to-blue-50/70 border border-slate-200/90 flex items-center justify-center shadow-xs shrink-0 p-1 group-hover:scale-105 transition-transform">
+                <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-white via-slate-50 to-blue-50/70 dark:from-slate-800 dark:via-slate-850 dark:to-slate-800 border border-slate-200/90 dark:border-slate-700/80 flex items-center justify-center shadow-xs shrink-0 p-1 group-hover:scale-105 transition-transform">
                     <img src="assets/gsa/star-google.png" alt="GSA Chrome Star" class="w-7 h-7 sm:w-8 sm:h-8 object-contain drop-shadow-xs">
                 </div>
                 <div class="min-w-0">
                     <div class="flex items-center gap-1.5 sm:gap-2">
-                        <h1 class="font-display font-bold text-sm sm:text-base md:text-lg text-slate-900 tracking-tight truncate group-hover:text-gblue transition-colors">GSA Campus Hub</h1>
-                        <span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[10px] sm:text-xs font-semibold bg-blue-50 text-gblue border border-blue-200 shrink-0">
+                        <h1 class="font-display font-bold text-sm sm:text-base md:text-lg text-slate-900 dark:text-white tracking-tight truncate group-hover:text-gblue dark:group-hover:text-blue-400 transition-colors">GSA Campus Hub</h1>
+                        <span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[10px] sm:text-xs font-semibold bg-blue-50 dark:bg-blue-950/60 text-gblue dark:text-blue-300 border border-blue-200 dark:border-blue-800/60 shrink-0">
                             <span class="w-1.5 h-1.5 rounded-full bg-gblue animate-pulse"></span>
                             <span>4-Event Series</span>
                         </span>
                     </div>
-                    <p class="text-[11px] sm:text-xs text-slate-500 truncate">Google Student Ambassadors Community Q&A</p>
+                    <p class="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 truncate">Google Student Ambassadors Community Q&A</p>
                 </div>
             </div>
 
             <!-- Desktop Navigation Controls (Hidden on mobile) -->
             <div class="hidden md:flex items-center gap-2 sm:gap-3 shrink-0">
+                <!-- Theme Toggle Button -->
+                <button id="themeToggleBtn" onclick="toggleTheme()" class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-amber-300 border border-slate-200 dark:border-slate-700 flex items-center justify-center transition-all shadow-xs" title="Toggle Light / Dark Mode" aria-label="Toggle theme">
+                    <i id="themeToggleIcon" class="fa-solid fa-moon text-sm sm:text-base"></i>
+                </button>
+
                 <!-- Connection Status Pill -->
-                <div id="dbStatusBadge" class="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600">
+                <div id="dbStatusBadge" class="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-slate-100 dark:bg-slate-800/80 text-slate-600 dark:text-slate-300 border border-slate-200/60 dark:border-slate-700/60">
                     <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse" id="dbStatusDot"></span>
                     <span id="dbStatusText">Connecting...</span>
                 </div>
 
                 <!-- View Switcher Buttons -->
-                <button id="navPublicBtn" onclick="switchMainView('public')" class="px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-blue-50 text-gblue border border-blue-200 transition-all flex items-center gap-1.5">
+                <button id="navPublicBtn" onclick="switchMainView('public')" class="px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-blue-50 dark:bg-blue-950/70 text-gblue dark:text-blue-300 border border-blue-200 dark:border-blue-800/60 transition-all flex items-center gap-1.5">
                     <i class="fa-solid fa-comments"></i>
                     <span>Attendee Hub</span>
                 </button>
 
                 <!-- Admin Portal Button -->
-                <button id="navAdminBtn" onclick="handleAdminNavClick()" class="px-3.5 py-2 rounded-xl text-xs sm:text-sm font-medium text-slate-700 hover:bg-slate-100 border border-slate-200 transition-all flex items-center gap-1.5">
-                    <i class="fa-solid fa-shield-halved text-slate-500" id="adminLockIcon"></i>
+                <button id="navAdminBtn" onclick="handleAdminNavClick()" class="px-3.5 py-2 rounded-xl text-xs sm:text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-700 transition-all flex items-center gap-1.5">
+                    <i class="fa-solid fa-shield-halved text-slate-500 dark:text-slate-400" id="adminLockIcon"></i>
                     <span id="adminNavText">Admin Login</span>
                 </button>
 
                 <!-- Admin Logout Button (Only visible when Admin is signed in) -->
-                <button id="adminLogoutBtn" onclick="logoutAdmin()" class="hidden px-3 py-2 rounded-xl text-xs font-medium text-red-600 hover:bg-red-50 border border-red-200 transition-all" title="Sign Out of Admin Account">
+                <button id="adminLogoutBtn" onclick="logoutAdmin()" class="hidden px-3 py-2 rounded-xl text-xs font-medium text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/50 border border-red-200 dark:border-red-900/60 transition-all" title="Sign Out of Admin Account">
                     <i class="fa-solid fa-right-from-bracket"></i>
                 </button>
             </div>
 
-            <!-- Mobile Hamburger Toggle Button (Visible on mobile only) -->
+            <!-- Mobile Hamburger & Theme Toggle Button (Visible on mobile only) -->
             <div class="flex md:hidden items-center gap-1.5 shrink-0">
-                <button id="mobileMenuBtn" onclick="toggleMobileNavMenu()" aria-label="Toggle navigation menu" class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-200 transition">
+                <button onclick="toggleTheme()" class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-700 dark:text-amber-300 transition" aria-label="Toggle theme">
+                    <i id="mobileHeaderThemeIcon" class="fa-solid fa-moon text-xs sm:text-sm"></i>
+                </button>
+                <button id="mobileMenuBtn" onclick="toggleMobileNavMenu()" aria-label="Toggle navigation menu" class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-200 dark:focus:ring-blue-800 transition">
                     <i id="mobileMenuIcon" class="fa-solid fa-bars text-sm sm:text-base"></i>
                 </button>
             </div>
         </div>
 
         <!-- Mobile Navigation Menu Dropdown -->
-        <div id="mobileNavMenu" class="hidden md:hidden border-t border-slate-200 bg-white/95 backdrop-blur px-4 py-3 space-y-2 shadow-lg transition-all duration-200">
+        <div id="mobileNavMenu" class="hidden md:hidden border-t border-slate-200 dark:border-slate-800 bg-white/95 dark:bg-[#131B2E]/95 backdrop-blur px-4 py-3 space-y-2 shadow-lg transition-all duration-200">
             <!-- Connection Status (Mobile) -->
-            <div class="flex items-center justify-between px-3 py-2 rounded-xl bg-slate-50 border border-slate-100 text-xs">
-                <span class="text-slate-500 font-medium">Sync Status:</span>
-                <div class="flex items-center gap-1.5 font-medium text-slate-700">
+            <div class="flex items-center justify-between px-3 py-2 rounded-xl bg-slate-50 dark:bg-[#0D1527] border border-slate-100 dark:border-slate-800 text-xs">
+                <span class="text-slate-500 dark:text-slate-400 font-medium">Sync Status:</span>
+                <div class="flex items-center gap-1.5 font-medium text-slate-700 dark:text-slate-200">
                     <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse" id="dbStatusDotMobile"></span>
                     <span id="dbStatusTextMobile">Connecting...</span>
                 </div>
             </div>
 
             <!-- Mobile Attendee Hub Button -->
-            <button id="mobileNavPublicBtn" onclick="switchMainView('public'); closeMobileNavMenu();" class="w-full px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold bg-blue-50 text-gblue border border-blue-200 transition flex items-center justify-between">
+            <button id="mobileNavPublicBtn" onclick="switchMainView('public'); closeMobileNavMenu();" class="w-full px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold bg-blue-50 dark:bg-blue-950/70 text-gblue dark:text-blue-300 border border-blue-200 dark:border-blue-800/60 transition flex items-center justify-between">
                 <div class="flex items-center gap-2">
                     <i class="fa-solid fa-comments"></i>
                     <span>Attendee Hub</span>
                 </div>
-                <span class="text-[10px] uppercase font-bold text-gblue tracking-wider">Public</span>
+                <span class="text-[10px] uppercase font-bold text-gblue dark:text-blue-400 tracking-wider">Public</span>
             </button>
 
             <!-- Mobile Admin Button -->
-            <button id="mobileNavAdminBtn" onclick="handleAdminNavClick(); closeMobileNavMenu();" class="w-full px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-medium text-slate-700 hover:bg-slate-50 border border-slate-200 transition flex items-center justify-between">
+            <button id="mobileNavAdminBtn" onclick="handleAdminNavClick(); closeMobileNavMenu();" class="w-full px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800/80 border border-slate-200 dark:border-slate-700 transition flex items-center justify-between">
                 <div class="flex items-center gap-2">
-                    <i class="fa-solid fa-shield-halved text-slate-500" id="mobileAdminLockIcon"></i>
+                    <i class="fa-solid fa-shield-halved text-slate-500 dark:text-slate-400" id="mobileAdminLockIcon"></i>
                     <span id="mobileAdminNavText">Admin Login</span>
                 </div>
                 <span id="mobileAdminBadge" class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Studio</span>
             </button>
 
             <!-- Mobile Admin Logout Button -->
-            <button id="mobileAdminLogoutBtn" onclick="logoutAdmin(); closeMobileNavMenu();" class="hidden w-full px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-medium text-red-600 bg-red-50/60 hover:bg-red-50 border border-red-200 transition flex items-center justify-center gap-2">
+            <button id="mobileAdminLogoutBtn" onclick="logoutAdmin(); closeMobileNavMenu();" class="hidden w-full px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-medium text-red-600 dark:text-red-400 bg-red-50/60 dark:bg-red-950/40 hover:bg-red-50 dark:hover:bg-red-900/60 border border-red-200 dark:border-red-900/60 transition flex items-center justify-center gap-2">
                 <i class="fa-solid fa-right-from-bracket"></i>
                 <span>Sign Out of Admin Account</span>
             </button>
@@ -219,49 +261,49 @@
         <!-- ========================================== -->
         <section id="publicView" class="space-y-8">
             <!-- Hero Banner with 3D GSA Elements -->
-            <div class="bg-gradient-to-br from-white via-slate-50/90 to-blue-50/40 rounded-3xl border border-slate-200/90 p-6 sm:p-8 md:p-10 shadow-sm relative overflow-hidden gsa-card-glow">
+            <div class="bg-gradient-to-br from-white via-slate-50/90 to-blue-50/40 dark:from-[#131B2E] dark:via-[#131B2E] dark:to-[#1a243d] rounded-3xl border border-slate-200/90 dark:border-slate-800 p-6 sm:p-8 md:p-10 shadow-sm relative overflow-hidden gsa-card-glow transition-colors duration-200">
                 <!-- Background Ambient Color Glows -->
-                <div class="absolute -right-16 -top-16 w-64 h-64 rounded-full bg-blue-100/60 blur-3xl pointer-events-none"></div>
-                <div class="absolute right-32 -bottom-20 w-64 h-64 rounded-full bg-amber-100/50 blur-3xl pointer-events-none"></div>
-                <div class="absolute left-1/2 top-10 w-48 h-48 rounded-full bg-rose-100/40 blur-3xl pointer-events-none"></div>
+                <div class="absolute -right-16 -top-16 w-64 h-64 rounded-full bg-blue-100/60 dark:bg-blue-600/10 blur-3xl pointer-events-none"></div>
+                <div class="absolute right-32 -bottom-20 w-64 h-64 rounded-full bg-amber-100/50 dark:bg-amber-600/10 blur-3xl pointer-events-none"></div>
+                <div class="absolute left-1/2 top-10 w-48 h-48 rounded-full bg-rose-100/40 dark:bg-rose-600/10 blur-3xl pointer-events-none"></div>
 
                 <div class="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-8">
                     <!-- Left: Headline & Context -->
                     <div class="max-w-2xl space-y-4 text-center lg:text-left">
                         <div class="flex flex-wrap items-center justify-center lg:justify-start gap-2">
-                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/80 border border-slate-200 text-slate-700 text-xs font-semibold shadow-2xs backdrop-blur-xs">
-                                <i class="fa-brands fa-google text-gblue"></i>
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/80 dark:bg-[#0D1527]/90 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-xs font-semibold shadow-2xs backdrop-blur-xs">
+                                <i class="fa-brands fa-google text-gblue dark:text-blue-400"></i>
                                 <span>Official GSA Campus Community Portal</span>
                             </span>
-                            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-amber-50/80 border border-amber-200/80 text-amber-900 text-xs font-semibold shadow-2xs">
+                            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-amber-50/80 dark:bg-amber-950/50 border border-amber-200/80 dark:border-amber-800/60 text-amber-900 dark:text-amber-300 text-xs font-semibold shadow-2xs">
                                 <img src="assets/gsa/keychain-unlocked.png" alt="Studying Unlocked" class="w-4 h-4 object-contain">
                                 <span>Studying Unlocked</span>
                             </span>
                         </div>
 
-                        <h2 class="font-display text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
-                            Got a question about our <br class="hidden sm:inline"><span class="bg-gradient-to-r from-gblue via-indigo-600 to-gred bg-clip-text text-transparent">GSA Campus Event Series?</span>
+                        <h2 class="font-display text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-tight">
+                            Got a question about our <br class="hidden sm:inline"><span class="bg-gradient-to-r from-gblue via-indigo-600 to-gred dark:from-blue-400 dark:via-indigo-300 dark:to-red-400 bg-clip-text text-transparent">GSA Campus Event Series?</span>
                         </h2>
 
-                        <p class="text-slate-600 text-sm sm:text-base leading-relaxed">
+                        <p class="text-slate-600 dark:text-slate-300 text-sm sm:text-base leading-relaxed">
                             Drop your question below! <strong>No login required</strong>. Our AI groups similar questions from the community into single Master Questions so our Google Student Ambassadors can give crystal-clear answers and publish digests to your WhatsApp &amp; Discord groups.
                         </p>
 
                         <!-- Event Badges Quick Glance -->
                         <div class="pt-2 flex flex-wrap items-center justify-center lg:justify-start gap-2">
-                            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-white border border-slate-200 text-slate-700 shadow-2xs">
+                            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-white dark:bg-[#0D1527] border border-slate-200 dark:border-slate-700/80 text-slate-700 dark:text-slate-300 shadow-2xs">
                                 <img src="assets/gsa/books-red.png" alt="Gemini Notebook" class="w-3.5 h-3.5 object-contain">
                                 <span>Event 3: Gemini Notebook</span>
                             </span>
-                            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-white border border-slate-200 text-slate-700 shadow-2xs">
+                            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-white dark:bg-[#0D1527] border border-slate-200 dark:border-slate-700/80 text-slate-700 dark:text-slate-300 shadow-2xs">
                                 <img src="assets/gsa/laptop-silver.png" alt="AI Studio" class="w-3.5 h-3.5 object-contain">
                                 <span>Event 4: AI Studio</span>
                             </span>
-                            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-white border border-slate-200 text-slate-700 shadow-2xs">
+                            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-white dark:bg-[#0D1527] border border-slate-200 dark:border-slate-700/80 text-slate-700 dark:text-slate-300 shadow-2xs">
                                 <img src="assets/gsa/flag-hologram.png" alt="Stitch" class="w-3.5 h-3.5 object-contain">
                                 <span>Event 5: Stitch</span>
                             </span>
-                            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-white border border-slate-200 text-slate-700 shadow-2xs">
+                            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-white dark:bg-[#0D1527] border border-slate-200 dark:border-slate-700/80 text-slate-700 dark:text-slate-300 shadow-2xs">
                                 <img src="assets/gsa/star-google.png" alt="Antigravity" class="w-3.5 h-3.5 object-contain">
                                 <span>Event 6: Antigravity</span>
                             </span>
@@ -273,7 +315,7 @@
                         <!-- Mascot Card Floating Container -->
                         <div class="relative w-56 sm:w-64 h-52 sm:h-60 flex items-center justify-center">
                             <!-- Glowing ring background -->
-                            <div class="absolute inset-4 rounded-3xl bg-gradient-to-tr from-blue-400/20 via-purple-300/20 to-amber-300/20 blur-xl animate-gentle-pulse"></div>
+                            <div class="absolute inset-4 rounded-3xl bg-gradient-to-tr from-blue-400/20 via-purple-300/20 to-amber-300/20 dark:from-blue-600/30 dark:via-purple-600/30 dark:to-amber-500/20 blur-xl animate-gentle-pulse"></div>
                             
                             <!-- 3D Mascot: Orange Retro Computer -->
                             <img src="assets/gsa/computer-orange.png" alt="GSA Campus Mascot" class="w-40 sm:w-48 h-auto object-contain relative z-20 animate-float-slow gsa-sticker-shadow cursor-pointer hover:scale-105 transition-transform" title="Hi! Ask your GSA event questions below!">
@@ -301,15 +343,15 @@
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
 
                 <!-- LEFT: Question Submission Card -->
-                <div class="lg:col-span-5 bg-white rounded-3xl border border-slate-200/90 p-6 shadow-sm lg:sticky lg:top-24 gsa-card-glow">
+                <div class="lg:col-span-5 bg-white dark:bg-[#131B2E] rounded-3xl border border-slate-200/90 dark:border-slate-800 p-6 shadow-sm lg:sticky lg:top-24 gsa-card-glow transition-colors duration-200">
                     <div class="flex items-center justify-between mb-5">
                         <div class="flex items-center gap-3">
-                            <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-amber-50 to-orange-100/60 border border-amber-200/80 flex items-center justify-center p-1.5 shadow-2xs">
+                            <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-amber-50 to-orange-100/60 dark:from-amber-950/60 dark:to-orange-950/40 border border-amber-200/80 dark:border-amber-800/60 flex items-center justify-center p-1.5 shadow-2xs">
                                 <img src="assets/gsa/lightbulb-voxel.png" alt="Ask Question" class="w-8 h-8 object-contain">
                             </div>
                             <div>
-                                <h3 class="font-display font-bold text-lg text-slate-900">Ask a Question</h3>
-                                <p class="text-xs text-slate-500">No login required • Instant community submission</p>
+                                <h3 class="font-display font-bold text-lg text-slate-900 dark:text-white">Ask a Question</h3>
+                                <p class="text-xs text-slate-500 dark:text-slate-400">No login required • Instant community submission</p>
                             </div>
                         </div>
                     </div>
@@ -317,18 +359,18 @@
                     <form id="questionForm" onsubmit="submitQuestion(event)" class="space-y-4">
                         <!-- Event / Category Dropdown -->
                         <div>
-                            <label for="questionCategory" class="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-1.5">
-                                Select Event / Category <span class="text-gred">*</span>
+                            <label for="questionCategory" class="block text-xs font-semibold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1.5">
+                                Select Event / Category <span class="text-gred dark:text-red-400">*</span>
                             </label>
                             <div class="relative w-full min-w-0 max-w-full">
-                                <select id="questionCategory" required class="w-full max-w-full truncate appearance-none rounded-xl border border-slate-300 bg-slate-50 px-3.5 py-2.5 pr-10 text-xs sm:text-sm font-medium text-slate-800 focus:bg-white focus:border-gblue focus:ring-2 focus:ring-blue-100 outline-none transition">
+                                <select id="questionCategory" required class="w-full max-w-full truncate appearance-none rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-[#0D1527] px-3.5 py-2.5 pr-10 text-xs sm:text-sm font-medium text-slate-800 dark:text-slate-200 focus:bg-white dark:focus:bg-[#0D1527] focus:border-gblue dark:focus:border-blue-400 focus:ring-2 focus:ring-blue-100 dark:focus:ring-blue-900/40 outline-none transition">
                                     <option value="General">🌐 General Questions (No Specific Event)</option>
                                     <option value="Event 1">🔵 Event 3 - Hands-on with Gemini Notebook</option>
                                     <option value="Event 2">🔴 Event 4 - Exploring Google AI Studio</option>
                                     <option value="Event 3">🟡 Event 5 - Practical Applications of Stitch</option>
                                     <option value="Event 4">🟢 Event 6 - Implementations with Antigravity</option>
                                 </select>
-                                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-slate-500">
+                                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-slate-500 dark:text-slate-400">
                                     <i class="fa-solid fa-chevron-down text-xs"></i>
                                 </div>
                             </div>
@@ -336,38 +378,38 @@
 
                         <!-- Optional Name Input -->
                         <div>
-                            <label for="attendeeName" class="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-1.5">
-                                Your Name <span class="text-slate-400 font-normal lowercase">(Optional)</span>
+                            <label for="attendeeName" class="block text-xs font-semibold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1.5">
+                                Your Name <span class="text-slate-400 dark:text-slate-500 font-normal lowercase">(Optional)</span>
                             </label>
                             <div class="relative">
-                                <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400">
+                                <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400 dark:text-slate-500">
                                     <i class="fa-regular fa-user text-xs"></i>
                                 </span>
-                                <input type="text" id="attendeeName" maxlength="50" placeholder="Leave blank to ask anonymously" class="w-full rounded-xl border border-slate-300 bg-slate-50 pl-9 pr-3.5 py-2.5 text-sm text-slate-800 focus:bg-white focus:border-gblue focus:ring-2 focus:ring-blue-100 outline-none transition">
+                                <input type="text" id="attendeeName" maxlength="50" placeholder="Leave blank to ask anonymously" class="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-[#0D1527] pl-9 pr-3.5 py-2.5 text-sm text-slate-800 dark:text-slate-200 placeholder-slate-400 dark:placeholder-slate-500 focus:bg-white dark:focus:bg-[#0D1527] focus:border-gblue dark:focus:border-blue-400 focus:ring-2 focus:ring-blue-100 dark:focus:ring-blue-900/40 outline-none transition">
                             </div>
                         </div>
 
                         <!-- Question Textarea -->
                         <div>
                             <div class="flex items-center justify-between mb-1.5">
-                                <label for="questionText" class="block text-xs font-semibold uppercase tracking-wider text-slate-700">
-                                    Your Question <span class="text-gred">*</span>
+                                <label for="questionText" class="block text-xs font-semibold uppercase tracking-wider text-slate-700 dark:text-slate-300">
+                                    Your Question <span class="text-gred dark:text-red-400">*</span>
                                 </label>
-                                <span id="charCount" class="text-xs text-slate-400">0 / 400</span>
+                                <span id="charCount" class="text-xs text-slate-400 dark:text-slate-500">0 / 400</span>
                             </div>
-                            <textarea id="questionText" required rows="4" maxlength="400" oninput="updateCharCount()" placeholder="e.g., Will we get a certificate of participation for attending GSA Event #1, and do we need to bring our own laptop?" class="w-full rounded-xl border border-slate-300 bg-slate-50 p-3.5 text-sm text-slate-800 focus:bg-white focus:border-gblue focus:ring-2 focus:ring-blue-100 outline-none transition resize-none"></textarea>
+                            <textarea id="questionText" required rows="4" maxlength="400" oninput="updateCharCount()" placeholder="e.g., Will we get a certificate of participation for attending GSA Event #1, and do we need to bring our own laptop?" class="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-[#0D1527] p-3.5 text-sm text-slate-800 dark:text-slate-200 placeholder-slate-400 dark:placeholder-slate-500 focus:bg-white dark:focus:bg-[#0D1527] focus:border-gblue dark:focus:border-blue-400 focus:ring-2 focus:ring-blue-100 dark:focus:ring-blue-900/40 outline-none transition resize-none"></textarea>
                         </div>
 
                         <!-- Submit Button -->
-                        <button type="submit" id="submitQuestionBtn" class="w-full py-3 px-4 rounded-xl bg-gblue hover:bg-blue-600 active:bg-blue-700 text-white font-semibold text-sm shadow-sm hover:shadow transition flex items-center justify-center gap-2">
+                        <button type="submit" id="submitQuestionBtn" class="w-full py-3 px-4 rounded-xl bg-gblue hover:bg-blue-600 active:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-500 text-white font-semibold text-sm shadow-sm hover:shadow transition flex items-center justify-center gap-2">
                             <i class="fa-solid fa-paper-plane"></i>
                             <span>Submit Question to GSA Hub</span>
                         </button>
                     </form>
 
                     <!-- Info Note -->
-                    <div class="mt-5 pt-4 border-t border-slate-100 flex items-start gap-2.5 text-xs text-slate-500">
-                        <i class="fa-solid fa-wand-magic-sparkles text-gblue mt-0.5"></i>
+                    <div class="mt-5 pt-4 border-t border-slate-100 dark:border-slate-800 flex items-start gap-2.5 text-xs text-slate-500 dark:text-slate-400">
+                        <i class="fa-solid fa-wand-magic-sparkles text-gblue dark:text-blue-400 mt-0.5"></i>
                         <p>Similar questions are automatically merged by Gemini AI so every angle of your question gets answered efficiently!</p>
                     </div>
                 </div>
@@ -376,26 +418,26 @@
                 <div class="lg:col-span-7 space-y-5">
 
                     <!-- Filter Bar & Sub-tabs -->
-                    <div class="bg-white rounded-2xl border border-slate-200 p-4 shadow-sm space-y-4">
+                    <div class="bg-white dark:bg-[#131B2E] rounded-2xl border border-slate-200 dark:border-slate-800 p-4 shadow-sm space-y-4 transition-colors duration-200">
                         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                             <!-- Feed Mode Switcher -->
-                            <div class="inline-flex w-full sm:w-auto p-1 rounded-xl bg-slate-100 border border-slate-200">
-                                <button id="publicTabAnswered" onclick="setPublicFeedTab('answered')" class="flex-1 sm:flex-initial px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-semibold bg-white text-slate-900 shadow-sm transition flex items-center justify-center gap-1.5">
+                            <div class="inline-flex w-full sm:w-auto p-1 rounded-xl bg-slate-100 dark:bg-[#0D1527] border border-slate-200 dark:border-slate-800">
+                                <button id="publicTabAnswered" onclick="setPublicFeedTab('answered')" class="flex-1 sm:flex-initial px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-semibold bg-white dark:bg-[#1E293B] text-slate-900 dark:text-white shadow-sm transition flex items-center justify-center gap-1.5">
                                     <img src="assets/gsa/diploma-hologram.png" class="w-4 h-4 object-contain shrink-0 gsa-sticker-shadow" alt="">
                                     <span>Official Q&A Answers</span>
-                                    <span id="publicAnsweredCount" class="ml-1 px-1.5 py-0.5 text-[11px] rounded-full bg-emerald-100 text-emerald-800">0</span>
+                                    <span id="publicAnsweredCount" class="ml-1 px-1.5 py-0.5 text-[11px] rounded-full bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300">0</span>
                                 </button>
-                                <button id="publicTabRaw" onclick="setPublicFeedTab('raw')" class="flex-1 sm:flex-initial px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-medium text-slate-600 hover:text-slate-900 transition flex items-center justify-center gap-1.5">
-                                    <i class="fa-solid fa-layer-group text-gblue"></i>
+                                <button id="publicTabRaw" onclick="setPublicFeedTab('raw')" class="flex-1 sm:flex-initial px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition flex items-center justify-center gap-1.5">
+                                    <i class="fa-solid fa-layer-group text-gblue dark:text-blue-400"></i>
                                     <span>All Questions</span>
-                                    <span id="publicRawCount" class="ml-1 px-1.5 py-0.5 text-[11px] rounded-full bg-slate-200 text-slate-700">0</span>
+                                    <span id="publicRawCount" class="ml-1 px-1.5 py-0.5 text-[11px] rounded-full bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300">0</span>
                                 </button>
                             </div>
 
                             <!-- Event Filter Dropdown -->
                             <div class="w-full sm:w-auto min-w-0 max-w-full">
                                 <div class="relative w-full min-w-0 max-w-full">
-                                    <select id="publicCategoryFilter" onchange="renderPublicView()" class="w-full max-w-full truncate rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 pr-7 text-xs font-semibold text-slate-700 outline-none focus:border-gblue appearance-none">
+                                    <select id="publicCategoryFilter" onchange="renderPublicView()" class="w-full max-w-full truncate rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-[#0D1527] px-3 py-2 pr-7 text-xs font-semibold text-slate-700 dark:text-slate-200 outline-none focus:border-gblue dark:focus:border-blue-400 appearance-none">
                                         <option value="ALL">All Categories (General + 4 Events)</option>
                                         <option value="General">🌐 General Questions (No Specific Event)</option>
                                         <option value="Event 1">🔵 Event 3 - Hands-on with Gemini Notebook</option>
@@ -403,7 +445,7 @@
                                         <option value="Event 3">🟡 Event 5 - Practical Applications of Stitch</option>
                                         <option value="Event 4">🟢 Event 6 - Implementations with Antigravity</option>
                                     </select>
-                                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-slate-400">
+                                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-slate-400 dark:text-slate-500">
                                         <i class="fa-solid fa-chevron-down text-[10px]"></i>
                                     </div>
                                 </div>
@@ -480,15 +522,15 @@
             </div>
 
             <!-- Admin Control Bar: Event Filter + AI Sort Trigger + Export Buttons -->
-            <div class="bg-white rounded-2xl border border-slate-200 p-4 sm:p-5 shadow-sm flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+            <div class="bg-white dark:bg-[#131B2E] rounded-2xl border border-slate-200 dark:border-slate-800 p-4 sm:p-5 shadow-sm flex flex-col lg:flex-row lg:items-center justify-between gap-4 transition-colors duration-200">
                 <!-- Category Filter & Stats -->
                 <div class="flex flex-col sm:flex-row sm:items-center gap-3 w-full lg:w-auto min-w-0 max-w-full">
                     <div class="w-full sm:w-auto min-w-0 max-w-full">
-                        <label for="adminCategoryFilter" class="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1">
+                        <label for="adminCategoryFilter" class="block text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-400 mb-1">
                             Target Event / Category
                         </label>
                         <div class="relative w-full min-w-0 max-w-full">
-                            <select id="adminCategoryFilter" onchange="renderAdminView()" class="w-full max-w-full truncate rounded-xl border border-slate-300 bg-slate-50 px-3.5 py-2 pr-8 text-xs sm:text-sm font-semibold text-slate-800 focus:border-gblue outline-none appearance-none">
+                            <select id="adminCategoryFilter" onchange="renderAdminView()" class="w-full max-w-full truncate rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-[#0D1527] px-3.5 py-2 pr-8 text-xs sm:text-sm font-semibold text-slate-800 dark:text-slate-200 focus:border-gblue dark:focus:border-blue-400 outline-none appearance-none">
                                 <option value="ALL">All Categories (General + 4 Events)</option>
                                 <option value="General">🌐 General Questions (No Specific Event)</option>
                                 <option value="Event 1">🔵 Event 3 - Hands-on with Gemini Notebook</option>
@@ -496,7 +538,7 @@
                                 <option value="Event 3">🟡 Event 5 - Practical Applications of Stitch</option>
                                 <option value="Event 4">🟢 Event 6 - Implementations with Antigravity</option>
                             </select>
-                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2.5 text-slate-400">
+                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2.5 text-slate-400 dark:text-slate-500">
                                 <i class="fa-solid fa-chevron-down text-xs"></i>
                             </div>
                         </div>
@@ -504,13 +546,13 @@
 
                     <!-- Counters -->
                     <div class="flex flex-wrap items-center gap-2 pt-1 sm:pt-5">
-                        <span class="px-3 py-1.5 rounded-xl bg-slate-100 border border-slate-200 text-xs font-semibold text-slate-700">
-                            Raw Questions: <strong id="adminRawCountBadge" class="text-slate-900">0</strong>
+                        <span class="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-[#0D1527] border border-slate-200 dark:border-slate-800 text-xs font-semibold text-slate-700 dark:text-slate-300">
+                            Raw Questions: <strong id="adminRawCountBadge" class="text-slate-900 dark:text-white">0</strong>
                         </span>
-                        <span class="px-3 py-1.5 rounded-xl bg-amber-50 border border-amber-200 text-xs font-semibold text-amber-800">
+                        <span class="px-3 py-1.5 rounded-xl bg-amber-50 dark:bg-amber-950/50 border border-amber-200 dark:border-amber-800/60 text-xs font-semibold text-amber-800 dark:text-amber-300">
                             Ungrouped: <strong id="adminUngroupedCountBadge">0</strong>
                         </span>
-                        <span class="px-3 py-1.5 rounded-xl bg-blue-50 border border-blue-200 text-xs font-semibold text-gblue">
+                        <span class="px-3 py-1.5 rounded-xl bg-blue-50 dark:bg-blue-950/50 border border-blue-200 dark:border-blue-800/60 text-xs font-semibold text-gblue dark:text-blue-300">
                             AI Groups: <strong id="adminGroupCountBadge">0</strong>
                         </span>
                     </div>
@@ -518,12 +560,12 @@
 
                 <!-- Primary Action Buttons: AI Group + Export for WhatsApp/Discord -->
                 <div class="flex flex-wrap items-center gap-2.5 w-full lg:w-auto">
-                    <button id="aiGroupBtn" onclick="runGeminiQuestionGrouping()" class="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-gradient-to-r from-gblue to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white font-semibold text-xs sm:text-sm shadow-sm hover:shadow transition flex items-center justify-center gap-2">
+                    <button id="aiGroupBtn" onclick="runGeminiQuestionGrouping()" class="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-gradient-to-r from-gblue to-indigo-600 hover:from-blue-600 hover:to-indigo-700 dark:from-blue-600 dark:to-indigo-600 dark:hover:from-blue-500 dark:hover:to-indigo-500 text-white font-semibold text-xs sm:text-sm shadow-sm hover:shadow transition flex items-center justify-center gap-2">
                         <i class="fa-solid fa-wand-magic-sparkles"></i>
                         <span>Group Similar Questions with Gemini AI</span>
                     </button>
 
-                    <button onclick="openExportModal()" class="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs sm:text-sm shadow-sm transition flex items-center justify-center gap-2">
+                    <button onclick="openExportModal()" class="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 dark:bg-emerald-600 dark:hover:bg-emerald-500 text-white font-semibold text-xs sm:text-sm shadow-sm transition flex items-center justify-center gap-2">
                         <i class="fa-brands fa-whatsapp text-base"></i>
                         <span>Export Q&A to WhatsApp / Discord</span>
                     </button>
@@ -534,34 +576,34 @@
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
 
                 <!-- LEFT COLUMN (5 cols): Incoming Raw Community Questions -->
-                <div class="lg:col-span-5 bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
-                    <div class="p-4 sm:p-5 border-b border-slate-200 flex items-center justify-between bg-slate-50/60">
+                <div class="lg:col-span-5 bg-white dark:bg-[#131B2E] rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden transition-colors duration-200">
+                    <div class="p-4 sm:p-5 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between bg-slate-50/60 dark:bg-[#0D1527]/60">
                         <div>
-                            <h3 class="font-display font-bold text-base text-slate-900 flex items-center gap-2">
-                                <i class="fa-solid fa-inbox text-gblue"></i>
+                            <h3 class="font-display font-bold text-base text-slate-900 dark:text-white flex items-center gap-2">
+                                <i class="fa-solid fa-inbox text-gblue dark:text-blue-400"></i>
                                 <span>Incoming Community Questions</span>
                             </h3>
-                            <p class="text-xs text-slate-500 mt-0.5">Questions collected from the website link</p>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Questions collected from the website link</p>
                         </div>
-                        <button onclick="resetAllUngroupedStatus()" class="text-xs font-medium text-slate-500 hover:text-gblue underline" title="Mark all filtered questions as ungrouped so you can re-cluster them">
+                        <button onclick="resetAllUngroupedStatus()" class="text-xs font-medium text-slate-500 dark:text-slate-400 hover:text-gblue dark:hover:text-blue-400 underline" title="Mark all filtered questions as ungrouped so you can re-cluster them">
                             Reset Status
                         </button>
                     </div>
 
-                    <div id="adminRawQuestionsList" class="divide-y divide-slate-100 max-h-[680px] overflow-y-auto custom-scrollbar">
+                    <div id="adminRawQuestionsList" class="divide-y divide-slate-100 dark:divide-slate-800 max-h-[680px] overflow-y-auto custom-scrollbar">
                         <!-- Populated dynamically -->
                     </div>
                 </div>
 
                 <!-- RIGHT COLUMN (7 cols): AI-Clustered Master Questions & Answer Editor -->
                 <div class="lg:col-span-7 space-y-4">
-                    <div class="bg-white rounded-2xl border border-slate-200 p-4 sm:p-5 shadow-sm flex items-center justify-between">
+                    <div class="bg-white dark:bg-[#131B2E] rounded-2xl border border-slate-200 dark:border-slate-800 p-4 sm:p-5 shadow-sm flex items-center justify-between transition-colors duration-200">
                         <div>
-                            <h3 class="font-display font-bold text-base text-slate-900 flex items-center gap-2">
-                                <i class="fa-solid fa-layer-group text-ggreen"></i>
+                            <h3 class="font-display font-bold text-base text-slate-900 dark:text-white flex items-center gap-2">
+                                <i class="fa-solid fa-layer-group text-ggreen dark:text-emerald-400"></i>
                                 <span>AI-Consolidated Master Questions & Answers</span>
                             </h3>
-                            <p class="text-xs text-slate-500 mt-0.5">
+                            <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
                                 Each group merges similar attendee questions into one single question. Write your answer below to publish and export.
                             </p>
                         </div>
@@ -579,28 +621,28 @@
     <!-- ==================================================== -->
     <!-- MODAL 1: STRICT ADMIN LOGIN (EXISTING ACCOUNT ONLY)  -->
     <!-- ==================================================== -->
-    <div id="adminLoginModal" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl max-w-md w-full border border-slate-200 shadow-xl overflow-hidden animate-fadeIn">
+    <div id="adminLoginModal" class="fixed inset-0 z-50 hidden bg-slate-950/70 backdrop-blur-xs flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-[#16213B] rounded-2xl max-w-md w-full border border-slate-200 dark:border-slate-700/80 shadow-xl overflow-hidden animate-fadeIn transition-colors duration-200">
             <div class="google-border-top"></div>
             <div class="p-6">
                 <div class="flex items-center justify-between mb-4">
                     <div class="flex items-center gap-3">
-                        <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-200/60 flex items-center justify-center p-1.5 shadow-2xs">
+                        <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-950/60 dark:to-indigo-950/50 border border-blue-200/60 dark:border-blue-800/60 flex items-center justify-center p-1.5 shadow-2xs">
                             <img src="assets/gsa/lock-heart.png" class="w-8 h-8 object-contain gsa-sticker-shadow animate-float-slow" alt="Admin Lock">
                         </div>
                         <div>
-                            <h3 class="font-display font-bold text-lg text-slate-900">GSA Admin Sign In</h3>
-                            <p class="text-xs text-slate-500">Authorized Ambassador Account Only</p>
+                            <h3 class="font-display font-bold text-lg text-slate-900 dark:text-white">GSA Admin Sign In</h3>
+                            <p class="text-xs text-slate-500 dark:text-slate-400">Authorized Ambassador Account Only</p>
                         </div>
                     </div>
-                    <button onclick="closeAdminLoginModal()" class="w-8 h-8 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 flex items-center justify-center">
+                    <button onclick="closeAdminLoginModal()" class="w-8 h-8 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center justify-center">
                         <i class="fa-solid fa-xmark"></i>
                     </button>
                 </div>
 
                 <!-- Notice: No Sign Up Permitted -->
-                <div class="mb-4 p-3 rounded-xl bg-amber-50 border border-amber-200 text-xs text-amber-900 flex items-start gap-2">
-                    <i class="fa-solid fa-circle-info text-amber-600 mt-0.5"></i>
+                <div class="mb-4 p-3 rounded-xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800/60 text-xs text-amber-900 dark:text-amber-300 flex items-start gap-2">
+                    <i class="fa-solid fa-circle-info text-amber-600 dark:text-amber-400 mt-0.5"></i>
                     <div>
                         <strong>Existing Account Access Only:</strong> Public registration is disabled. Attendees do not need an account to submit or view questions.
                     </div>
@@ -608,22 +650,22 @@
 
                 <form id="adminLoginForm" onsubmit="handleAdminLogin(event)" class="space-y-4">
                     <div>
-                        <label for="adminEmail" class="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-1">
+                        <label for="adminEmail" class="block text-xs font-semibold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1">
                             Admin Email Address
                         </label>
-                        <input type="email" id="adminEmail" required placeholder="admin@gmail.com" class="w-full rounded-xl border border-slate-300 bg-slate-50 px-3.5 py-2.5 text-sm text-slate-900 focus:bg-white focus:border-gblue outline-none">
+                        <input type="email" id="adminEmail" required placeholder="admin@gmail.com" class="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-[#0D1527] px-3.5 py-2.5 text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:bg-white dark:focus:bg-[#0D1527] focus:border-gblue dark:focus:border-blue-400 outline-none">
                     </div>
 
                     <div>
-                        <label for="adminPassword" class="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-1">
+                        <label for="adminPassword" class="block text-xs font-semibold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1">
                             Password
                         </label>
-                        <input type="password" id="adminPassword" required placeholder="••••••••••••" class="w-full rounded-xl border border-slate-300 bg-slate-50 px-3.5 py-2.5 text-sm text-slate-900 focus:bg-white focus:border-gblue outline-none">
+                        <input type="password" id="adminPassword" required placeholder="••••••••••••" class="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-[#0D1527] px-3.5 py-2.5 text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:bg-white dark:focus:bg-[#0D1527] focus:border-gblue dark:focus:border-blue-400 outline-none">
                     </div>
 
-                    <div id="adminLoginError" class="hidden p-3 rounded-xl bg-red-50 border border-red-200 text-xs text-red-700 font-medium"></div>
+                    <div id="adminLoginError" class="hidden p-3 rounded-xl bg-red-50 dark:bg-red-950/50 border border-red-200 dark:border-red-900/60 text-xs text-red-700 dark:text-red-300 font-medium"></div>
 
-                    <button type="submit" id="adminLoginSubmitBtn" class="w-full py-2.5 px-4 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-semibold text-sm transition flex items-center justify-center gap-2">
+                    <button type="submit" id="adminLoginSubmitBtn" class="w-full py-2.5 px-4 rounded-xl bg-slate-900 dark:bg-blue-600 hover:bg-slate-800 dark:hover:bg-blue-500 text-white font-semibold text-sm transition flex items-center justify-center gap-2">
                         <i class="fa-solid fa-right-to-bracket"></i>
                         <span>Sign In to Admin Studio</span>
                     </button>
@@ -635,35 +677,35 @@
     <!-- ==================================================== -->
     <!-- MODAL 2: WHATSAPP & DISCORD DIGEST EXPORT MODAL      -->
     <!-- ==================================================== -->
-    <div id="exportModal" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl max-w-2xl w-full border border-slate-200 shadow-xl overflow-hidden">
+    <div id="exportModal" class="fixed inset-0 z-50 hidden bg-slate-950/70 backdrop-blur-xs flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-[#16213B] rounded-2xl max-w-2xl w-full border border-slate-200 dark:border-slate-700/80 shadow-xl overflow-hidden transition-colors duration-200">
             <div class="google-border-top"></div>
             <div class="p-6 space-y-4">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center gap-3">
-                        <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-emerald-50 to-teal-50 border border-emerald-200/60 flex items-center justify-center p-1.5 shadow-2xs">
+                        <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-emerald-950/60 dark:to-teal-950/50 border border-emerald-200/60 dark:border-emerald-800/60 flex items-center justify-center p-1.5 shadow-2xs">
                             <img src="assets/gsa/megaphone-hologram.png" class="w-8 h-8 object-contain gsa-sticker-shadow animate-float-slow" alt="Megaphone">
                         </div>
                         <div>
-                            <h3 class="font-display font-bold text-lg text-slate-900">Send Consolidated Q&A to Platform</h3>
-                            <p class="text-xs text-slate-500">Ready to paste into your WhatsApp Group or Discord Server</p>
+                            <h3 class="font-display font-bold text-lg text-slate-900 dark:text-white">Send Consolidated Q&A to Platform</h3>
+                            <p class="text-xs text-slate-500 dark:text-slate-400">Ready to paste into your WhatsApp Group or Discord Server</p>
                         </div>
                     </div>
-                    <button onclick="closeExportModal()" class="w-8 h-8 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 flex items-center justify-center">
+                    <button onclick="closeExportModal()" class="w-8 h-8 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center justify-center">
                         <i class="fa-solid fa-xmark"></i>
                     </button>
                 </div>
 
                 <!-- Format & Category Controls -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 bg-slate-50 p-3.5 rounded-xl border border-slate-200">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 bg-slate-50 dark:bg-[#0D1527] p-3.5 rounded-xl border border-slate-200 dark:border-slate-800">
                     <div>
-                        <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1">Platform Formatting</label>
+                        <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">Platform Formatting</label>
                         <div class="grid grid-cols-2 gap-2">
                             <button type="button" id="fmtWhatsappBtn" onclick="setExportPlatform('whatsapp')" class="py-2 px-3 rounded-lg text-xs font-semibold bg-emerald-600 text-white flex items-center justify-center gap-1.5 transition">
                                 <i class="fa-brands fa-whatsapp"></i>
                                 <span>WhatsApp</span>
                             </button>
-                            <button type="button" id="fmtDiscordBtn" onclick="setExportPlatform('discord')" class="py-2 px-3 rounded-lg text-xs font-semibold bg-white text-slate-700 border border-slate-200 flex items-center justify-center gap-1.5 transition">
+                            <button type="button" id="fmtDiscordBtn" onclick="setExportPlatform('discord')" class="py-2 px-3 rounded-lg text-xs font-semibold bg-white dark:bg-[#131B2E] text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 flex items-center justify-center gap-1.5 transition">
                                 <i class="fa-brands fa-discord"></i>
                                 <span>Discord</span>
                             </button>
@@ -671,8 +713,8 @@
                     </div>
 
                     <div>
-                        <label for="exportCategorySelect" class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1">Filter Event Digest</label>
-                        <select id="exportCategorySelect" onchange="updateExportPreview()" class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-xs font-semibold text-slate-800 outline-none">
+                        <label for="exportCategorySelect" class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">Filter Event Digest</label>
+                        <select id="exportCategorySelect" onchange="updateExportPreview()" class="w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-[#131B2E] px-3 py-2 text-xs font-semibold text-slate-800 dark:text-slate-200 outline-none">
                             <option value="ALL">All Categories (Complete Digest)</option>
                             <option value="General">🌐 General Questions (No Specific Event)</option>
                             <option value="Event 1">🔵 Event 3 - Your Personal Research Assistant: Hands-on with Gemini Notebook</option>
@@ -686,21 +728,21 @@
                 <!-- Preview Textarea -->
                 <div>
                     <div class="flex items-center justify-between mb-1">
-                        <span class="text-xs font-semibold text-slate-600">Formatted Message Preview (Editable)</span>
-                        <label class="inline-flex items-center gap-1.5 text-xs text-slate-600 cursor-pointer">
+                        <span class="text-xs font-semibold text-slate-600 dark:text-slate-300">Formatted Message Preview (Editable)</span>
+                        <label class="inline-flex items-center gap-1.5 text-xs text-slate-600 dark:text-slate-400 cursor-pointer">
                             <input type="checkbox" id="includeUnansweredToggle" onchange="updateExportPreview()" class="rounded text-gblue">
                             <span>Include unanswered master questions</span>
                         </label>
                     </div>
-                    <textarea id="exportPreviewText" rows="11" class="w-full rounded-xl border border-slate-300 bg-slate-900 text-slate-100 font-mono text-xs p-4 outline-none focus:border-gblue custom-scrollbar"></textarea>
+                    <textarea id="exportPreviewText" rows="11" class="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-900 text-slate-100 font-mono text-xs p-4 outline-none focus:border-gblue custom-scrollbar"></textarea>
                 </div>
 
                 <!-- Copy Actions -->
                 <div class="flex items-center justify-end gap-2.5 pt-2">
-                    <button onclick="closeExportModal()" class="px-4 py-2.5 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-50 text-xs font-semibold">
+                    <button onclick="closeExportModal()" class="px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 text-xs font-semibold">
                         Close
                     </button>
-                    <button onclick="copyExportDigest()" class="px-5 py-2.5 rounded-xl bg-gblue hover:bg-blue-600 text-white text-xs sm:text-sm font-semibold shadow-sm flex items-center gap-2">
+                    <button onclick="copyExportDigest()" class="px-5 py-2.5 rounded-xl bg-gblue hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-500 text-white text-xs sm:text-sm font-semibold shadow-sm flex items-center gap-2">
                         <i class="fa-regular fa-copy"></i>
                         <span>Copy Formatted Digest to Clipboard</span>
                     </button>
@@ -710,41 +752,41 @@
     </div>
 
     <!-- Footer -->
-    <footer class="bg-white border-t border-slate-200 mt-14 py-8">
+    <footer class="bg-white dark:bg-[#131B2E] border-t border-slate-200 dark:border-slate-800 mt-14 py-8 transition-colors duration-200">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
             <!-- Playful GSA Sticker Showcase Strip -->
-            <div class="flex flex-wrap items-center justify-center gap-4 sm:gap-8 py-3 px-4 rounded-2xl bg-gradient-to-r from-slate-50 via-blue-50/30 to-purple-50/30 border border-slate-200/80">
+            <div class="flex flex-wrap items-center justify-center gap-4 sm:gap-8 py-3 px-4 rounded-2xl bg-gradient-to-r from-slate-50 via-blue-50/30 to-purple-50/30 dark:from-[#0D1527] dark:via-[#0F172A] dark:to-[#0D1527] border border-slate-200/80 dark:border-slate-800">
                 <div class="flex items-center gap-2 group cursor-default">
                     <img src="assets/gsa/keychain-unlocked.png" class="w-8 h-8 object-contain transition-transform group-hover:scale-110 gsa-sticker-shadow" alt="Studying Unlocked">
-                    <span class="text-[11px] font-semibold text-slate-600 hidden sm:inline">Studying Unlocked</span>
+                    <span class="text-[11px] font-semibold text-slate-600 dark:text-slate-300 hidden sm:inline">Studying Unlocked</span>
                 </div>
                 <div class="flex items-center gap-2 group cursor-default">
                     <img src="assets/gsa/bananas-hologram.png" class="w-8 h-8 object-contain transition-transform group-hover:scale-110 gsa-sticker-shadow" alt="Ambassador Chrome">
-                    <span class="text-[11px] font-semibold text-slate-600 hidden sm:inline">GSA Spark</span>
+                    <span class="text-[11px] font-semibold text-slate-600 dark:text-slate-300 hidden sm:inline">GSA Spark</span>
                 </div>
                 <div class="flex items-center gap-2 group cursor-default">
                     <img src="assets/gsa/basketball-pillow.png" class="w-8 h-8 object-contain transition-transform group-hover:scale-110 gsa-sticker-shadow" alt="Campus Life">
-                    <span class="text-[11px] font-semibold text-slate-600 hidden sm:inline">Campus Life</span>
+                    <span class="text-[11px] font-semibold text-slate-600 dark:text-slate-300 hidden sm:inline">Campus Life</span>
                 </div>
                 <div class="flex items-center gap-2 group cursor-default">
                     <img src="assets/gsa/grad-cap-blue.png" class="w-8 h-8 object-contain transition-transform group-hover:scale-110 gsa-sticker-shadow" alt="Graduation Cap">
-                    <span class="text-[11px] font-semibold text-slate-600 hidden sm:inline">Student Community</span>
+                    <span class="text-[11px] font-semibold text-slate-600 dark:text-slate-300 hidden sm:inline">Student Community</span>
                 </div>
                 <div class="flex items-center gap-2 group cursor-default">
                     <img src="assets/gsa/star-google.png" class="w-7 h-7 object-contain transition-transform group-hover:scale-110 gsa-sticker-shadow" alt="Google Star">
-                    <span class="text-[11px] font-semibold text-slate-600 hidden sm:inline">Gemini AI</span>
+                    <span class="text-[11px] font-semibold text-slate-600 dark:text-slate-300 hidden sm:inline">Gemini AI</span>
                 </div>
             </div>
 
-            <div class="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500 pt-2">
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500 dark:text-slate-400 pt-2">
                 <div class="flex items-center gap-2">
                     <span class="w-2 h-2 rounded-full bg-gblue"></span>
                     <span class="w-2 h-2 rounded-full bg-gred"></span>
                     <span class="w-2 h-2 rounded-full bg-gyellow"></span>
                     <span class="w-2 h-2 rounded-full bg-ggreen"></span>
-                    <span class="font-semibold text-slate-700 ml-1">Google Student Ambassadors Campus Question Collector</span>
+                    <span class="font-semibold text-slate-700 dark:text-slate-200 ml-1">Google Student Ambassadors Campus Question Collector</span>
                 </div>
-                <div class="flex items-center gap-1.5 text-slate-500">
+                <div class="flex items-center gap-1.5 text-slate-500 dark:text-slate-400">
                     <span>Powered by Firebase Firestore &amp; Google Gemini AI</span>
                 </div>
             </div>
@@ -1006,11 +1048,11 @@
             const rawBtn = document.getElementById('publicTabRaw');
 
             if (tab === 'answered') {
-                ansBtn.className = "px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-semibold bg-white text-slate-900 shadow-sm transition flex items-center gap-1.5";
-                rawBtn.className = "px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-medium text-slate-600 hover:text-slate-900 transition flex items-center gap-1.5";
+                ansBtn.className = "flex-1 sm:flex-initial px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-semibold bg-white dark:bg-[#1E293B] text-slate-900 dark:text-white shadow-sm transition flex items-center justify-center gap-1.5";
+                rawBtn.className = "flex-1 sm:flex-initial px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition flex items-center justify-center gap-1.5";
             } else {
-                rawBtn.className = "px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-semibold bg-white text-slate-900 shadow-sm transition flex items-center gap-1.5";
-                ansBtn.className = "px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-medium text-slate-600 hover:text-slate-900 transition flex items-center gap-1.5";
+                rawBtn.className = "flex-1 sm:flex-initial px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-semibold bg-white dark:bg-[#1E293B] text-slate-900 dark:text-white shadow-sm transition flex items-center justify-center gap-1.5";
+                ansBtn.className = "flex-1 sm:flex-initial px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition flex items-center justify-center gap-1.5";
             }
             renderPublicView();
         };
@@ -1036,14 +1078,14 @@
             if (publicFeedTab === 'answered') {
                 if (answeredGroups.length === 0) {
                     container.innerHTML = `
-                        <div class="relative overflow-hidden bg-white rounded-2xl border border-slate-200 p-10 text-center shadow-xs">
-                            <div class="absolute -top-10 -right-10 w-40 h-40 bg-blue-100/40 rounded-full blur-2xl pointer-events-none"></div>
+                        <div class="relative overflow-hidden bg-white dark:bg-[#131B2E] rounded-2xl border border-slate-200 dark:border-slate-800 p-10 text-center shadow-xs transition-colors duration-200">
+                            <div class="absolute -top-10 -right-10 w-40 h-40 bg-blue-100/40 dark:bg-blue-600/10 rounded-full blur-2xl pointer-events-none"></div>
                             <div class="relative flex items-center justify-center gap-3 mb-4">
                                 <img src="assets/gsa/diploma-hologram.png" class="w-14 h-14 object-contain animate-float-slow gsa-sticker-shadow" alt="Diploma">
                                 <img src="assets/gsa/grad-cap-blue.png" class="w-12 h-12 object-contain animate-float-alt gsa-sticker-shadow" alt="Grad Cap">
                             </div>
-                            <h4 class="font-display font-bold text-slate-900 text-lg">No Published Answers Yet</h4>
-                            <p class="text-xs sm:text-sm text-slate-500 max-w-md mx-auto mt-1.5 leading-relaxed">
+                            <h4 class="font-display font-bold text-slate-900 dark:text-white text-lg">No Published Answers Yet</h4>
+                            <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 max-w-md mx-auto mt-1.5 leading-relaxed">
                                 Submit your questions on the left! Once our Google Student Ambassadors cluster similar questions with Gemini AI and publish answers, they will appear right here and in the WhatsApp/Discord community digest.
                             </p>
                         </div>
@@ -1054,30 +1096,30 @@
                 container.innerHTML = answeredGroups.map(group => {
                     const subQuestions = (group.sourceQuestions || []);
                     return `
-                        <div class="bg-white rounded-2xl border border-slate-200/90 hover:border-slate-300 p-5 sm:p-6 shadow-sm transition space-y-4">
+                        <div class="bg-white dark:bg-[#131B2E] rounded-2xl border border-slate-200/90 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 p-5 sm:p-6 shadow-sm transition space-y-4">
                             <div class="flex flex-wrap items-center justify-between gap-2">
                                 <div class="flex items-center gap-2">
                                     ${getCategoryBadgeHTML(group.category)}
-                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200">
-                                        <i class="fa-solid fa-circle-check text-emerald-600"></i>
+                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 dark:bg-emerald-950/70 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800/60">
+                                        <i class="fa-solid fa-circle-check text-emerald-600 dark:text-emerald-400"></i>
                                         Covers ${subQuestions.length} community question${subQuestions.length === 1 ? '' : 's'}
                                     </span>
                                 </div>
-                                <span class="text-xs text-slate-400">${formatTimeAgo(group.answeredAt || group.createdAt)}</span>
+                                <span class="text-xs text-slate-400 dark:text-slate-500">${formatTimeAgo(group.answeredAt || group.createdAt)}</span>
                             </div>
 
                             <div>
-                                <div class="text-[11px] font-bold uppercase tracking-wider text-gblue mb-1 flex items-center gap-1.5">
+                                <div class="text-[11px] font-bold uppercase tracking-wider text-gblue dark:text-blue-400 mb-1 flex items-center gap-1.5">
                                     <img src="assets/gsa/star-google.png" class="w-3.5 h-3.5 object-contain gsa-sticker-shadow" alt="">
                                     <span>AI-Consolidated Master Question</span>
                                 </div>
-                                <h4 class="font-display font-bold text-base sm:text-lg text-slate-900 leading-snug">
+                                <h4 class="font-display font-bold text-base sm:text-lg text-slate-900 dark:text-white leading-snug">
                                     ${escapeHTML(group.masterQuestion)}
                                 </h4>
                             </div>
 
-                            <div class="p-4 rounded-xl bg-gradient-to-br from-emerald-50/90 to-teal-50/50 border border-emerald-200/90 text-slate-800 text-sm leading-relaxed whitespace-pre-line shadow-xs">
-                                <div class="text-xs font-bold uppercase tracking-wider text-emerald-800 mb-1.5 flex items-center gap-1.5">
+                            <div class="p-4 rounded-xl bg-gradient-to-br from-emerald-50/90 to-teal-50/50 dark:from-emerald-950/40 dark:to-teal-950/30 border border-emerald-200/90 dark:border-emerald-800/60 text-slate-800 dark:text-emerald-100 text-sm leading-relaxed whitespace-pre-line shadow-xs">
+                                <div class="text-xs font-bold uppercase tracking-wider text-emerald-800 dark:text-emerald-300 mb-1.5 flex items-center gap-1.5">
                                     <img src="assets/gsa/megaphone-hologram.png" class="w-4 h-4 object-contain gsa-sticker-shadow" alt="">
                                     <span>Official GSA Answer</span>
                                 </div>
@@ -1085,15 +1127,15 @@
                             </div>
 
                             ${subQuestions.length > 0 ? `
-                                <details class="group text-xs text-slate-500 pt-1">
-                                    <summary class="cursor-pointer font-semibold text-slate-600 hover:text-gblue flex items-center gap-1.5 select-none">
+                                <details class="group text-xs text-slate-500 dark:text-slate-400 pt-1">
+                                    <summary class="cursor-pointer font-semibold text-slate-600 dark:text-slate-300 hover:text-gblue dark:hover:text-blue-400 flex items-center gap-1.5 select-none">
                                         <i class="fa-solid fa-chevron-right text-[10px] transition-transform group-open:rotate-90"></i>
                                         <span>View ${subQuestions.length} similar attendee question${subQuestions.length === 1 ? '' : 's'} answered by this</span>
                                     </summary>
-                                    <ul class="mt-2.5 space-y-1.5 pl-4 border-l-2 border-slate-200">
+                                    <ul class="mt-2.5 space-y-1.5 pl-4 border-l-2 border-slate-200 dark:border-slate-700">
                                         ${subQuestions.map(sq => `
-                                            <li class="text-slate-600">
-                                                "${escapeHTML(sq.text)}" <span class="text-slate-400">— ${escapeHTML(sq.authorName || 'Anonymous')}</span>
+                                            <li class="text-slate-600 dark:text-slate-300">
+                                                "${escapeHTML(sq.text)}" <span class="text-slate-400 dark:text-slate-500">— ${escapeHTML(sq.authorName || 'Anonymous')}</span>
                                             </li>
                                         `).join('')}
                                     </ul>
@@ -1107,31 +1149,31 @@
                 // Raw community questions feed
                 if (filteredQuestions.length === 0) {
                     container.innerHTML = `
-                        <div class="bg-white rounded-2xl border border-slate-200 p-10 text-center">
-                            <p class="text-sm text-slate-500">No questions submitted for this category yet. Be the first to ask!</p>
+                        <div class="bg-white dark:bg-[#131B2E] rounded-2xl border border-slate-200 dark:border-slate-800 p-10 text-center transition-colors duration-200">
+                            <p class="text-sm text-slate-500 dark:text-slate-400">No questions submitted for this category yet. Be the first to ask!</p>
                         </div>
                     `;
                     return;
                 }
 
                 container.innerHTML = filteredQuestions.map(q => `
-                    <div class="bg-white rounded-2xl border border-slate-200 p-4 sm:p-5 shadow-sm flex flex-col gap-2">
+                    <div class="bg-white dark:bg-[#131B2E] rounded-2xl border border-slate-200 dark:border-slate-800 p-4 sm:p-5 shadow-sm flex flex-col gap-2 transition-colors duration-200">
                         <div class="flex items-center justify-between gap-2">
                             <div class="flex items-center gap-2">
                                 ${getCategoryBadgeHTML(q.category)}
-                                <span class="text-xs font-semibold text-slate-700">
-                                    <i class="fa-regular fa-user text-slate-400 mr-1"></i>${escapeHTML(q.authorName || 'Anonymous')}
+                                <span class="text-xs font-semibold text-slate-700 dark:text-slate-300">
+                                    <i class="fa-regular fa-user text-slate-400 dark:text-slate-500 mr-1"></i>${escapeHTML(q.authorName || 'Anonymous')}
                                 </span>
                             </div>
                             <div class="flex items-center gap-2">
                                 ${q.status === 'grouped'
-                                    ? `<span class="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-blue-50 text-gblue border border-blue-200">Grouped by AI</span>`
-                                    : `<span class="px-2 py-0.5 rounded-full text-[11px] font-medium bg-amber-50 text-amber-700 border border-amber-200">Awaiting AI Sort</span>`
+                                    ? `<span class="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-blue-50 dark:bg-blue-950/60 text-gblue dark:text-blue-300 border border-blue-200 dark:border-blue-800/60">Grouped by AI</span>`
+                                    : `<span class="px-2 py-0.5 rounded-full text-[11px] font-medium bg-amber-50 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-800/60">Awaiting AI Sort</span>`
                                 }
-                                <span class="text-xs text-slate-400">${formatTimeAgo(q.createdAt)}</span>
+                                <span class="text-xs text-slate-400 dark:text-slate-500">${formatTimeAgo(q.createdAt)}</span>
                             </div>
                         </div>
-                        <p class="text-sm text-slate-800 font-medium leading-relaxed">${escapeHTML(q.text)}</p>
+                        <p class="text-sm text-slate-800 dark:text-slate-100 font-medium leading-relaxed">${escapeHTML(q.text)}</p>
                     </div>
                 `).join('');
             }
@@ -1558,25 +1600,25 @@ For each cluster:
             const rawListEl = document.getElementById('adminRawQuestionsList');
             if (filteredRaw.length === 0) {
                 rawListEl.innerHTML = `
-                    <div class="p-8 text-center text-slate-500 text-xs">
+                    <div class="p-8 text-center text-slate-500 dark:text-slate-400 text-xs">
                         No questions in this category yet. Click <strong>"Load Demo Campus Questions"</strong> above to test AI sorting!
                     </div>
                 `;
             } else {
                 rawListEl.innerHTML = filteredRaw.map(q => `
-                    <div class="p-4 hover:bg-slate-50/80 transition flex items-start justify-between gap-3">
+                    <div class="p-4 hover:bg-slate-50/80 dark:hover:bg-[#1E293B]/60 transition flex items-start justify-between gap-3">
                         <div class="space-y-1 flex-1">
                             <div class="flex flex-wrap items-center gap-1.5">
                                 ${getCategoryBadgeHTML(q.category)}
-                                <span class="text-xs font-semibold text-slate-700">${escapeHTML(q.authorName || 'Anonymous')}</span>
+                                <span class="text-xs font-semibold text-slate-700 dark:text-slate-300">${escapeHTML(q.authorName || 'Anonymous')}</span>
                                 ${q.status === 'grouped'
-                                    ? `<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-50 text-gblue border border-blue-200">Grouped</span>`
-                                    : `<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-50 text-amber-700 border border-amber-200">Ungrouped</span>`
+                                    ? `<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-50 dark:bg-blue-950/60 text-gblue dark:text-blue-300 border border-blue-200 dark:border-blue-800/60">Grouped</span>`
+                                    : `<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-50 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-800/60">Ungrouped</span>`
                                 }
                             </div>
-                            <p class="text-xs sm:text-sm text-slate-800">${escapeHTML(q.text)}</p>
+                            <p class="text-xs sm:text-sm text-slate-800 dark:text-slate-200">${escapeHTML(q.text)}</p>
                         </div>
-                        <button onclick="deleteRawQuestion('${q.id}')" class="text-slate-400 hover:text-gred p-1" title="Delete question">
+                        <button onclick="deleteRawQuestion('${q.id}')" class="text-slate-400 dark:text-slate-500 hover:text-gred dark:hover:text-red-400 p-1" title="Delete question">
                             <i class="fa-regular fa-trash-can text-xs"></i>
                         </button>
                     </div>
@@ -1587,14 +1629,14 @@ For each cluster:
             const groupsEl = document.getElementById('adminGroupsContainer');
             if (filteredGroups.length === 0) {
                 groupsEl.innerHTML = `
-                    <div class="relative overflow-hidden bg-white rounded-2xl border border-slate-200 p-10 text-center space-y-4 shadow-xs">
+                    <div class="relative overflow-hidden bg-white dark:bg-[#131B2E] rounded-2xl border border-slate-200 dark:border-slate-800 p-10 text-center space-y-4 shadow-xs transition-colors duration-200">
                         <div class="relative flex items-center justify-center gap-3">
                             <img src="assets/gsa/computer-orange.png" class="w-16 h-16 object-contain animate-float-slow gsa-sticker-shadow" alt="Mascot">
                             <img src="assets/gsa/lightbulb-voxel.png" class="w-12 h-12 object-contain animate-float-alt gsa-sticker-shadow" alt="Lightbulb">
                         </div>
                         <div>
-                            <h4 class="font-display font-bold text-slate-900 text-lg">No AI Question Groups Yet</h4>
-                            <p class="text-xs sm:text-sm text-slate-500 max-w-md mx-auto mt-1 leading-relaxed">
+                            <h4 class="font-display font-bold text-slate-900 dark:text-white text-lg">No AI Question Groups Yet</h4>
+                            <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 max-w-md mx-auto mt-1 leading-relaxed">
                                 Click <strong>"Group Similar Questions with Gemini AI"</strong> above to merge incoming attendee questions into unified Master Questions.
                             </p>
                         </div>
@@ -1606,46 +1648,46 @@ For each cluster:
                     const isAnswered = group.answer && group.answer.trim().length > 0;
 
                     return `
-                        <div class="bg-white rounded-2xl border ${isAnswered ? 'border-emerald-300' : 'border-slate-200'} p-5 shadow-sm space-y-4">
+                        <div class="bg-white dark:bg-[#131B2E] rounded-2xl border ${isAnswered ? 'border-emerald-300 dark:border-emerald-700/80' : 'border-slate-200 dark:border-slate-800'} p-5 shadow-sm space-y-4 transition-colors duration-200">
                             <!-- Top Meta Row -->
                             <div class="flex flex-wrap items-center justify-between gap-2">
                                 <div class="flex flex-wrap items-center gap-2">
                                     ${getCategoryBadgeHTML(group.category)}
-                                    <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-indigo-50 text-indigo-700 border border-indigo-200">
+                                    <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800/60">
                                         <i class="fa-solid fa-tag mr-1 text-[10px]"></i>${escapeHTML(group.topicTag || 'Cluster')}
                                     </span>
-                                    <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-slate-100 text-slate-700">
+                                    <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-slate-100 dark:bg-[#0D1527] text-slate-700 dark:text-slate-300">
                                         Merged ${subQuestions.length} question${subQuestions.length === 1 ? '' : 's'}
                                     </span>
                                     ${isAnswered
-                                        ? `<span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800"><i class="fa-solid fa-check mr-1"></i>Answered & Live</span>`
-                                        : `<span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-100 text-amber-800">Needs Official Answer</span>`
+                                        ? `<span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300"><i class="fa-solid fa-check mr-1"></i>Answered & Live</span>`
+                                        : `<span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-100 dark:bg-amber-950/80 text-amber-800 dark:text-amber-300">Needs Official Answer</span>`
                                     }
                                 </div>
-                                <button onclick="deleteQuestionGroup('${group.id}')" class="text-xs text-slate-400 hover:text-gred p-1" title="Remove group and ungroup its questions">
+                                <button onclick="deleteQuestionGroup('${group.id}')" class="text-xs text-slate-400 dark:text-slate-500 hover:text-gred dark:hover:text-red-400 p-1" title="Remove group and ungroup its questions">
                                     <i class="fa-regular fa-trash-can"></i>
                                 </button>
                             </div>
 
                             <!-- Editable Master Question -->
                             <div>
-                                <label class="block text-[11px] font-bold uppercase tracking-wider text-gblue mb-1 flex items-center gap-1.5">
+                                <label class="block text-[11px] font-bold uppercase tracking-wider text-gblue dark:text-blue-400 mb-1 flex items-center gap-1.5">
                                     <img src="assets/gsa/star-google.png" class="w-3.5 h-3.5 object-contain gsa-sticker-shadow" alt="">
                                     <span>Consolidated Master Question (Synthesized by Gemini AI)</span>
                                 </label>
-                                <input type="text" id="masterQ_${group.id}" value="${escapeHTML(group.masterQuestion)}" class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3.5 py-2 text-sm font-bold text-slate-900 focus:bg-white focus:border-gblue outline-none">
+                                <input type="text" id="masterQ_${group.id}" value="${escapeHTML(group.masterQuestion)}" class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-[#0D1527] px-3.5 py-2 text-sm font-bold text-slate-900 dark:text-white focus:bg-white dark:focus:bg-[#0D1527] focus:border-gblue dark:focus:border-blue-400 outline-none">
                             </div>
 
                             <!-- Clustered Original Questions Accordion -->
-                            <div class="bg-slate-50 rounded-xl p-3.5 border border-slate-200/80">
-                                <div class="text-xs font-semibold text-slate-700 mb-2 flex items-center gap-1.5">
-                                    <i class="fa-solid fa-code-merge text-gblue"></i>
+                            <div class="bg-slate-50 dark:bg-[#0D1527] rounded-xl p-3.5 border border-slate-200/80 dark:border-slate-800">
+                                <div class="text-xs font-semibold text-slate-700 dark:text-slate-300 mb-2 flex items-center gap-1.5">
+                                    <i class="fa-solid fa-code-merge text-gblue dark:text-blue-400"></i>
                                     <span>Original Community Questions Answered by this Master Question (${subQuestions.length}):</span>
                                 </div>
-                                <ul class="space-y-1.5 text-xs text-slate-600 pl-3 border-l-2 border-blue-300">
+                                <ul class="space-y-1.5 text-xs text-slate-600 dark:text-slate-300 pl-3 border-l-2 border-blue-300 dark:border-blue-500/60">
                                     ${subQuestions.map(sq => `
                                         <li>
-                                             "${escapeHTML(sq.text)}" <span class="text-slate-400 font-medium">— ${escapeHTML(sq.authorName || 'Anonymous')}</span>
+                                             "${escapeHTML(sq.text)}" <span class="text-slate-400 dark:text-slate-500 font-medium">— ${escapeHTML(sq.authorName || 'Anonymous')}</span>
                                         </li>
                                     `).join('')}
                                 </ul>
@@ -1654,24 +1696,24 @@ For each cluster:
                             <!-- Official Answer Input -->
                             <div>
                                 <div class="flex items-center justify-between mb-1.5">
-                                    <label for="answerInput_${group.id}" class="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
+                                    <label for="answerInput_${group.id}" class="text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
                                         <img src="assets/gsa/megaphone-hologram.png" class="w-4 h-4 object-contain gsa-sticker-shadow" alt="">
                                         <span>Official GSA Answer</span>
                                     </label>
                                     ${group.suggestedDraft ? `
-                                        <button type="button" onclick="useSuggestedDraft('${group.id}')" class="text-xs font-semibold text-indigo-600 hover:underline flex items-center gap-1">
+                                        <button type="button" onclick="useSuggestedDraft('${group.id}')" class="text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:underline flex items-center gap-1">
                                             <i class="fa-solid fa-wand-magic-sparkles text-[10px]"></i>
                                             <span>Insert AI Suggested Answer Draft</span>
                                         </button>
                                     ` : ''}
                                 </div>
-                                <textarea id="answerInput_${group.id}" rows="3" placeholder="Write the clear answer that answers all ${subQuestions.length} grouped questions..." class="w-full rounded-xl border border-slate-300 bg-white p-3 text-sm text-slate-800 focus:border-gblue focus:ring-2 focus:ring-blue-100 outline-none">${escapeHTML(group.answer || '')}</textarea>
+                                <textarea id="answerInput_${group.id}" rows="3" placeholder="Write the clear answer that answers all ${subQuestions.length} grouped questions..." class="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-[#0D1527] p-3 text-sm text-slate-800 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:border-gblue dark:focus:border-blue-400 focus:ring-2 focus:ring-blue-100 dark:focus:ring-blue-900/40 outline-none">${escapeHTML(group.answer || '')}</textarea>
                                 <input type="hidden" id="draftHolder_${group.id}" value="${escapeHTML(group.suggestedDraft || '')}">
                             </div>
 
                             <!-- Action Row -->
                             <div class="flex items-center justify-end gap-2 pt-1">
-                                <button onclick="saveGroupAnswer('${group.id}')" class="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold transition flex items-center gap-1.5">
+                                <button onclick="saveGroupAnswer('${group.id}')" class="px-4 py-2 rounded-xl bg-slate-900 dark:bg-blue-600 hover:bg-slate-800 dark:hover:bg-blue-500 text-white text-xs font-semibold transition flex items-center gap-1.5">
                                     <i class="fa-solid fa-floppy-disk"></i>
                                     <span>Save & Publish Answer</span>
                                 </button>
@@ -1915,16 +1957,50 @@ For each cluster:
                 'Event 4': 'assets/gsa/star-google.png'
             };
             const styles = {
-                'General': 'bg-emerald-50 text-emerald-900 border-emerald-200/80',
-                'Event 1': 'bg-red-50 text-red-900 border-red-200/80',
-                'Event 2': 'bg-blue-50 text-blue-900 border-blue-200/80',
-                'Event 3': 'bg-purple-50 text-purple-900 border-purple-200/80',
-                'Event 4': 'bg-amber-50 text-amber-900 border-amber-200/80'
+                'General': 'bg-emerald-50 dark:bg-emerald-950/60 text-emerald-900 dark:text-emerald-300 border-emerald-200/80 dark:border-emerald-800/60',
+                'Event 1': 'bg-red-50 dark:bg-red-950/60 text-red-900 dark:text-red-300 border-red-200/80 dark:border-red-800/60',
+                'Event 2': 'bg-blue-50 dark:bg-blue-950/60 text-blue-900 dark:text-blue-300 border-blue-200/80 dark:border-blue-800/60',
+                'Event 3': 'bg-purple-50 dark:bg-purple-950/60 text-purple-900 dark:text-purple-300 border-purple-200/80 dark:border-purple-800/60',
+                'Event 4': 'bg-amber-50 dark:bg-amber-950/60 text-amber-900 dark:text-amber-300 border-amber-200/80 dark:border-amber-800/60'
             };
             const icon = icons[cat] || 'assets/gsa/star-google.png';
-            const cls = styles[cat] || 'bg-slate-100 text-slate-800 border-slate-300';
+            const cls = styles[cat] || 'bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 border-slate-300 dark:border-slate-700';
             return `<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold border shadow-2xs ${cls}"><img src="${icon}" class="w-3.5 h-3.5 object-contain shrink-0 gsa-sticker-shadow" alt=""><span>${escapeHTML(formatCategoryLabel(cat))}</span></span>`;
         }
+
+        // ============================================================================
+        // 11. DARK MODE TOGGLE & THEME CONTROLLER
+        // ============================================================================
+        window.toggleTheme = function() {
+            const isDark = document.documentElement.classList.toggle('dark');
+            try {
+                localStorage.setItem('gsa_theme', isDark ? 'dark' : 'light');
+            } catch (e) {}
+            updateThemeUI(isDark);
+        };
+
+        function updateThemeUI(isDark) {
+            const themeIcon = document.getElementById('themeToggleIcon');
+            const mobileIcon = document.getElementById('mobileHeaderThemeIcon');
+            const mobileMenuIcon = document.getElementById('mobileThemeToggleIcon');
+            const mobileMenuText = document.getElementById('mobileThemeToggleText');
+
+            if (themeIcon) {
+                themeIcon.className = isDark ? "fa-solid fa-sun text-sm sm:text-base text-amber-400" : "fa-solid fa-moon text-sm sm:text-base text-slate-700 dark:text-slate-200";
+            }
+            if (mobileIcon) {
+                mobileIcon.className = isDark ? "fa-solid fa-sun text-xs sm:text-sm text-amber-400" : "fa-solid fa-moon text-xs sm:text-sm text-slate-700 dark:text-slate-200";
+            }
+            if (mobileMenuIcon) {
+                mobileMenuIcon.className = isDark ? "fa-solid fa-sun text-xs text-amber-400" : "fa-solid fa-moon text-xs text-slate-700 dark:text-slate-200";
+            }
+            if (mobileMenuText) {
+                mobileMenuText.textContent = isDark ? "Light" : "Dark";
+            }
+        }
+
+        // Sync Theme UI state on startup
+        updateThemeUI(document.documentElement.classList.contains('dark'));
 
         function formatTimeAgo(timestamp) {
             if (!timestamp) return "Just now";
@@ -1950,9 +2026,9 @@ For each cluster:
             if (!container) return;
 
             const colors = {
-                success: "bg-slate-900 border-l-4 border-ggreen text-white",
-                error: "bg-red-900 border-l-4 border-gred text-white",
-                info: "bg-slate-900 border-l-4 border-gblue text-white"
+                success: "bg-slate-900 dark:bg-emerald-950 border-l-4 border-ggreen text-white",
+                error: "bg-red-900 dark:bg-red-950 border-l-4 border-gred text-white",
+                info: "bg-slate-900 dark:bg-slate-800 border-l-4 border-gblue text-white"
             };
 
             const icons = {
@@ -1976,7 +2052,10 @@ For each cluster:
         }
 
         // Start Application on Window Load
-        window.onload = initApp;
+        window.onload = function() {
+            initApp();
+            updateThemeUI(document.documentElement.classList.contains('dark'));
+        };
     </script>
 </body>
 </html>
