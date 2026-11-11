@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GSA Campus Question Hub | Google Student Ambassadors</title>
-    <meta name="description" content="Official Google Student Ambassadors Community Q&A Portal. Ask questions about our 4-event campus series (NotebookLM, Google AI Studio, Stitch, Antigravity) and get answers organized with Gemini AI.">
+    <meta name="description" content="Official Google Student Ambassadors Community Q&A Portal. Ask questions about our 4-event campus series (Gemini Notebook, Google AI Studio, Stitch, Antigravity) and get answers organized with Gemini AI.">
     <meta name="author" content="Google Student Ambassadors">
     <meta name="theme-color" content="#4285F4">
     <meta name="color-scheme" content="light">
@@ -81,31 +81,54 @@
         .custom-scrollbar::-webkit-scrollbar-thumb:hover {
             background: #94a3b8;
         }
+        @keyframes floatSlow {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-8px) rotate(2deg); }
+        }
+        @keyframes floatAlt {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-6px) rotate(-2deg); }
+        }
+        @keyframes gentlePulse {
+            0%, 100% { transform: scale(1); opacity: 0.95; }
+            50% { transform: scale(1.05); opacity: 1; }
+        }
+        .animate-float-slow {
+            animation: floatSlow 5s ease-in-out infinite;
+        }
+        .animate-float-alt {
+            animation: floatAlt 6s ease-in-out infinite;
+        }
+        .animate-gentle-pulse {
+            animation: gentlePulse 4s ease-in-out infinite;
+        }
+        .gsa-sticker-shadow {
+            filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.12));
+        }
+        .gsa-sticker-glow {
+            filter: drop-shadow(0 8px 20px rgba(66, 133, 244, 0.3));
+        }
     </style>
 </head>
-<body class="min-h-screen flex flex-col selection:bg-blue-100 selection:text-blue-900 overflow-x-hidden">
+<body class="min-h-screen flex flex-col selection:bg-blue-100 selection:text-blue-900 overflow-x-hidden bg-[#F8FAFC]">
 
     <!-- Google 4-Color Top Accent Bar -->
     <div class="google-border-top sticky top-0 z-50"></div>
 
     <!-- Header Navigation -->
-    <header class="bg-white border-b border-slate-200 sticky top-[5px] z-40 shadow-sm">
+    <header class="bg-white/95 backdrop-blur-md border-b border-slate-200 sticky top-[5px] z-40 shadow-xs">
         <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-2">
             <!-- Brand Logo & Title -->
-            <div class="flex items-center gap-2 sm:gap-3 cursor-pointer min-w-0" onclick="switchMainView('public')">
-                <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-center shadow-inner shrink-0">
-                    <div class="grid grid-cols-2 gap-1 p-1 sm:p-1.5">
-                        <span class="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-gblue"></span>
-                        <span class="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-gred"></span>
-                        <span class="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-gyellow"></span>
-                        <span class="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-ggreen"></span>
-                    </div>
+            <div class="flex items-center gap-2.5 sm:gap-3 cursor-pointer min-w-0 group" onclick="switchMainView('public')">
+                <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-white via-slate-50 to-blue-50/70 border border-slate-200/90 flex items-center justify-center shadow-xs shrink-0 p-1 group-hover:scale-105 transition-transform">
+                    <img src="assets/gsa/star-google.png" alt="GSA Chrome Star" class="w-7 h-7 sm:w-8 sm:h-8 object-contain drop-shadow-xs">
                 </div>
                 <div class="min-w-0">
                     <div class="flex items-center gap-1.5 sm:gap-2">
-                        <h1 class="font-display font-bold text-sm sm:text-base md:text-lg text-slate-900 tracking-tight truncate">GSA Campus Hub</h1>
-                        <span class="inline-flex items-center px-1.5 py-0.5 rounded-full text-[10px] sm:text-xs font-semibold bg-blue-50 text-gblue border border-blue-200 shrink-0">
-                            4-Event Series
+                        <h1 class="font-display font-bold text-sm sm:text-base md:text-lg text-slate-900 tracking-tight truncate group-hover:text-gblue transition-colors">GSA Campus Hub</h1>
+                        <span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[10px] sm:text-xs font-semibold bg-blue-50 text-gblue border border-blue-200 shrink-0">
+                            <span class="w-1.5 h-1.5 rounded-full bg-gblue animate-pulse"></span>
+                            <span>4-Event Series</span>
                         </span>
                     </div>
                     <p class="text-[11px] sm:text-xs text-slate-500 truncate">Google Student Ambassadors Community Q&A</p>
@@ -195,22 +218,82 @@
         <!-- 1. PUBLIC ATTENDEE VIEW (NO LOGIN NEEDED)  -->
         <!-- ========================================== -->
         <section id="publicView" class="space-y-8">
-            <!-- Hero Banner -->
-            <div class="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 shadow-sm relative overflow-hidden">
-                <div class="absolute -right-12 -top-12 w-48 h-48 rounded-full bg-blue-50/70 blur-2xl pointer-events-none"></div>
-                <div class="absolute right-12 -bottom-16 w-48 h-48 rounded-full bg-amber-50/70 blur-2xl pointer-events-none"></div>
+            <!-- Hero Banner with 3D GSA Elements -->
+            <div class="bg-gradient-to-br from-white via-slate-50/90 to-blue-50/40 rounded-3xl border border-slate-200/90 p-6 sm:p-8 md:p-10 shadow-sm relative overflow-hidden gsa-card-glow">
+                <!-- Background Ambient Color Glows -->
+                <div class="absolute -right-16 -top-16 w-64 h-64 rounded-full bg-blue-100/60 blur-3xl pointer-events-none"></div>
+                <div class="absolute right-32 -bottom-20 w-64 h-64 rounded-full bg-amber-100/50 blur-3xl pointer-events-none"></div>
+                <div class="absolute left-1/2 top-10 w-48 h-48 rounded-full bg-rose-100/40 blur-3xl pointer-events-none"></div>
 
-                <div class="relative z-10 max-w-3xl">
-                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 text-slate-700 text-xs font-semibold mb-3">
-                        <i class="fa-brands fa-google text-gblue"></i>
-                        <span>Official GSA Campus Community Portal</span>
+                <div class="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-8">
+                    <!-- Left: Headline & Context -->
+                    <div class="max-w-2xl space-y-4 text-center lg:text-left">
+                        <div class="flex flex-wrap items-center justify-center lg:justify-start gap-2">
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/80 border border-slate-200 text-slate-700 text-xs font-semibold shadow-2xs backdrop-blur-xs">
+                                <i class="fa-brands fa-google text-gblue"></i>
+                                <span>Official GSA Campus Community Portal</span>
+                            </span>
+                            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-amber-50/80 border border-amber-200/80 text-amber-900 text-xs font-semibold shadow-2xs">
+                                <img src="assets/gsa/keychain-unlocked.png" alt="Studying Unlocked" class="w-4 h-4 object-contain">
+                                <span>Studying Unlocked</span>
+                            </span>
+                        </div>
+
+                        <h2 class="font-display text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
+                            Got a question about our <br class="hidden sm:inline"><span class="bg-gradient-to-r from-gblue via-indigo-600 to-gred bg-clip-text text-transparent">GSA Campus Event Series?</span>
+                        </h2>
+
+                        <p class="text-slate-600 text-sm sm:text-base leading-relaxed">
+                            Drop your question below! <strong>No login required</strong>. Our AI groups similar questions from the community into single Master Questions so our Google Student Ambassadors can give crystal-clear answers and publish digests to your WhatsApp &amp; Discord groups.
+                        </p>
+
+                        <!-- Event Badges Quick Glance -->
+                        <div class="pt-2 flex flex-wrap items-center justify-center lg:justify-start gap-2">
+                            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-white border border-slate-200 text-slate-700 shadow-2xs">
+                                <img src="assets/gsa/books-red.png" alt="Gemini Notebook" class="w-3.5 h-3.5 object-contain">
+                                <span>Event 3: Gemini Notebook</span>
+                            </span>
+                            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-white border border-slate-200 text-slate-700 shadow-2xs">
+                                <img src="assets/gsa/laptop-silver.png" alt="AI Studio" class="w-3.5 h-3.5 object-contain">
+                                <span>Event 4: AI Studio</span>
+                            </span>
+                            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-white border border-slate-200 text-slate-700 shadow-2xs">
+                                <img src="assets/gsa/flag-hologram.png" alt="Stitch" class="w-3.5 h-3.5 object-contain">
+                                <span>Event 5: Stitch</span>
+                            </span>
+                            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-white border border-slate-200 text-slate-700 shadow-2xs">
+                                <img src="assets/gsa/star-google.png" alt="Antigravity" class="w-3.5 h-3.5 object-contain">
+                                <span>Event 6: Antigravity</span>
+                            </span>
+                        </div>
                     </div>
-                    <h2 class="font-display text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
-                        Got a question about our GSA Campus Events?
-                    </h2>
-                    <p class="mt-2 text-slate-600 text-sm sm:text-base leading-relaxed">
-                        Drop your question below! No account needed. Our AI groups similar questions from the community into one master question so our Google Student Ambassadors can answer everything clearly and post the digest back in our WhatsApp/Discord group.
-                    </p>
+
+                    <!-- Right: Dynamic 3D GSA Composition -->
+                    <div class="relative shrink-0 flex items-center justify-center p-4">
+                        <!-- Mascot Card Floating Container -->
+                        <div class="relative w-56 sm:w-64 h-52 sm:h-60 flex items-center justify-center">
+                            <!-- Glowing ring background -->
+                            <div class="absolute inset-4 rounded-3xl bg-gradient-to-tr from-blue-400/20 via-purple-300/20 to-amber-300/20 blur-xl animate-gentle-pulse"></div>
+                            
+                            <!-- 3D Mascot: Orange Retro Computer -->
+                            <img src="assets/gsa/computer-orange.png" alt="GSA Campus Mascot" class="w-40 sm:w-48 h-auto object-contain relative z-20 animate-float-slow gsa-sticker-shadow cursor-pointer hover:scale-105 transition-transform" title="Hi! Ask your GSA event questions below!">
+
+                            <!-- Floating Element 1: Megaphone (top right) -->
+                            <div class="absolute -top-2 -right-2 z-30 animate-float-alt">
+                                <img src="assets/gsa/megaphone-hologram.png" alt="Broadcast Q&A" class="w-16 sm:w-20 h-auto object-contain gsa-sticker-shadow hover:scale-110 transition-transform">
+                            </div>
+
+                            <!-- Floating Element 2: Voxel Lightbulb (bottom left) -->
+                            <div class="absolute -bottom-2 -left-2 z-30 animate-float-slow">
+                                <img src="assets/gsa/lightbulb-voxel.png" alt="Smart Ideas" class="w-14 sm:w-16 h-auto object-contain gsa-sticker-shadow hover:scale-110 transition-transform">
+                            </div>
+
+                            <!-- Floating Element 3: Google Chrome Star (top left) -->
+                            <div class="absolute top-2 left-2 z-10 animate-gentle-pulse">
+                                <img src="assets/gsa/star-google.png" alt="Gemini AI" class="w-10 sm:w-12 h-auto object-contain gsa-sticker-glow">
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -218,15 +301,15 @@
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
 
                 <!-- LEFT: Question Submission Card -->
-                <div class="lg:col-span-5 bg-white rounded-2xl border border-slate-200 p-6 shadow-sm lg:sticky lg:top-24">
+                <div class="lg:col-span-5 bg-white rounded-3xl border border-slate-200/90 p-6 shadow-sm lg:sticky lg:top-24 gsa-card-glow">
                     <div class="flex items-center justify-between mb-5">
-                        <div class="flex items-center gap-2.5">
-                            <div class="w-9 h-9 rounded-xl bg-blue-50 text-gblue flex items-center justify-center font-bold">
-                                <i class="fa-solid fa-paper-plane"></i>
+                        <div class="flex items-center gap-3">
+                            <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-amber-50 to-orange-100/60 border border-amber-200/80 flex items-center justify-center p-1.5 shadow-2xs">
+                                <img src="assets/gsa/lightbulb-voxel.png" alt="Ask Question" class="w-8 h-8 object-contain">
                             </div>
                             <div>
                                 <h3 class="font-display font-bold text-lg text-slate-900">Ask a Question</h3>
-                                <p class="text-xs text-slate-500">No login required • Instant submission</p>
+                                <p class="text-xs text-slate-500">No login required • Instant community submission</p>
                             </div>
                         </div>
                     </div>
@@ -240,7 +323,7 @@
                             <div class="relative w-full min-w-0 max-w-full">
                                 <select id="questionCategory" required class="w-full max-w-full truncate appearance-none rounded-xl border border-slate-300 bg-slate-50 px-3.5 py-2.5 pr-10 text-xs sm:text-sm font-medium text-slate-800 focus:bg-white focus:border-gblue focus:ring-2 focus:ring-blue-100 outline-none transition">
                                     <option value="General">🌐 General Questions (No Specific Event)</option>
-                                    <option value="Event 1">🔵 Event 3 - Hands-on with NotebookLM</option>
+                                    <option value="Event 1">🔵 Event 3 - Hands-on with Gemini Notebook</option>
                                     <option value="Event 2">🔴 Event 4 - Exploring Google AI Studio</option>
                                     <option value="Event 3">🟡 Event 5 - Practical Applications of Stitch</option>
                                     <option value="Event 4">🟢 Event 6 - Implementations with Antigravity</option>
@@ -298,7 +381,7 @@
                             <!-- Feed Mode Switcher -->
                             <div class="inline-flex w-full sm:w-auto p-1 rounded-xl bg-slate-100 border border-slate-200">
                                 <button id="publicTabAnswered" onclick="setPublicFeedTab('answered')" class="flex-1 sm:flex-initial px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-semibold bg-white text-slate-900 shadow-sm transition flex items-center justify-center gap-1.5">
-                                    <i class="fa-solid fa-circle-check text-ggreen"></i>
+                                    <img src="assets/gsa/diploma-hologram.png" class="w-4 h-4 object-contain shrink-0 gsa-sticker-shadow" alt="">
                                     <span>Official Q&A Answers</span>
                                     <span id="publicAnsweredCount" class="ml-1 px-1.5 py-0.5 text-[11px] rounded-full bg-emerald-100 text-emerald-800">0</span>
                                 </button>
@@ -315,7 +398,7 @@
                                     <select id="publicCategoryFilter" onchange="renderPublicView()" class="w-full max-w-full truncate rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 pr-7 text-xs font-semibold text-slate-700 outline-none focus:border-gblue appearance-none">
                                         <option value="ALL">All Categories (General + 4 Events)</option>
                                         <option value="General">🌐 General Questions (No Specific Event)</option>
-                                        <option value="Event 1">🔵 Event 3 - Hands-on with NotebookLM</option>
+                                        <option value="Event 1">🔵 Event 3 - Hands-on with Gemini Notebook</option>
                                         <option value="Event 2">🔴 Event 4 - Exploring Google AI Studio</option>
                                         <option value="Event 3">🟡 Event 5 - Practical Applications of Stitch</option>
                                         <option value="Event 4">🟢 Event 6 - Implementations with Antigravity</option>
@@ -342,17 +425,23 @@
         <section id="adminView" class="hidden space-y-6">
 
             <!-- Admin Top Bar: Status, API Key Configuration, and Sample Seeder -->
-            <div class="bg-slate-900 text-white rounded-2xl p-6 shadow-md border border-slate-800">
-                <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-                    <div>
-                        <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-blue-500/20 text-blue-300 text-xs font-semibold mb-2 border border-blue-400/30">
-                            <i class="fa-solid fa-user-shield"></i>
-                            <span id="adminIdentityBadge">Authenticated Admin</span>
+            <div class="relative overflow-hidden bg-slate-900 text-white rounded-2xl p-6 shadow-md border border-slate-800">
+                <div class="absolute -top-12 -right-12 w-48 h-48 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="relative flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+                    <div class="flex items-start gap-4">
+                        <div class="hidden sm:flex shrink-0 w-12 h-12 rounded-2xl bg-slate-800/80 border border-slate-700/80 items-center justify-center p-1.5 shadow-inner">
+                            <img src="assets/gsa/laptop-silver.png" class="w-10 h-10 object-contain animate-float-slow gsa-sticker-shadow" alt="Admin Laptop">
                         </div>
-                        <h2 class="font-display text-xl sm:text-2xl font-bold tracking-tight">GSA AI Question Sorter & Answer Studio</h2>
-                        <p class="text-xs sm:text-sm text-slate-300 mt-1">
-                            Cluster similar community questions into unified Master Questions with Gemini AI, write official answers, and copy formatted digests for WhatsApp or Discord.
-                        </p>
+                        <div>
+                            <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-blue-500/20 text-blue-300 text-xs font-semibold mb-2 border border-blue-400/30">
+                                <img src="assets/gsa/star-google.png" class="w-3.5 h-3.5 object-contain" alt="">
+                                <span id="adminIdentityBadge">Authenticated Ambassador Admin</span>
+                            </div>
+                            <h2 class="font-display text-xl sm:text-2xl font-bold tracking-tight">GSA AI Question Sorter & Answer Studio</h2>
+                            <p class="text-xs sm:text-sm text-slate-300 mt-1 max-w-2xl leading-relaxed">
+                                Cluster similar community questions into unified Master Questions with Gemini AI, write official answers, and copy formatted digests for WhatsApp or Discord.
+                            </p>
+                        </div>
                     </div>
 
                     <div class="flex flex-wrap items-center gap-2.5">
@@ -371,8 +460,8 @@
                 <div id="apiKeyDrawer" class="hidden mt-5 pt-5 border-t border-slate-800">
                     <div class="bg-slate-800/90 rounded-xl p-4 border border-slate-700">
                         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2">
-                            <label for="runtimeGeminiKey" class="text-xs font-semibold uppercase tracking-wider text-blue-300 flex items-center gap-1.5">
-                                <i class="fa-solid fa-wand-magic-sparkles"></i>
+                            <label for="runtimeGeminiKey" class="text-xs font-semibold uppercase tracking-wider text-blue-300 flex items-center gap-2">
+                                <img src="assets/gsa/lock-heart.png" class="w-4 h-4 object-contain" alt="">
                                 <span>Gemini API Key Override (Optional if set in code)</span>
                             </label>
                             <span id="apiKeyStatusBadge" class="text-xs text-slate-400">Checking code placeholder...</span>
@@ -402,7 +491,7 @@
                             <select id="adminCategoryFilter" onchange="renderAdminView()" class="w-full max-w-full truncate rounded-xl border border-slate-300 bg-slate-50 px-3.5 py-2 pr-8 text-xs sm:text-sm font-semibold text-slate-800 focus:border-gblue outline-none appearance-none">
                                 <option value="ALL">All Categories (General + 4 Events)</option>
                                 <option value="General">🌐 General Questions (No Specific Event)</option>
-                                <option value="Event 1">🔵 Event 3 - Hands-on with NotebookLM</option>
+                                <option value="Event 1">🔵 Event 3 - Hands-on with Gemini Notebook</option>
                                 <option value="Event 2">🔴 Event 4 - Exploring Google AI Studio</option>
                                 <option value="Event 3">🟡 Event 5 - Practical Applications of Stitch</option>
                                 <option value="Event 4">🟢 Event 6 - Implementations with Antigravity</option>
@@ -495,9 +584,9 @@
             <div class="google-border-top"></div>
             <div class="p-6">
                 <div class="flex items-center justify-between mb-4">
-                    <div class="flex items-center gap-2.5">
-                        <div class="w-10 h-10 rounded-xl bg-blue-50 text-gblue flex items-center justify-center">
-                            <i class="fa-solid fa-user-lock text-lg"></i>
+                    <div class="flex items-center gap-3">
+                        <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-200/60 flex items-center justify-center p-1.5 shadow-2xs">
+                            <img src="assets/gsa/lock-heart.png" class="w-8 h-8 object-contain gsa-sticker-shadow animate-float-slow" alt="Admin Lock">
                         </div>
                         <div>
                             <h3 class="font-display font-bold text-lg text-slate-900">GSA Admin Sign In</h3>
@@ -551,9 +640,9 @@
             <div class="google-border-top"></div>
             <div class="p-6 space-y-4">
                 <div class="flex items-center justify-between">
-                    <div class="flex items-center gap-2.5">
-                        <div class="w-10 h-10 rounded-xl bg-emerald-50 text-ggreen flex items-center justify-center">
-                            <i class="fa-solid fa-share-nodes text-lg"></i>
+                    <div class="flex items-center gap-3">
+                        <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-emerald-50 to-teal-50 border border-emerald-200/60 flex items-center justify-center p-1.5 shadow-2xs">
+                            <img src="assets/gsa/megaphone-hologram.png" class="w-8 h-8 object-contain gsa-sticker-shadow animate-float-slow" alt="Megaphone">
                         </div>
                         <div>
                             <h3 class="font-display font-bold text-lg text-slate-900">Send Consolidated Q&A to Platform</h3>
@@ -586,7 +675,7 @@
                         <select id="exportCategorySelect" onchange="updateExportPreview()" class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-xs font-semibold text-slate-800 outline-none">
                             <option value="ALL">All Categories (Complete Digest)</option>
                             <option value="General">🌐 General Questions (No Specific Event)</option>
-                            <option value="Event 1">🔵 Event 3 - Your Personal Research Assistant: Hands-on with NotebookLM</option>
+                            <option value="Event 1">🔵 Event 3 - Your Personal Research Assistant: Hands-on with Gemini Notebook</option>
                             <option value="Event 2">🔴 Event 4 - Prototyping Made Easy: Exploring Google AI Studio</option>
                             <option value="Event 3">🟡 Event 5 - Weaving Workflows: Practical Applications of Stitch</option>
                             <option value="Event 4">🟢 Event 6 - Defying Limits: Advanced Implementations with Antigravity</option>
@@ -621,17 +710,43 @@
     </div>
 
     <!-- Footer -->
-    <footer class="bg-white border-t border-slate-200 mt-12 py-6">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
-            <div class="flex items-center gap-2">
-                <span class="w-2 h-2 rounded-full bg-gblue"></span>
-                <span class="w-2 h-2 rounded-full bg-gred"></span>
-                <span class="w-2 h-2 rounded-full bg-gyellow"></span>
-                <span class="w-2 h-2 rounded-full bg-ggreen"></span>
-                <span class="font-semibold text-slate-700 ml-1">Google Student Ambassadors Campus Question Collector</span>
+    <footer class="bg-white border-t border-slate-200 mt-14 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+            <!-- Playful GSA Sticker Showcase Strip -->
+            <div class="flex flex-wrap items-center justify-center gap-4 sm:gap-8 py-3 px-4 rounded-2xl bg-gradient-to-r from-slate-50 via-blue-50/30 to-purple-50/30 border border-slate-200/80">
+                <div class="flex items-center gap-2 group cursor-default">
+                    <img src="assets/gsa/keychain-unlocked.png" class="w-8 h-8 object-contain transition-transform group-hover:scale-110 gsa-sticker-shadow" alt="Studying Unlocked">
+                    <span class="text-[11px] font-semibold text-slate-600 hidden sm:inline">Studying Unlocked</span>
+                </div>
+                <div class="flex items-center gap-2 group cursor-default">
+                    <img src="assets/gsa/bananas-hologram.png" class="w-8 h-8 object-contain transition-transform group-hover:scale-110 gsa-sticker-shadow" alt="Ambassador Chrome">
+                    <span class="text-[11px] font-semibold text-slate-600 hidden sm:inline">GSA Spark</span>
+                </div>
+                <div class="flex items-center gap-2 group cursor-default">
+                    <img src="assets/gsa/basketball-pillow.png" class="w-8 h-8 object-contain transition-transform group-hover:scale-110 gsa-sticker-shadow" alt="Campus Life">
+                    <span class="text-[11px] font-semibold text-slate-600 hidden sm:inline">Campus Life</span>
+                </div>
+                <div class="flex items-center gap-2 group cursor-default">
+                    <img src="assets/gsa/grad-cap-blue.png" class="w-8 h-8 object-contain transition-transform group-hover:scale-110 gsa-sticker-shadow" alt="Graduation Cap">
+                    <span class="text-[11px] font-semibold text-slate-600 hidden sm:inline">Student Community</span>
+                </div>
+                <div class="flex items-center gap-2 group cursor-default">
+                    <img src="assets/gsa/star-google.png" class="w-7 h-7 object-contain transition-transform group-hover:scale-110 gsa-sticker-shadow" alt="Google Star">
+                    <span class="text-[11px] font-semibold text-slate-600 hidden sm:inline">Gemini AI</span>
+                </div>
             </div>
-            <div>
-                Powered by Firebase Firestore &amp; Google Gemini AI
+
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500 pt-2">
+                <div class="flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-gblue"></span>
+                    <span class="w-2 h-2 rounded-full bg-gred"></span>
+                    <span class="w-2 h-2 rounded-full bg-gyellow"></span>
+                    <span class="w-2 h-2 rounded-full bg-ggreen"></span>
+                    <span class="font-semibold text-slate-700 ml-1">Google Student Ambassadors Campus Question Collector</span>
+                </div>
+                <div class="flex items-center gap-1.5 text-slate-500">
+                    <span>Powered by Firebase Firestore &amp; Google Gemini AI</span>
+                </div>
             </div>
         </div>
     </footer>
@@ -921,13 +1036,15 @@
             if (publicFeedTab === 'answered') {
                 if (answeredGroups.length === 0) {
                     container.innerHTML = `
-                        <div class="bg-white rounded-2xl border border-slate-200 p-10 text-center">
-                            <div class="w-12 h-12 rounded-2xl bg-blue-50 text-gblue mx-auto flex items-center justify-center mb-3">
-                                <i class="fa-solid fa-wand-magic-sparkles text-xl"></i>
+                        <div class="relative overflow-hidden bg-white rounded-2xl border border-slate-200 p-10 text-center shadow-xs">
+                            <div class="absolute -top-10 -right-10 w-40 h-40 bg-blue-100/40 rounded-full blur-2xl pointer-events-none"></div>
+                            <div class="relative flex items-center justify-center gap-3 mb-4">
+                                <img src="assets/gsa/diploma-hologram.png" class="w-14 h-14 object-contain animate-float-slow gsa-sticker-shadow" alt="Diploma">
+                                <img src="assets/gsa/grad-cap-blue.png" class="w-12 h-12 object-contain animate-float-alt gsa-sticker-shadow" alt="Grad Cap">
                             </div>
-                            <h4 class="font-display font-bold text-slate-800 text-base">No Published Answers Yet</h4>
-                            <p class="text-xs sm:text-sm text-slate-500 max-w-md mx-auto mt-1">
-                                Submit your questions on the left! Once our Google Student Ambassadors group similar questions with AI and post the official answers, they will appear right here and in WhatsApp/Discord.
+                            <h4 class="font-display font-bold text-slate-900 text-lg">No Published Answers Yet</h4>
+                            <p class="text-xs sm:text-sm text-slate-500 max-w-md mx-auto mt-1.5 leading-relaxed">
+                                Submit your questions on the left! Once our Google Student Ambassadors cluster similar questions with Gemini AI and publish answers, they will appear right here and in the WhatsApp/Discord community digest.
                             </p>
                         </div>
                     `;
@@ -937,12 +1054,12 @@
                 container.innerHTML = answeredGroups.map(group => {
                     const subQuestions = (group.sourceQuestions || []);
                     return `
-                        <div class="bg-white rounded-2xl border border-slate-200 p-5 sm:p-6 shadow-sm space-y-4">
+                        <div class="bg-white rounded-2xl border border-slate-200/90 hover:border-slate-300 p-5 sm:p-6 shadow-sm transition space-y-4">
                             <div class="flex flex-wrap items-center justify-between gap-2">
                                 <div class="flex items-center gap-2">
                                     ${getCategoryBadgeHTML(group.category)}
-                                    <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
-                                        <i class="fa-solid fa-check-circle"></i>
+                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200">
+                                        <i class="fa-solid fa-circle-check text-emerald-600"></i>
                                         Covers ${subQuestions.length} community question${subQuestions.length === 1 ? '' : 's'}
                                     </span>
                                 </div>
@@ -950,18 +1067,18 @@
                             </div>
 
                             <div>
-                                <div class="text-[11px] font-bold uppercase tracking-wider text-gblue mb-1 flex items-center gap-1">
-                                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                                <div class="text-[11px] font-bold uppercase tracking-wider text-gblue mb-1 flex items-center gap-1.5">
+                                    <img src="assets/gsa/star-google.png" class="w-3.5 h-3.5 object-contain gsa-sticker-shadow" alt="">
                                     <span>AI-Consolidated Master Question</span>
                                 </div>
-                                <h4 class="font-display font-bold text-base sm:text-lg text-slate-900">
+                                <h4 class="font-display font-bold text-base sm:text-lg text-slate-900 leading-snug">
                                     ${escapeHTML(group.masterQuestion)}
                                 </h4>
                             </div>
 
-                            <div class="p-4 rounded-xl bg-emerald-50/70 border border-emerald-200 text-slate-800 text-sm leading-relaxed whitespace-pre-line">
-                                <div class="text-xs font-bold uppercase tracking-wider text-emerald-800 mb-1 flex items-center gap-1.5">
-                                    <i class="fa-solid fa-bullhorn"></i>
+                            <div class="p-4 rounded-xl bg-gradient-to-br from-emerald-50/90 to-teal-50/50 border border-emerald-200/90 text-slate-800 text-sm leading-relaxed whitespace-pre-line shadow-xs">
+                                <div class="text-xs font-bold uppercase tracking-wider text-emerald-800 mb-1.5 flex items-center gap-1.5">
+                                    <img src="assets/gsa/megaphone-hologram.png" class="w-4 h-4 object-contain gsa-sticker-shadow" alt="">
                                     <span>Official GSA Answer</span>
                                 </div>
                                 ${escapeHTML(group.answer)}
@@ -1470,14 +1587,17 @@ For each cluster:
             const groupsEl = document.getElementById('adminGroupsContainer');
             if (filteredGroups.length === 0) {
                 groupsEl.innerHTML = `
-                    <div class="bg-white rounded-2xl border border-slate-200 p-10 text-center space-y-3">
-                        <div class="w-12 h-12 rounded-2xl bg-indigo-50 text-indigo-600 mx-auto flex items-center justify-center">
-                            <i class="fa-solid fa-wand-magic-sparkles text-xl"></i>
+                    <div class="relative overflow-hidden bg-white rounded-2xl border border-slate-200 p-10 text-center space-y-4 shadow-xs">
+                        <div class="relative flex items-center justify-center gap-3">
+                            <img src="assets/gsa/computer-orange.png" class="w-16 h-16 object-contain animate-float-slow gsa-sticker-shadow" alt="Mascot">
+                            <img src="assets/gsa/lightbulb-voxel.png" class="w-12 h-12 object-contain animate-float-alt gsa-sticker-shadow" alt="Lightbulb">
                         </div>
-                        <h4 class="font-display font-bold text-slate-800 text-base">No AI Question Groups Yet</h4>
-                        <p class="text-xs sm:text-sm text-slate-500 max-w-md mx-auto">
-                            Click <strong>"Group Similar Questions with Gemini AI"</strong> above to merge similar attendee questions into single Master Questions.
-                        </p>
+                        <div>
+                            <h4 class="font-display font-bold text-slate-900 text-lg">No AI Question Groups Yet</h4>
+                            <p class="text-xs sm:text-sm text-slate-500 max-w-md mx-auto mt-1 leading-relaxed">
+                                Click <strong>"Group Similar Questions with Gemini AI"</strong> above to merge incoming attendee questions into unified Master Questions.
+                            </p>
+                        </div>
                     </div>
                 `;
             } else {
@@ -1509,8 +1629,9 @@ For each cluster:
 
                             <!-- Editable Master Question -->
                             <div>
-                                <label class="block text-[11px] font-bold uppercase tracking-wider text-gblue mb-1">
-                                    Consolidated Master Question (Synthesized by Gemini AI)
+                                <label class="block text-[11px] font-bold uppercase tracking-wider text-gblue mb-1 flex items-center gap-1.5">
+                                    <img src="assets/gsa/star-google.png" class="w-3.5 h-3.5 object-contain gsa-sticker-shadow" alt="">
+                                    <span>Consolidated Master Question (Synthesized by Gemini AI)</span>
                                 </label>
                                 <input type="text" id="masterQ_${group.id}" value="${escapeHTML(group.masterQuestion)}" class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3.5 py-2 text-sm font-bold text-slate-900 focus:bg-white focus:border-gblue outline-none">
                             </div>
@@ -1524,7 +1645,7 @@ For each cluster:
                                 <ul class="space-y-1.5 text-xs text-slate-600 pl-3 border-l-2 border-blue-300">
                                     ${subQuestions.map(sq => `
                                         <li>
-                                            "${escapeHTML(sq.text)}" <span class="text-slate-400 font-medium">— ${escapeHTML(sq.authorName || 'Anonymous')}</span>
+                                             "${escapeHTML(sq.text)}" <span class="text-slate-400 font-medium">— ${escapeHTML(sq.authorName || 'Anonymous')}</span>
                                         </li>
                                     `).join('')}
                                 </ul>
@@ -1533,8 +1654,9 @@ For each cluster:
                             <!-- Official Answer Input -->
                             <div>
                                 <div class="flex items-center justify-between mb-1.5">
-                                    <label for="answerInput_${group.id}" class="text-xs font-bold uppercase tracking-wider text-slate-700">
-                                        Official GSA Answer
+                                    <label for="answerInput_${group.id}" class="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
+                                        <img src="assets/gsa/megaphone-hologram.png" class="w-4 h-4 object-contain gsa-sticker-shadow" alt="">
+                                        <span>Official GSA Answer</span>
                                     </label>
                                     ${group.suggestedDraft ? `
                                         <button type="button" onclick="useSuggestedDraft('${group.id}')" class="text-xs font-semibold text-indigo-600 hover:underline flex items-center gap-1">
@@ -1776,7 +1898,7 @@ For each cluster:
         function formatCategoryLabel(cat) {
             const map = {
                 'General': '🌐 General Questions',
-                'Event 1': '🔵 Event 3 - Your Personal Research Assistant: Hands-on with NotebookLM',
+                'Event 1': '🔵 Event 3 - Your Personal Research Assistant: Hands-on with Gemini Notebook',
                 'Event 2': '🔴 Event 4 - Prototyping Made Easy: Exploring Google AI Studio',
                 'Event 3': '🟡 Event 5 - Weaving Workflows: Practical Applications of Stitch',
                 'Event 4': '🟢 Event 6 - Defying Limits: Advanced Implementations with Antigravity'
@@ -1785,15 +1907,23 @@ For each cluster:
         }
 
         function getCategoryBadgeHTML(cat) {
-            const styles = {
-                'General': 'bg-slate-100 text-slate-800 border-slate-300',
-                'Event 1': 'bg-blue-50 text-gblue border-blue-200',
-                'Event 2': 'bg-red-50 text-gred border-red-200',
-                'Event 3': 'bg-amber-50 text-amber-800 border-amber-200',
-                'Event 4': 'bg-emerald-50 text-ggreen border-emerald-200'
+            const icons = {
+                'General': 'assets/gsa/globe-green.png',
+                'Event 1': 'assets/gsa/books-red.png',
+                'Event 2': 'assets/gsa/laptop-silver.png',
+                'Event 3': 'assets/gsa/flag-hologram.png',
+                'Event 4': 'assets/gsa/star-google.png'
             };
-            const cls = styles[cat] || styles['General'];
-            return `<span class="px-2.5 py-0.5 rounded-full text-xs font-bold border ${cls}">${escapeHTML(formatCategoryLabel(cat))}</span>`;
+            const styles = {
+                'General': 'bg-emerald-50 text-emerald-900 border-emerald-200/80',
+                'Event 1': 'bg-red-50 text-red-900 border-red-200/80',
+                'Event 2': 'bg-blue-50 text-blue-900 border-blue-200/80',
+                'Event 3': 'bg-purple-50 text-purple-900 border-purple-200/80',
+                'Event 4': 'bg-amber-50 text-amber-900 border-amber-200/80'
+            };
+            const icon = icons[cat] || 'assets/gsa/star-google.png';
+            const cls = styles[cat] || 'bg-slate-100 text-slate-800 border-slate-300';
+            return `<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold border shadow-2xs ${cls}"><img src="${icon}" class="w-3.5 h-3.5 object-contain shrink-0 gsa-sticker-shadow" alt=""><span>${escapeHTML(formatCategoryLabel(cat))}</span></span>`;
         }
 
         function formatTimeAgo(timestamp) {
