@@ -867,34 +867,44 @@
         // ============================================================================
         // 3. INITIALIZE FIREBASE & REALTIME LISTENERS
         // ============================================================================
+        let listenersAttached = false;
+
         async function initApp() {
             try {
                 app = initializeApp(firebaseConfig);
                 db = getFirestore(app);
                 auth = getAuth(app);
 
-                // Establish base session for Firestore operations
+                // 1. Initial render so Public Feed is never a blank void on first visit
+                renderPublicView();
+                renderAdminView();
+
+                // 2. Setup realtime listeners immediately (works unauthenticated and authenticated)
+                setupRealtimeListeners();
+
+                // 3. Attempt authentication session if available
                 if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                    await signInWithCustomToken(auth, __initial_auth_token);
+                    try {
+                        await signInWithCustomToken(auth, __initial_auth_token);
+                    } catch (tokenErr) {
+                        console.warn("Custom token auth note:", tokenErr);
+                    }
                 } else if (!auth.currentUser) {
                     try {
                         await signInAnonymously(auth);
                     } catch (authErr) {
-                        console.warn("Anonymous auth note:", authErr);
+                        // Anonymous auth may not be toggled in Firebase console; public reads still proceed
+                        console.info("Anonymous auth bypassed:", authErr.code || authErr.message);
                     }
                 }
 
                 onAuthStateChanged(auth, (user) => {
                     currentUser = user;
-                    if (user) {
-                        // If the user logged in via Firebase Email/Password, automatically grant Admin access
-                        if (user.email) {
-                            isAdminAuthenticated = true;
-                            adminEmailIdentity = user.email;
-                        }
-                        updateAdminHeaderUI();
-                        setupRealtimeListeners();
+                    if (user && user.email) {
+                        isAdminAuthenticated = true;
+                        adminEmailIdentity = user.email;
                     }
+                    updateAdminHeaderUI();
                 });
 
                 // Populate runtime API key field from localStorage if available
@@ -913,7 +923,8 @@
         }
 
         function setupRealtimeListeners() {
-            if (!currentUser) return;
+            if (listenersAttached || !db) return;
+            listenersAttached = true;
 
             const questionsRef = collection(db, 'artifacts', appId, 'public', 'data', 'questions');
             const groupsRef = collection(db, 'artifacts', appId, 'public', 'data', 'question_groups');
@@ -1000,7 +1011,7 @@
 
         window.submitQuestion = async function(e) {
             e.preventDefault();
-            if (!currentUser) {
+            if (!db) {
                 showToast("Connecting to database, please try again in a moment.", "error");
                 return;
             }
@@ -1236,9 +1247,13 @@
                 if (auth.currentUser && auth.currentUser.email) {
                     await signOut(auth);
                     if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                        await signInWithCustomToken(auth, __initial_auth_token);
+                        try {
+                            await signInWithCustomToken(auth, __initial_auth_token);
+                        } catch (e) {}
                     } else {
-                        await signInAnonymously(auth);
+                        try {
+                            await signInAnonymously(auth);
+                        } catch (e) {}
                     }
                 }
             } catch (e) {
