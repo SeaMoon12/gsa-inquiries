@@ -33,6 +33,7 @@ jobs:
 
       - name: Generate config.js from GitHub Secrets
         env:
+          ALLOW_PUBLIC_GEMINI_KEY: ${{ secrets.ALLOW_PUBLIC_GEMINI_KEY }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           FIREBASE_CONFIG: ${{ secrets.FIREBASE_CONFIG }}
           FIREBASE_API_KEY: ${{ secrets.FIREBASE_API_KEY }}
@@ -44,13 +45,20 @@ jobs:
           FIREBASE_MEASUREMENT_ID: ${{ secrets.FIREBASE_MEASUREMENT_ID }}
         run: node scripts/build-config.js
 
+      - name: Assemble Clean Public Distribution (_site)
+        run: |
+          mkdir -p _site
+          cp index.html _site/
+          cp config.js _site/
+          cp -r assets _site/
+
       - name: Setup GitHub Pages
         uses: actions/configure-pages@v5
 
       - name: Upload Pages Artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: '.'
+          path: './_site'
 
       - name: Deploy to GitHub Pages
         id: deployment

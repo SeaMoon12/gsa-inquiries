@@ -5,7 +5,19 @@
 const fs = require('fs');
 const path = require('path');
 
-const geminiApiKey = process.env.GEMINI_API_KEY || '';
+// SECURITY NOTE: Static files on GitHub Pages are publicly readable by anyone.
+// By default, we do NOT embed GEMINI_API_KEY into the public static bundle unless
+// explicitly opted-in via ALLOW_PUBLIC_GEMINI_KEY=true (with HTTP referrer restrictions enabled).
+const allowPublicKey = process.env.ALLOW_PUBLIC_GEMINI_KEY === 'true';
+const geminiApiKey = allowPublicKey ? (process.env.GEMINI_API_KEY || '') : '';
+
+if (process.env.GEMINI_API_KEY && !allowPublicKey) {
+    console.warn(
+        '[SECURITY] GEMINI_API_KEY was detected in environment, but skipped from public static config.js ' +
+        'to prevent leaking your private key to site visitors. Enter your Gemini key in the Admin Studio UI ' +
+        '(stored in session memory), or set ALLOW_PUBLIC_GEMINI_KEY=true ONLY if HTTP referrer restrictions are enforced.'
+    );
+}
 
 let firebaseConfig = null;
 if (process.env.FIREBASE_CONFIG) {
@@ -41,15 +53,16 @@ fs.writeFileSync(targetPath, configOutput, 'utf8');
 console.log('Successfully generated config.js for deployment.');
 
 // Automatically inject absolute URL into Open Graph tags for WhatsApp / Social Media Link Previews
-let baseUrl = process.env.PUBLIC_URL || '';
+let baseUrl = (process.env.PUBLIC_URL || '').trim().replace(/\/+$/, '');
 if (!baseUrl && process.env.GITHUB_REPOSITORY) {
     const parts = process.env.GITHUB_REPOSITORY.split('/');
-    if (parts.length === 2) {
+    if (parts.length === 2 && /^[a-zA-Z0-9._-]+$/.test(parts[0]) && /^[a-zA-Z0-9._-]+$/.test(parts[1])) {
         baseUrl = `https://${parts[0]}.github.io/${parts[1]}`;
     }
 }
 
-if (baseUrl) {
+// Validate baseUrl is a safe HTTPS URL before injecting into HTML
+if (baseUrl && /^https:\/\/[a-zA-Z0-9.-]+(\/[a-zA-Z0-9._/-]*)?$/.test(baseUrl)) {
     const indexPath = path.join(__dirname, '..', 'index.html');
     if (fs.existsSync(indexPath)) {
         let indexHtml = fs.readFileSync(indexPath, 'utf8');
@@ -70,3 +83,4 @@ if (baseUrl) {
         console.log(`Updated index.html Open Graph tags with absolute URL: ${baseUrl}`);
     }
 }
+

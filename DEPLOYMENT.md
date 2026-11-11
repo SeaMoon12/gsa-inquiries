@@ -15,22 +15,25 @@ Firebase web credentials (`apiKey`, `projectId`, etc.) identify your Firebase pr
 * Your git repository remains 100% free of hardcoded project IDs.
 
 ### 2. Gemini API Key (Private AI Studio Key)
-There are two ways to use your Gemini API Key on GitHub Pages without committing it:
+Because GitHub Pages serves static files publicly, **bundling a private Gemini API key into `config.js` would expose it to anyone viewing your site's source**. By default, `scripts/build-config.js` **blocks** `GEMINI_API_KEY` from being written into the deployed `config.js` bundle.
 
-#### Option A: Admin Browser `localStorage` (Recommended & Safest)
+#### Recommended Approach: Admin Browser `sessionStorage` (Default & Safest)
 * **Regular attendees** only submit and view questions—they **never** need the Gemini API key.
 * **Only the Admin** triggers AI question grouping.
 * Simply sign in as Admin on your GitHub Pages site, open **Gemini API Key Setup**, and paste your key.
-* It is saved **only in your browser's `localStorage`** on your device.
+* It is stored **only in your browser's `sessionStorage`** for your active Admin session and is automatically wiped when you click **Logout** or close the tab.
 * **Result:** Zero API key exposure to attendees, zero API key in git, and zero API key in the public GitHub Pages bundle.
 
-#### Option B: GitHub Actions Secret Injection + Domain Restriction
-* Add `GEMINI_API_KEY` as a GitHub Secret. The deployment workflow will inject it into `config.js` at deploy time.
-* ⚠️ **Important:** To prevent unauthorized use by visitors who inspect DevTools, restrict the key in [Google Cloud Console / Google AI Studio](https://console.cloud.google.com/apis/credentials):
-  1. Open your API Key settings.
-  2. Under **Application restrictions**, choose **Websites / HTTP referrers**.
-  3. Add: `https://<your-username>.github.io/*`
-  4. Under **API restrictions**, select **Generative Language API**.
+---
+
+## 🛡️ Firestore Security Rules (`firestore.rules`)
+
+Client-side validation is backed by strict server-side rules in [`firestore.rules`](file:///c:/Users/user/Documents/Coding/Personal/gsa-question-collector/firestore.rules):
+1. Open the [Firebase Console](https://console.firebase.google.com/) $\rightarrow$ **Firestore Database** $\rightarrow$ **Rules**.
+2. Copy the contents of `firestore.rules` and click **Publish**.
+3. This enforces on Google's servers that:
+   * Public visitors can **read** questions/answers and **create** new pending questions only if they match strict schema, category, and character-length limits (`authorName` $\le 50$, `text` $3\text{--}400$ chars).
+   * Only authenticated Email/Password Admins (`request.auth.token.firebase.sign_in_provider == 'password'`) can modify/delete questions or create/edit/delete official answer groups.
 
 ---
 

@@ -1,0 +1,56 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper: Verify user is signed in with an existing Email/Password Admin account (never anonymous)
+    function isAdmin() {
+      return request.auth != null
+             && request.auth.token.firebase.sign_in_provider == 'password'
+             && request.auth.token.email != null;
+    }
+
+    // Helper: Validate safe alphanumeric document IDs to prevent attribute/XSS injection via custom IDs
+    function isSafeId(docId) {
+      return docId.matches('^[a-zA-Z0-9_-]{1,64}$');
+    }
+
+    // Helper: Strict schema validation for public attendee question submissions
+    function isValidPublicQuestion(data) {
+      return data.keys().hasOnly(['category', 'authorName', 'text', 'status', 'groupId', 'createdAt'])
+             && data.category in ['General', 'Event 1', 'Event 2', 'Event 3', 'Event 4']
+             && data.authorName is string
+             && data.authorName.size() >= 1
+             && data.authorName.size() <= 50
+             && data.text is string
+             && data.text.size() >= 3
+             && data.text.size() <= 400
+             && data.status == 'pending'
+             && data.groupId == null
+             && data.createdAt is number;
+    }
+
+    match /artifacts/{appId}/public/data/questions/{questionId} {
+      // Anyone can view questions
+      allow read: if true;
+
+      // Attendees can submit new questions only if payload strictly matches schema & constraints, or Admin is seeding
+      allow create: if isSafeId(questionId) && (isValidPublicQuestion(request.resource.data) || isAdmin());
+
+      // ONLY authenticated Email/Password Admins can update status or delete questions
+      allow update, delete: if isAdmin();
+    }
+
+    match /artifacts/{appId}/public/data/question_groups/{groupId} {
+      // Anyone can read AI-grouped master questions & official GSA answers
+      allow read: if true;
+
+      // ONLY authenticated Email/Password Admins can create, edit, publish answers, or delete groups
+      allow create, update, delete: if isAdmin() && isSafeId(groupId);
+    }
+
+    // Default deny all other paths
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
