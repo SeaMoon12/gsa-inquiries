@@ -152,101 +152,82 @@
     <div class="google-border-top sticky top-0 z-50"></div>
 
     <!-- Header Navigation -->
-    <header class="bg-white/95 dark:bg-[#131B2E]/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800/80 sticky top-[5px] z-40 shadow-xs transition-colors duration-200">
-        <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-2">
+    <header class="bg-white/90 dark:bg-[#0B0F19]/90 backdrop-blur-md border-b border-slate-200/80 dark:border-slate-800/80 sticky top-[5px] z-40 transition-colors duration-200">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 h-14 sm:h-16 flex items-center justify-between gap-3">
             <!-- Brand Logo & Title -->
-            <div class="flex items-center gap-2.5 sm:gap-3 cursor-pointer min-w-0 group" onclick="switchMainView('public')">
-                <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-white via-slate-50 to-blue-50/70 dark:from-slate-800 dark:via-slate-850 dark:to-slate-800 border border-slate-200/90 dark:border-slate-700/80 flex items-center justify-center shadow-xs shrink-0 p-1 group-hover:scale-105 transition-transform">
-                    <img src="assets/gsa/star-google.png" alt="GSA Chrome Star" class="w-7 h-7 sm:w-8 sm:h-8 object-contain drop-shadow-xs">
-                </div>
-                <div class="min-w-0">
-                    <div class="flex items-center gap-1.5 sm:gap-2">
-                        <h1 class="font-display font-bold text-sm sm:text-base md:text-lg text-slate-900 dark:text-white tracking-tight truncate group-hover:text-gblue dark:group-hover:text-blue-400 transition-colors">GSA Campus Hub</h1>
-                        <span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[10px] sm:text-xs font-semibold bg-blue-50 dark:bg-blue-950/60 text-gblue dark:text-blue-300 border border-blue-200 dark:border-blue-800/60 shrink-0">
-                            <span class="w-1.5 h-1.5 rounded-full bg-gblue animate-pulse"></span>
-                            <span>4-Event Series</span>
-                        </span>
-                    </div>
-                    <p class="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 truncate">Google Student Ambassadors Community Q&A</p>
+            <div class="flex items-center gap-2.5 cursor-pointer min-w-0 group" onclick="switchMainView('public'); window.scrollTo({top: 0, behavior: 'smooth'});">
+                <img src="assets/gsa/star-google.png" alt="GSA" class="w-7 h-7 sm:w-8 sm:h-8 object-contain shrink-0 group-hover:scale-105 transition-transform">
+                <div class="flex items-center gap-2 min-w-0">
+                    <h1 id="navBrandTitle" class="font-display font-bold text-sm sm:text-base text-slate-900 dark:text-white tracking-tight truncate">Google AI Series</h1>
+                    <span id="navBrandBadge" class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-50 dark:bg-blue-950/70 text-gblue dark:text-blue-300 border border-blue-200/80 dark:border-blue-800/60 shrink-0">UNIJI</span>
                 </div>
             </div>
 
-            <!-- Desktop Navigation Controls (Hidden on mobile) -->
-            <div class="hidden md:flex items-center gap-2 sm:gap-3 shrink-0">
-                <!-- Theme Toggle Button -->
-                <button id="themeToggleBtn" onclick="toggleTheme()" class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-amber-300 border border-slate-200 dark:border-slate-700 flex items-center justify-center transition-all shadow-xs" title="Toggle Light / Dark Mode" aria-label="Toggle theme">
-                    <i id="themeToggleIcon" class="fa-solid fa-moon text-sm sm:text-base"></i>
+            <!-- Desktop Navigation Controls -->
+            <div class="hidden md:flex items-center gap-1.5 shrink-0">
+                <button onclick="navigateToSection('workshopsSection')" class="px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/70 transition">
+                    <span id="navEventsLabel">Workshops</span>
+                </button>
+                <button onclick="navigateToSection('curriculumSection')" class="px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/70 transition">
+                    <span id="navRoadmapLabel">About</span>
+                </button>
+                <button id="navPublicBtn" onclick="navigateToSection('qnaSection')" class="px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/70 transition">
+                    <span id="navQnaLabel">Q&amp;A</span>
                 </button>
 
-                <!-- Connection Status Pill -->
-                <div id="dbStatusBadge" class="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-slate-100 dark:bg-slate-800/80 text-slate-600 dark:text-slate-300 border border-slate-200/60 dark:border-slate-700/60">
-                    <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse" id="dbStatusDot"></span>
-                    <span id="dbStatusText">Connecting...</span>
-                </div>
+                <div class="h-4 w-px bg-slate-200 dark:bg-slate-800 mx-1"></div>
 
-                <!-- View Switcher Buttons -->
-                <button id="navPublicBtn" onclick="switchMainView('public')" class="px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-blue-50 dark:bg-blue-950/70 text-gblue dark:text-blue-300 border border-blue-200 dark:border-blue-800/60 transition-all flex items-center gap-1.5">
-                    <i class="fa-solid fa-comments"></i>
-                    <span>Attendee Hub</span>
+                <!-- Theme Toggle Button -->
+                <button id="themeToggleBtn" onclick="toggleTheme()" class="w-8 h-8 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-amber-300 flex items-center justify-center transition" title="Toggle Light / Dark Mode" aria-label="Toggle theme">
+                    <i id="themeToggleIcon" class="fa-solid fa-moon text-xs sm:text-sm"></i>
                 </button>
 
                 <!-- Admin Portal Button -->
-                <button id="navAdminBtn" onclick="handleAdminNavClick()" class="px-3.5 py-2 rounded-xl text-xs sm:text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-700 transition-all flex items-center gap-1.5">
-                    <i class="fa-solid fa-shield-halved text-slate-500 dark:text-slate-400" id="adminLockIcon"></i>
-                    <span id="adminNavText">Admin Login</span>
+                <button id="navAdminBtn" onclick="handleAdminNavClick()" class="px-3 py-1.5 rounded-lg text-xs font-medium text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition flex items-center gap-1.5">
+                    <i class="fa-solid fa-shield-halved text-[11px]" id="adminLockIcon"></i>
+                    <span id="adminNavText">Admin</span>
                 </button>
 
                 <!-- Admin Logout Button (Only visible when Admin is signed in) -->
-                <button id="adminLogoutBtn" onclick="logoutAdmin()" class="hidden px-3 py-2 rounded-xl text-xs font-medium text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/50 border border-red-200 dark:border-red-900/60 transition-all" title="Sign Out of Admin Account">
+                <button id="adminLogoutBtn" onclick="logoutAdmin()" class="hidden px-2.5 py-1.5 rounded-lg text-xs font-medium text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/50 transition" title="Sign Out of Admin Account">
                     <i class="fa-solid fa-right-from-bracket"></i>
                 </button>
             </div>
 
-            <!-- Mobile Hamburger & Theme Toggle Button (Visible on mobile only) -->
-            <div class="flex md:hidden items-center gap-1.5 shrink-0">
-                <button onclick="toggleTheme()" class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-700 dark:text-amber-300 transition" aria-label="Toggle theme">
-                    <i id="mobileHeaderThemeIcon" class="fa-solid fa-moon text-xs sm:text-sm"></i>
+            <!-- Mobile Hamburger & Theme Toggle Button -->
+            <div class="flex md:hidden items-center gap-1 shrink-0">
+                <button onclick="toggleTheme()" class="w-8 h-8 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center justify-center text-slate-600 dark:text-amber-300 transition" aria-label="Toggle theme">
+                    <i id="mobileHeaderThemeIcon" class="fa-solid fa-moon text-xs"></i>
                 </button>
-                <button id="mobileMenuBtn" onclick="toggleMobileNavMenu()" aria-label="Toggle navigation menu" class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-200 dark:focus:ring-blue-800 transition">
-                    <i id="mobileMenuIcon" class="fa-solid fa-bars text-sm sm:text-base"></i>
+                <button id="mobileMenuBtn" onclick="toggleMobileNavMenu()" aria-label="Toggle navigation menu" class="w-8 h-8 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center justify-center text-slate-700 dark:text-slate-200 transition">
+                    <i id="mobileMenuIcon" class="fa-solid fa-bars text-sm"></i>
                 </button>
             </div>
         </div>
 
         <!-- Mobile Navigation Menu Dropdown -->
-        <div id="mobileNavMenu" class="hidden md:hidden border-t border-slate-200 dark:border-slate-800 bg-white/95 dark:bg-[#131B2E]/95 backdrop-blur px-4 py-3 space-y-2 shadow-lg transition-all duration-200">
-            <!-- Connection Status (Mobile) -->
-            <div class="flex items-center justify-between px-3 py-2 rounded-xl bg-slate-50 dark:bg-[#0D1527] border border-slate-100 dark:border-slate-800 text-xs">
-                <span class="text-slate-500 dark:text-slate-400 font-medium">Sync Status:</span>
-                <div class="flex items-center gap-1.5 font-medium text-slate-700 dark:text-slate-200">
-                    <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse" id="dbStatusDotMobile"></span>
-                    <span id="dbStatusTextMobile">Connecting...</span>
-                </div>
-            </div>
-
-            <!-- Mobile Attendee Hub Button -->
-            <button id="mobileNavPublicBtn" onclick="switchMainView('public'); closeMobileNavMenu();" class="w-full px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold bg-blue-50 dark:bg-blue-950/70 text-gblue dark:text-blue-300 border border-blue-200 dark:border-blue-800/60 transition flex items-center justify-between">
-                <div class="flex items-center gap-2">
-                    <i class="fa-solid fa-comments"></i>
-                    <span>Attendee Hub</span>
-                </div>
-                <span class="text-[10px] uppercase font-bold text-gblue dark:text-blue-400 tracking-wider">Public</span>
+        <div id="mobileNavMenu" class="hidden md:hidden border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-[#131B2E] px-4 py-2.5 space-y-1 shadow-lg">
+            <button onclick="navigateToSection('workshopsSection'); closeMobileNavMenu();" class="w-full px-3 py-2 rounded-lg text-xs font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 flex items-center justify-between">
+                <span>Workshops (Events 3–6)</span>
+                <i class="fa-solid fa-chevron-right text-[10px] text-slate-400"></i>
             </button>
-
-            <!-- Mobile Admin Button -->
-            <button id="mobileNavAdminBtn" onclick="handleAdminNavClick(); closeMobileNavMenu();" class="w-full px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800/80 border border-slate-200 dark:border-slate-700 transition flex items-center justify-between">
-                <div class="flex items-center gap-2">
-                    <i class="fa-solid fa-shield-halved text-slate-500 dark:text-slate-400" id="mobileAdminLockIcon"></i>
+            <button onclick="navigateToSection('curriculumSection'); closeMobileNavMenu();" class="w-full px-3 py-2 rounded-lg text-xs font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 flex items-center justify-between">
+                <span>About &amp; Past Sessions</span>
+                <i class="fa-solid fa-chevron-right text-[10px] text-slate-400"></i>
+            </button>
+            <button id="mobileNavPublicBtn" onclick="navigateToSection('qnaSection'); closeMobileNavMenu();" class="w-full px-3 py-2 rounded-lg text-xs font-semibold text-gblue dark:text-blue-400 hover:bg-blue-50/50 dark:hover:bg-slate-800 flex items-center justify-between">
+                <span>Community Q&amp;A</span>
+                <i class="fa-solid fa-chevron-right text-[10px]"></i>
+            </button>
+            <div class="pt-1 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                <button id="mobileNavAdminBtn" onclick="handleAdminNavClick(); closeMobileNavMenu();" class="px-3 py-1.5 rounded-lg text-xs font-medium text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
+                    <i class="fa-solid fa-shield-halved text-[11px]" id="mobileAdminLockIcon"></i>
                     <span id="mobileAdminNavText">Admin Login</span>
-                </div>
-                <span id="mobileAdminBadge" class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Studio</span>
-            </button>
-
-            <!-- Mobile Admin Logout Button -->
-            <button id="mobileAdminLogoutBtn" onclick="logoutAdmin(); closeMobileNavMenu();" class="hidden w-full px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-medium text-red-600 dark:text-red-400 bg-red-50/60 dark:bg-red-950/40 hover:bg-red-50 dark:hover:bg-red-900/60 border border-red-200 dark:border-red-900/60 transition flex items-center justify-center gap-2">
-                <i class="fa-solid fa-right-from-bracket"></i>
-                <span>Sign Out of Admin Account</span>
-            </button>
+                </button>
+                <button id="mobileAdminLogoutBtn" onclick="logoutAdmin(); closeMobileNavMenu();" class="hidden px-3 py-1.5 rounded-lg text-xs font-medium text-red-600 dark:text-red-400">
+                    Sign Out
+                </button>
+            </div>
         </div>
     </header>
 
@@ -256,208 +237,229 @@
     <!-- ========================================== -->
     <!-- MAIN CONTENT CONTAINER                     -->
     <!-- ========================================== -->
-    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+    <main class="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 py-6 sm:py-10">
 
         <!-- ========================================== -->
-        <!-- 1. PUBLIC ATTENDEE VIEW (NO LOGIN NEEDED)  -->
+        <!-- 1. PUBLIC WORKSHOP SERIES & Q&A PORTAL     -->
         <!-- ========================================== -->
-        <section id="publicView" class="space-y-8">
-            <!-- Hero Banner with 3D GSA Elements -->
-            <div class="bg-gradient-to-br from-white via-slate-50/90 to-blue-50/40 dark:from-[#131B2E] dark:via-[#131B2E] dark:to-[#1a243d] rounded-3xl border border-slate-200/90 dark:border-slate-800 p-6 sm:p-8 md:p-10 shadow-sm relative overflow-hidden gsa-card-glow transition-colors duration-200">
-                <!-- Background Ambient Color Glows -->
-                <div class="absolute -right-16 -top-16 w-64 h-64 rounded-full bg-blue-100/60 dark:bg-blue-600/10 blur-3xl pointer-events-none"></div>
-                <div class="absolute right-32 -bottom-20 w-64 h-64 rounded-full bg-amber-100/50 dark:bg-amber-600/10 blur-3xl pointer-events-none"></div>
-                <div class="absolute left-1/2 top-10 w-48 h-48 rounded-full bg-rose-100/40 dark:bg-rose-600/10 blur-3xl pointer-events-none"></div>
+        <section id="publicView" class="space-y-12 sm:space-y-16">
 
-                <div class="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-8">
-                    <!-- Left: Headline & Context -->
+            <!-- CLEAN, UNCLUTTERED HERO SECTION -->
+            <div id="heroSection" class="bg-white dark:bg-[#131B2E] rounded-3xl border border-slate-200/80 dark:border-slate-800 px-5 py-7 sm:p-10 shadow-xs relative overflow-hidden">
+                <div class="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-6">
                     <div class="max-w-2xl space-y-4 text-center lg:text-left">
-                        <div class="flex flex-wrap items-center justify-center lg:justify-start gap-2">
-                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/80 dark:bg-[#0D1527]/90 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-xs font-semibold shadow-2xs backdrop-blur-xs">
-                                <i class="fa-brands fa-google text-gblue dark:text-blue-400"></i>
-                                <span>Official GSA Campus Community Portal</span>
-                            </span>
-                            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-amber-50/80 dark:bg-amber-950/50 border border-amber-200/80 dark:border-amber-800/60 text-amber-900 dark:text-amber-300 text-xs font-semibold shadow-2xs">
-                                <img src="assets/gsa/keychain-unlocked.png" alt="Studying Unlocked" class="w-4 h-4 object-contain">
-                                <span>Studying Unlocked</span>
-                            </span>
-                        </div>
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-950/60 border border-blue-200/80 dark:border-blue-800/60 text-gblue dark:text-blue-300 text-xs font-semibold">
+                            <i class="fa-brands fa-google text-[11px]"></i>
+                            <span id="heroBadgePrimary">Google Student Ambassadors • Nov 17–27, 2026</span>
+                        </span>
 
-                        <h2 class="font-display text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-tight">
-                            Got a question about our <br class="hidden sm:inline"><span class="bg-gradient-to-r from-gblue via-indigo-600 to-gred dark:from-blue-400 dark:via-indigo-300 dark:to-red-400 bg-clip-text text-transparent">GSA Campus Event Series?</span>
+                        <h2 class="font-display text-2xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-tight">
+                            <span id="heroHeadlinePrefix">Google AI</span>
+                            <span id="heroHeadlineHighlight" class="bg-gradient-to-r from-gblue via-indigo-500 to-gred dark:from-blue-400 dark:via-indigo-300 dark:to-red-400 bg-clip-text text-transparent">Workshop Series</span>
                         </h2>
 
-                        <p class="text-slate-600 dark:text-slate-300 text-sm sm:text-base leading-relaxed">
-                            Drop your question below! <strong>No login required</strong>. Our AI groups similar questions from the community into single Master Questions so our Google Student Ambassadors can give crystal-clear answers and publish digests to your WhatsApp &amp; Discord groups.
+                        <p id="heroDescription" class="text-slate-600 dark:text-slate-300 text-xs sm:text-base leading-relaxed max-w-xl mx-auto lg:mx-0">
+                            4 hands-on, 60-minute Google AI sessions at University of Jakarta International. Practical workflows you can apply immediately—100% standalone, no prior experience required.
                         </p>
 
-                        <!-- Event Badges Quick Glance -->
-                        <div class="pt-2 flex flex-wrap items-center justify-center lg:justify-start gap-2">
-                            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-white dark:bg-[#0D1527] border border-slate-200 dark:border-slate-700/80 text-slate-700 dark:text-slate-300 shadow-2xs">
-                                <img src="assets/gsa/books-red.png" alt="Gemini Notebook" class="w-3.5 h-3.5 object-contain">
-                                <span>Event 3: Gemini Notebook</span>
-                            </span>
-                            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-white dark:bg-[#0D1527] border border-slate-200 dark:border-slate-700/80 text-slate-700 dark:text-slate-300 shadow-2xs">
-                                <img src="assets/gsa/laptop-silver.png" alt="AI Studio" class="w-3.5 h-3.5 object-contain">
-                                <span>Event 4: AI Studio</span>
-                            </span>
-                            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-white dark:bg-[#0D1527] border border-slate-200 dark:border-slate-700/80 text-slate-700 dark:text-slate-300 shadow-2xs">
-                                <img src="assets/gsa/flag-hologram.png" alt="Stitch" class="w-3.5 h-3.5 object-contain">
-                                <span>Event 5: Stitch</span>
-                            </span>
-                            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-white dark:bg-[#0D1527] border border-slate-200 dark:border-slate-700/80 text-slate-700 dark:text-slate-300 shadow-2xs">
-                                <img src="assets/gsa/star-google.png" alt="Antigravity" class="w-3.5 h-3.5 object-contain">
-                                <span>Event 6: Antigravity</span>
-                            </span>
+                        <!-- Clean CTA Row -->
+                        <div class="flex flex-wrap items-center justify-center lg:justify-start gap-2.5 pt-1">
+                            <button onclick="navigateToSection('workshopsSection')" class="px-4 py-2.5 rounded-xl bg-gblue hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-500 text-white font-semibold text-xs sm:text-sm shadow-xs transition flex items-center gap-2">
+                                <span id="heroPrimaryCta">View 4 Workshops</span>
+                                <i class="fa-solid fa-arrow-down text-xs"></i>
+                            </button>
+                            <button onclick="navigateToSection('qnaSection')" class="px-4 py-2.5 rounded-xl bg-slate-100 dark:bg-[#0D1527] hover:bg-slate-200/70 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-700 font-semibold text-xs sm:text-sm transition flex items-center gap-2">
+                                <i class="fa-regular fa-comment-dots text-gblue dark:text-blue-400"></i>
+                                <span id="heroSecondaryCta">Ask a Question</span>
+                            </button>
                         </div>
                     </div>
 
-                    <!-- Right: Dynamic 3D GSA Composition -->
-                    <div class="relative shrink-0 flex items-center justify-center p-4">
-                        <!-- Mascot Card Floating Container -->
-                        <div class="relative w-56 sm:w-64 h-52 sm:h-60 flex items-center justify-center">
-                            <!-- Glowing ring background -->
-                            <div class="absolute inset-4 rounded-3xl bg-gradient-to-tr from-blue-400/20 via-purple-300/20 to-amber-300/20 dark:from-blue-600/30 dark:via-purple-600/30 dark:to-amber-500/20 blur-xl animate-gentle-pulse"></div>
-                            
-                            <!-- 3D Mascot: Orange Retro Computer -->
-                            <img src="assets/gsa/computer-orange.png" alt="GSA Campus Mascot" class="w-40 sm:w-48 h-auto object-contain relative z-20 animate-float-slow gsa-sticker-shadow cursor-pointer hover:scale-105 transition-transform" title="Hi! Ask your GSA event questions below!">
-
-                            <!-- Floating Element 1: Megaphone (top right) -->
-                            <div class="absolute -top-2 -right-2 z-30 animate-float-alt">
-                                <img src="assets/gsa/megaphone-hologram.png" alt="Broadcast Q&A" class="w-16 sm:w-20 h-auto object-contain gsa-sticker-shadow hover:scale-110 transition-transform">
-                            </div>
-
-                            <!-- Floating Element 2: Voxel Lightbulb (bottom left) -->
-                            <div class="absolute -bottom-2 -left-2 z-30 animate-float-slow">
-                                <img src="assets/gsa/lightbulb-voxel.png" alt="Smart Ideas" class="w-14 sm:w-16 h-auto object-contain gsa-sticker-shadow hover:scale-110 transition-transform">
-                            </div>
-
-                            <!-- Floating Element 3: Google Chrome Star (top left) -->
-                            <div class="absolute top-2 left-2 z-10 animate-gentle-pulse">
-                                <img src="assets/gsa/star-google.png" alt="Gemini AI" class="w-10 sm:w-12 h-auto object-contain gsa-sticker-glow">
-                            </div>
-                        </div>
+                    <!-- Subtle Desktop Mascot (Hidden on mobile so mobile stays ultra-clean) -->
+                    <div class="hidden lg:flex items-center justify-center shrink-0 pr-4">
+                        <img src="assets/gsa/computer-orange.png" alt="GSA Mascot" class="w-36 h-36 object-contain animate-float-slow gsa-sticker-shadow cursor-pointer" onclick="navigateToSection('workshopsSection')">
                     </div>
                 </div>
             </div>
 
-            <!-- Main Grid: Left Submission Form (5 cols) + Right Community Feed & Answers (7 cols) -->
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-
-                <!-- LEFT: Question Submission Card -->
-                <div class="lg:col-span-5 bg-white dark:bg-[#131B2E] rounded-3xl border border-slate-200/90 dark:border-slate-800 p-6 shadow-sm lg:sticky lg:top-24 gsa-card-glow transition-colors duration-200">
-                    <div class="flex items-center justify-between mb-5">
-                        <div class="flex items-center gap-3">
-                            <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-amber-50 to-orange-100/60 dark:from-amber-950/60 dark:to-orange-950/40 border border-amber-200/80 dark:border-amber-800/60 flex items-center justify-center p-1.5 shadow-2xs">
-                                <img src="assets/gsa/lightbulb-voxel.png" alt="Ask Question" class="w-8 h-8 object-contain">
-                            </div>
-                            <div>
-                                <h3 class="font-display font-bold text-lg text-slate-900 dark:text-white">Ask a Question</h3>
-                                <p class="text-xs text-slate-500 dark:text-slate-400">No login required • Instant community submission</p>
-                            </div>
-                        </div>
+            <!-- ========================================================== -->
+            <!-- SECTION 1: THE 4 FEATURED WORKSHOPS (EVENTS 3, 4, 5, 6)    -->
+            <!-- ========================================================== -->
+            <div id="workshopsSection" class="scroll-mt-20 space-y-5">
+                <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-2">
+                    <div>
+                        <h3 id="featuredSectionTitle" class="font-display text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+                            Upcoming Workshops
+                        </h3>
+                        <p id="featuredSectionSubtitle" class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-0.5">
+                            Tap any workshop for the full syllabus &amp; details, or jump straight to its Q&amp;A.
+                        </p>
                     </div>
+                    <span id="venueSummaryBadge" class="text-xs font-medium text-slate-500 dark:text-slate-400">
+                        University of Jakarta International • Jakarta International Tower
+                    </span>
+                </div>
 
-                    <form id="questionForm" onsubmit="submitQuestion(event)" class="space-y-4">
-                        <!-- Event / Category Dropdown -->
-                        <div>
-                            <label for="questionCategory" class="block text-xs font-semibold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1.5">
-                                Select Event / Category <span class="text-gred dark:text-red-400">*</span>
-                            </label>
-                            <div class="relative w-full min-w-0 max-w-full">
-                                <select id="questionCategory" required class="w-full max-w-full truncate appearance-none rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-[#0D1527] px-3.5 py-2.5 pr-10 text-xs sm:text-sm font-medium text-slate-800 dark:text-slate-200 focus:bg-white dark:focus:bg-[#0D1527] focus:border-gblue dark:focus:border-blue-400 focus:ring-2 focus:ring-blue-100 dark:focus:ring-blue-900/40 outline-none transition">
-                                    <option value="General">🌐 General Questions (No Specific Event)</option>
-                                    <option value="Event 1">🔵 Event 3 - Hands-on with Gemini Notebook</option>
-                                    <option value="Event 2">🔴 Event 4 - Exploring Google AI Studio</option>
-                                    <option value="Event 3">🟡 Event 5 - Practical Applications of Stitch</option>
-                                    <option value="Event 4">🟢 Event 6 - Implementations with Antigravity</option>
-                                </select>
-                                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-slate-500 dark:text-slate-400">
-                                    <i class="fa-solid fa-chevron-down text-xs"></i>
-                                </div>
-                            </div>
+                <!-- Admin-Only Quick Lock Bar (Visible only when Admin is signed in) -->
+                <div id="publicAdminLockBar" class="hidden bg-slate-900 dark:bg-[#16213B] text-white rounded-2xl p-3.5 sm:px-5 border border-slate-800 dark:border-blue-500/30 shadow-sm">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                        <div class="flex items-center gap-2 text-xs font-semibold text-blue-300">
+                            <i class="fa-solid fa-lock-open"></i>
+                            <span>Admin Mode — Click to Lock / Unlock Workshops:</span>
                         </div>
-
-                        <!-- Optional Name Input -->
-                        <div>
-                            <label for="attendeeName" class="block text-xs font-semibold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1.5">
-                                Your Name <span class="text-slate-400 dark:text-slate-500 font-normal lowercase">(Optional)</span>
-                            </label>
-                            <div class="relative">
-                                <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400 dark:text-slate-500">
-                                    <i class="fa-regular fa-user text-xs"></i>
-                                </span>
-                                <input type="text" id="attendeeName" maxlength="50" placeholder="Leave blank to ask anonymously" class="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-[#0D1527] pl-9 pr-3.5 py-2.5 text-sm text-slate-800 dark:text-slate-200 placeholder-slate-400 dark:placeholder-slate-500 focus:bg-white dark:focus:bg-[#0D1527] focus:border-gblue dark:focus:border-blue-400 focus:ring-2 focus:ring-blue-100 dark:focus:ring-blue-900/40 outline-none transition">
-                            </div>
+                        <div id="publicAdminLockButtons" class="flex flex-wrap items-center gap-2">
+                            <!-- Populated dynamically -->
                         </div>
-
-                        <!-- Question Textarea -->
-                        <div>
-                            <div class="flex items-center justify-between mb-1.5">
-                                <label for="questionText" class="block text-xs font-semibold uppercase tracking-wider text-slate-700 dark:text-slate-300">
-                                    Your Question <span class="text-gred dark:text-red-400">*</span>
-                                </label>
-                                <span id="charCount" class="text-xs text-slate-400 dark:text-slate-500">0 / 400</span>
-                            </div>
-                            <textarea id="questionText" required rows="4" maxlength="400" oninput="updateCharCount()" placeholder="e.g., Will we get a certificate of participation for attending GSA Event #1, and do we need to bring our own laptop?" class="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-[#0D1527] p-3.5 text-sm text-slate-800 dark:text-slate-200 placeholder-slate-400 dark:placeholder-slate-500 focus:bg-white dark:focus:bg-[#0D1527] focus:border-gblue dark:focus:border-blue-400 focus:ring-2 focus:ring-blue-100 dark:focus:ring-blue-900/40 outline-none transition resize-none"></textarea>
-                        </div>
-
-                        <!-- Submit Button -->
-                        <button type="submit" id="submitQuestionBtn" class="w-full py-3 px-4 rounded-xl bg-gblue hover:bg-blue-600 active:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-500 text-white font-semibold text-sm shadow-sm hover:shadow transition flex items-center justify-center gap-2">
-                            <i class="fa-solid fa-paper-plane"></i>
-                            <span>Submit Question to GSA Hub</span>
-                        </button>
-                    </form>
-
-                    <!-- Info Note -->
-                    <div class="mt-5 pt-4 border-t border-slate-100 dark:border-slate-800 flex items-start gap-2.5 text-xs text-slate-500 dark:text-slate-400">
-                        <i class="fa-solid fa-wand-magic-sparkles text-gblue dark:text-blue-400 mt-0.5"></i>
-                        <p>Similar questions are automatically merged by Gemini AI so every angle of your question gets answered efficiently!</p>
                     </div>
                 </div>
 
-                <!-- RIGHT: Live Answers & Community Feed -->
-                <div class="lg:col-span-7 space-y-5">
+                <!-- Clean 2x2 Grid of Scannable Workshop Cards -->
+                <div id="featuredWorkshopsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
+                    <!-- Populated dynamically from SITE_CONTENT.events -->
+                </div>
+            </div>
 
-                    <!-- Filter Bar & Sub-tabs -->
-                    <div class="bg-white dark:bg-[#131B2E] rounded-2xl border border-slate-200 dark:border-slate-800 p-4 shadow-sm space-y-4 transition-colors duration-200">
-                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                            <!-- Feed Mode Switcher -->
-                            <div class="inline-flex w-full sm:w-auto p-1 rounded-xl bg-slate-100 dark:bg-[#0D1527] border border-slate-200 dark:border-slate-800">
-                                <button id="publicTabAnswered" onclick="setPublicFeedTab('answered')" class="flex-1 sm:flex-initial px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-semibold bg-white dark:bg-[#1E293B] text-slate-900 dark:text-white shadow-sm transition flex items-center justify-center gap-1.5">
-                                    <img src="assets/gsa/diploma-hologram.png" class="w-4 h-4 object-contain shrink-0 gsa-sticker-shadow" alt="">
-                                    <span>Official Q&A Answers</span>
-                                    <span id="publicAnsweredCount" class="ml-1 px-1.5 py-0.5 text-[11px] rounded-full bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300">0</span>
-                                </button>
-                                <button id="publicTabRaw" onclick="setPublicFeedTab('raw')" class="flex-1 sm:flex-initial px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition flex items-center justify-center gap-1.5">
-                                    <i class="fa-solid fa-layer-group text-gblue dark:text-blue-400"></i>
-                                    <span>All Questions</span>
-                                    <span id="publicRawCount" class="ml-1 px-1.5 py-0.5 text-[11px] rounded-full bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300">0</span>
-                                </button>
+            <!-- ========================================================== -->
+            <!-- SECTION 2: COMPACT HOST CARD & COLLAPSIBLE PAST SESSIONS   -->
+            <!-- ========================================================== -->
+            <div id="curriculumSection" class="scroll-mt-20">
+                <div class="bg-white dark:bg-[#131B2E] rounded-2xl border border-slate-200/80 dark:border-slate-800 p-5 sm:p-6 space-y-4">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                        <div class="flex items-center gap-3.5">
+                            <img src="assets/gsa/grad-cap-blue.png" class="w-10 h-10 object-contain shrink-0 gsa-sticker-shadow" alt="Host">
+                            <div>
+                                <div class="flex flex-wrap items-center gap-2">
+                                    <span id="hostCardLabel" class="text-[10px] font-bold uppercase tracking-wider text-gblue dark:text-blue-400">Hosted By</span>
+                                    <h4 id="hostCardName" class="font-display font-bold text-sm sm:text-base text-slate-900 dark:text-white">Simmon Priady Sasmita</h4>
+                                </div>
+                                <p id="hostCardRole" class="text-xs text-slate-500 dark:text-slate-400">Google Student Ambassador (GSAID26B20269) • UNIJI</p>
                             </div>
+                        </div>
+                        <p id="seriesOverviewDescription" class="text-xs text-slate-500 dark:text-slate-400 sm:max-w-md sm:text-right">
+                            Every 60-minute workshop is self-contained—you can join any session without having attended the previous ones.
+                        </p>
+                    </div>
 
-                            <!-- Event Filter Dropdown -->
-                            <div class="w-full sm:w-auto min-w-0 max-w-full">
-                                <div class="relative w-full min-w-0 max-w-full">
-                                    <select id="publicCategoryFilter" onchange="renderPublicView()" class="w-full max-w-full truncate rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-[#0D1527] px-3 py-2 pr-7 text-xs font-semibold text-slate-700 dark:text-slate-200 outline-none focus:border-gblue dark:focus:border-blue-400 appearance-none">
-                                        <option value="ALL">All Categories (General + 4 Events)</option>
-                                        <option value="General">🌐 General Questions (No Specific Event)</option>
-                                        <option value="Event 1">🔵 Event 3 - Hands-on with Gemini Notebook</option>
-                                        <option value="Event 2">🔴 Event 4 - Exploring Google AI Studio</option>
-                                        <option value="Event 3">🟡 Event 5 - Practical Applications of Stitch</option>
-                                        <option value="Event 4">🟢 Event 6 - Implementations with Antigravity</option>
+                    <!-- Collapsible Completed October Sessions (Events 1 & 2) -->
+                    <details class="group pt-3 border-t border-slate-100 dark:border-slate-800/80">
+                        <summary class="cursor-pointer list-none flex items-center justify-between text-xs font-semibold text-slate-600 dark:text-slate-300 hover:text-gblue dark:hover:text-blue-400 select-none">
+                            <span class="flex items-center gap-2">
+                                <i class="fa-solid fa-clock-rotate-left text-slate-400"></i>
+                                <span id="foundationTitle">Completed October Primers (Events 1 &amp; 2)</span>
+                            </span>
+                            <i class="fa-solid fa-chevron-down text-[10px] text-slate-400 transition-transform group-open:rotate-180"></i>
+                        </summary>
+                        <div id="foundationEventsGrid" class="mt-3.5 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <!-- Populated dynamically from SITE_CONTENT.foundationSection.events -->
+                        </div>
+                    </details>
+                </div>
+            </div>
+
+            <!-- ========================================================== -->
+            <!-- SECTION 3: INTERACTIVE LIVE COMMUNITY Q&A HUB              -->
+            <!-- ========================================================== -->
+            <div id="qnaSection" class="scroll-mt-20 space-y-5">
+                <div>
+                    <h3 id="qnaSectionTitle" class="font-display text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+                        Community Q&amp;A
+                    </h3>
+                    <p id="qnaSectionSubtitle" class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-0.5">
+                        Ask a question about any workshop—no login required. Similar questions are grouped by Gemini AI for clear official answers.
+                    </p>
+                </div>
+
+                <!-- Main Grid: Left Submission Form (5 cols) + Right Community Feed & Answers (7 cols) -->
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+
+                    <!-- LEFT: Question Submission Card -->
+                    <div class="lg:col-span-5 bg-white dark:bg-[#131B2E] rounded-2xl border border-slate-200/80 dark:border-slate-800 p-5 shadow-xs lg:sticky lg:top-20">
+                        <div class="flex items-center gap-2.5 mb-4">
+                            <img src="assets/gsa/lightbulb-voxel.png" alt="Ask" class="w-6 h-6 object-contain">
+                            <div>
+                                <h4 id="qnaFormTitle" class="font-display font-bold text-base text-slate-900 dark:text-white">Ask a Question</h4>
+                                <p id="qnaFormSubtitle" class="text-[11px] text-slate-500 dark:text-slate-400">Anonymous or with your name</p>
+                            </div>
+                        </div>
+
+                        <form id="questionForm" onsubmit="submitQuestion(event)" class="space-y-3.5">
+                            <!-- Event / Category Dropdown -->
+                            <div>
+                                <label for="questionCategory" class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
+                                    <span id="qnaCategoryLabel">Workshop / Topic</span>
+                                </label>
+                                <div class="relative w-full">
+                                    <select id="questionCategory" required class="w-full truncate appearance-none rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-[#0D1527] px-3 py-2 pr-8 text-xs sm:text-sm font-medium text-slate-800 dark:text-slate-200 focus:border-gblue dark:focus:border-blue-400 outline-none transition">
+                                        <option value="General">🌐 General Series Questions</option>
+                                        <option value="Event 1">🔵 Event 3: NotebookLM</option>
                                     </select>
-                                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-slate-400 dark:text-slate-500">
+                                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-slate-400">
                                         <i class="fa-solid fa-chevron-down text-[10px]"></i>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+
+                            <!-- Optional Name Input -->
+                            <div>
+                                <label for="attendeeName" class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
+                                    <span id="qnaNameLabel">Name</span> <span id="qnaNameOptionalHint" class="text-slate-400 font-normal">(Optional)</span>
+                                </label>
+                                <input type="text" id="attendeeName" maxlength="50" placeholder="Leave blank for anonymous" class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-[#0D1527] px-3 py-2 text-xs sm:text-sm text-slate-800 dark:text-slate-200 placeholder-slate-400 dark:placeholder-slate-500 focus:border-gblue dark:focus:border-blue-400 outline-none transition">
+                            </div>
+
+                            <!-- Question Textarea -->
+                            <div>
+                                <div class="flex items-center justify-between mb-1">
+                                    <label for="questionText" class="block text-xs font-semibold text-slate-700 dark:text-slate-300">
+                                        <span id="qnaQuestionLabel">Question</span>
+                                    </label>
+                                    <span id="charCount" class="text-[11px] text-slate-400">0 / 400</span>
+                                </div>
+                                <textarea id="questionText" required rows="3" maxlength="400" oninput="updateCharCount()" placeholder="Ask anything about the workshops..." class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-[#0D1527] p-3 text-xs sm:text-sm text-slate-800 dark:text-slate-200 placeholder-slate-400 dark:placeholder-slate-500 focus:border-gblue dark:focus:border-blue-400 outline-none transition resize-none"></textarea>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <button type="submit" id="submitQuestionBtn" class="w-full py-2.5 px-4 rounded-xl bg-gblue hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-500 text-white font-semibold text-xs sm:text-sm transition flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-paper-plane text-xs"></i>
+                                <span id="qnaSubmitButtonText">Submit Question</span>
+                            </button>
+                        </form>
                     </div>
 
-                    <!-- Public Feed Content Container -->
-                    <div id="publicFeedContainer" class="space-y-4">
-                        <!-- Populated dynamically via JavaScript -->
+                    <!-- RIGHT: Live Answers & Community Feed -->
+                    <div class="lg:col-span-7 space-y-4">
+
+                        <!-- Compact Filter Bar & Sub-tabs -->
+                        <div class="bg-white dark:bg-[#131B2E] rounded-2xl border border-slate-200/80 dark:border-slate-800 p-3 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+                            <!-- Feed Mode Switcher -->
+                            <div class="inline-flex w-full sm:w-auto p-1 rounded-xl bg-slate-100 dark:bg-[#0D1527]">
+                                <button id="publicTabAnswered" onclick="setPublicFeedTab('answered')" class="flex-1 sm:flex-initial px-3 py-1.5 rounded-lg text-xs font-semibold bg-white dark:bg-[#1E293B] text-slate-900 dark:text-white shadow-2xs transition flex items-center justify-center gap-1.5">
+                                    <span id="qnaTabAnsweredLabel">Official Answers</span>
+                                    <span id="publicAnsweredCount" class="px-1.5 py-0.2 text-[10px] rounded-full bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300">0</span>
+                                </button>
+                                <button id="publicTabRaw" onclick="setPublicFeedTab('raw')" class="flex-1 sm:flex-initial px-3 py-1.5 rounded-lg text-xs font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition flex items-center justify-center gap-1.5">
+                                    <span id="qnaTabAllLabel">All Questions</span>
+                                    <span id="publicRawCount" class="px-1.5 py-0.2 text-[10px] rounded-full bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300">0</span>
+                                </button>
+                            </div>
+
+                            <!-- Event Filter Dropdown -->
+                            <div class="relative w-full sm:w-48">
+                                <select id="publicCategoryFilter" onchange="renderPublicView()" class="w-full truncate rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-[#0D1527] px-3 py-1.5 pr-7 text-xs font-semibold text-slate-700 dark:text-slate-200 outline-none focus:border-gblue appearance-none">
+                                    <option value="ALL">All Workshops</option>
+                                    <option value="General">🌐 General</option>
+                                    <option value="Event 1">🔵 Event 3: NotebookLM</option>
+                                </select>
+                                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2.5 text-slate-400">
+                                    <i class="fa-solid fa-chevron-down text-[10px]"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Public Feed Content Container -->
+                        <div id="publicFeedContainer" class="space-y-3">
+                            <!-- Populated dynamically via JavaScript -->
+                        </div>
                     </div>
                 </div>
             </div>
@@ -520,6 +522,22 @@
                             </button>
                         </div>
                     </div>
+                </div>
+            </div>
+
+            <!-- Admin Workshop Visibility & Mystery Locks Control Bar -->
+            <div class="bg-white dark:bg-[#131B2E] rounded-2xl border border-slate-200 dark:border-slate-800 p-4 sm:p-5 shadow-sm flex flex-col lg:flex-row lg:items-center justify-between gap-3 transition-colors duration-200">
+                <div>
+                    <h3 class="font-display font-bold text-sm sm:text-base text-slate-900 dark:text-white flex items-center gap-2">
+                        <i class="fa-solid fa-lock text-gblue dark:text-blue-400"></i>
+                        <span>Workshop Mystery Locks (Events 3–6)</span>
+                    </h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+                        Locked workshops hide all text and show only their 3D icon &amp; color theme to build excitement. Click any workshop to lock/unlock it live.
+                    </p>
+                </div>
+                <div id="adminStudioLockButtons" class="flex flex-wrap items-center gap-2">
+                    <!-- Populated dynamically -->
                 </div>
             </div>
 
@@ -753,47 +771,40 @@
         </div>
     </div>
 
-    <!-- Footer -->
-    <footer class="bg-white dark:bg-[#131B2E] border-t border-slate-200 dark:border-slate-800 mt-14 py-8 transition-colors duration-200">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
-            <!-- Playful GSA Sticker Showcase Strip -->
-            <div class="flex flex-wrap items-center justify-center gap-4 sm:gap-8 py-3 px-4 rounded-2xl bg-gradient-to-r from-slate-50 via-blue-50/30 to-purple-50/30 dark:from-[#0D1527] dark:via-[#0F172A] dark:to-[#0D1527] border border-slate-200/80 dark:border-slate-800">
-                <div class="flex items-center gap-2 group cursor-default">
-                    <img src="assets/gsa/keychain-unlocked.png" class="w-8 h-8 object-contain transition-transform group-hover:scale-110 gsa-sticker-shadow" alt="Studying Unlocked">
-                    <span class="text-[11px] font-semibold text-slate-600 dark:text-slate-300 hidden sm:inline">Studying Unlocked</span>
-                </div>
-                <div class="flex items-center gap-2 group cursor-default">
-                    <img src="assets/gsa/bananas-hologram.png" class="w-8 h-8 object-contain transition-transform group-hover:scale-110 gsa-sticker-shadow" alt="Ambassador Chrome">
-                    <span class="text-[11px] font-semibold text-slate-600 dark:text-slate-300 hidden sm:inline">GSA Spark</span>
-                </div>
-                <div class="flex items-center gap-2 group cursor-default">
-                    <img src="assets/gsa/basketball-pillow.png" class="w-8 h-8 object-contain transition-transform group-hover:scale-110 gsa-sticker-shadow" alt="Campus Life">
-                    <span class="text-[11px] font-semibold text-slate-600 dark:text-slate-300 hidden sm:inline">Campus Life</span>
-                </div>
-                <div class="flex items-center gap-2 group cursor-default">
-                    <img src="assets/gsa/grad-cap-blue.png" class="w-8 h-8 object-contain transition-transform group-hover:scale-110 gsa-sticker-shadow" alt="Graduation Cap">
-                    <span class="text-[11px] font-semibold text-slate-600 dark:text-slate-300 hidden sm:inline">Student Community</span>
-                </div>
-                <div class="flex items-center gap-2 group cursor-default">
-                    <img src="assets/gsa/star-google.png" class="w-7 h-7 object-contain transition-transform group-hover:scale-110 gsa-sticker-shadow" alt="Google Star">
-                    <span class="text-[11px] font-semibold text-slate-600 dark:text-slate-300 hidden sm:inline">Gemini AI</span>
-                </div>
+    <!-- ==================================================== -->
+    <!-- MODAL 3: FULL WORKSHOP DETAIL & SYLLABUS MODAL       -->
+    <!-- ==================================================== -->
+    <div id="eventDetailModal" class="fixed inset-0 z-50 hidden bg-slate-950/75 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto" onclick="if(event.target === this) closeEventDetailModal()">
+        <div class="bg-white dark:bg-[#131B2E] rounded-3xl max-w-3xl w-full border border-slate-200 dark:border-slate-700/80 shadow-2xl overflow-hidden my-8 transition-colors duration-200">
+            <div class="google-border-top"></div>
+            <div id="eventDetailModalContent" class="p-6 sm:p-8 max-h-[85vh] overflow-y-auto custom-scrollbar space-y-6">
+                <!-- Populated dynamically when a user clicks an event card -->
             </div>
+        </div>
+    </div>
 
-            <div class="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500 dark:text-slate-400 pt-2">
-                <div class="flex items-center gap-2">
+    <!-- Footer -->
+    <footer class="bg-white dark:bg-[#131B2E] border-t border-slate-200 dark:border-slate-800 mt-12 py-6 transition-colors duration-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500 dark:text-slate-400 text-center sm:text-left">
+                <div class="flex flex-wrap items-center justify-center sm:justify-start gap-2">
                     <span class="w-2 h-2 rounded-full bg-gblue"></span>
                     <span class="w-2 h-2 rounded-full bg-gred"></span>
                     <span class="w-2 h-2 rounded-full bg-gyellow"></span>
                     <span class="w-2 h-2 rounded-full bg-ggreen"></span>
-                    <span class="font-semibold text-slate-700 dark:text-slate-200 ml-1">Google Student Ambassadors Campus Question Collector</span>
+                    <span id="footerOrgLine" class="font-semibold text-slate-700 dark:text-slate-200 ml-1">Google Student Ambassadors • Google AI Workshop Series at UNIJI</span>
+                    <span class="hidden sm:inline text-slate-300 dark:text-slate-700">•</span>
+                    <span id="footerCreditLine" class="text-slate-500 dark:text-slate-400">Organized by Simmon Priady Sasmita (GSAID26B20269)</span>
                 </div>
-                <div class="flex items-center gap-1.5 text-slate-500 dark:text-slate-400">
-                    <span>Powered by Firebase Firestore &amp; Google Gemini AI</span>
+                <div class="text-[11px] text-slate-400 dark:text-slate-500">
+                    <span id="footerPoweredByLine">Editable via site-content.js</span>
                 </div>
             </div>
         </div>
     </footer>
+
+    <!-- Editable Website & Event Content (Modify site-content.js anytime to update texts!) -->
+    <script src="site-content.js"></script>
 
     <!-- External Configuration (Ignored by Git for Security) -->
     <script src="config.js" onerror="console.info('config.js not found; using environment or fallback settings.')"></script>
@@ -1008,12 +1019,19 @@
                 setDbStatus("Sync Error", "bg-red-500");
             });
 
-            // Listen to AI-Sorted Question Groups
+            // Listen to AI-Sorted Question Groups (and special site_event_locks config doc)
             onSnapshot(groupsRef, (snapshot) => {
                 const groups = [];
                 snapshot.forEach((docSnap) => {
                     const safeDocId = sanitizeId(docSnap.id);
                     if (!safeDocId || safeDocId !== docSnap.id) return; // Reject malformed IDs
+                    if (safeDocId === 'site_event_locks') {
+                        const lockData = docSnap.data();
+                        if (lockData && lockData.locks && typeof lockData.locks === 'object') {
+                            applyRemoteEventLocks(lockData.locks);
+                        }
+                        return;
+                    }
                     groups.push({ id: safeDocId, ...docSnap.data() });
                 });
                 // Sort newest first in memory
@@ -1132,6 +1150,11 @@
         };
 
         window.renderPublicView = function() {
+            // Update the live Q&A count badges on the 4 Workshop Cards whenever questions/answers change
+            if (typeof renderFeaturedWorkshops === 'function') {
+                renderFeaturedWorkshops();
+            }
+
             const filterCat = document.getElementById('publicCategoryFilter')?.value || 'ALL';
             const container = document.getElementById('publicFeedContainer');
             if (!container) return;
@@ -1348,6 +1371,8 @@
             const mobileAdminLockIcon = document.getElementById('mobileAdminLockIcon');
             const mobileAdminLogoutBtn = document.getElementById('mobileAdminLogoutBtn');
 
+            const publicAdminLockBar = document.getElementById('publicAdminLockBar');
+
             if (isAdminAuthenticated) {
                 if (adminNavText) adminNavText.textContent = "Admin Studio";
                 if (adminLockIcon) adminLockIcon.className = "fa-solid fa-wand-magic-sparkles text-gblue";
@@ -1357,6 +1382,7 @@
                 if (mobileAdminNavText) mobileAdminNavText.textContent = "Admin Studio";
                 if (mobileAdminLockIcon) mobileAdminLockIcon.className = "fa-solid fa-wand-magic-sparkles text-gblue";
                 if (mobileAdminLogoutBtn) mobileAdminLogoutBtn.classList.remove('hidden');
+                if (publicAdminLockBar) publicAdminLockBar.classList.remove('hidden');
             } else {
                 if (adminNavText) adminNavText.textContent = "Admin Login";
                 if (adminLockIcon) adminLockIcon.className = "fa-solid fa-shield-halved text-slate-500";
@@ -1365,7 +1391,11 @@
                 if (mobileAdminNavText) mobileAdminNavText.textContent = "Admin Login";
                 if (mobileAdminLockIcon) mobileAdminLockIcon.className = "fa-solid fa-shield-halved text-slate-500";
                 if (mobileAdminLogoutBtn) mobileAdminLogoutBtn.classList.add('hidden');
+                if (publicAdminLockBar) publicAdminLockBar.classList.add('hidden');
             }
+
+            if (typeof renderEventLockControls === 'function') renderEventLockControls();
+            if (typeof renderFeaturedWorkshops === 'function') renderFeaturedWorkshops();
         }
 
         window.toggleMobileNavMenu = function() {
@@ -2055,27 +2085,764 @@ For each cluster:
         };
 
         // ============================================================================
-        // 10. UI HELPERS & UTILITIES
+        // 10. DYNAMIC SITE CONTENT & WORKSHOP SERIES RENDERER (FROM site-content.js)
         // ============================================================================
+        const siteContent = (typeof window !== 'undefined' && window.SITE_CONTENT) ? window.SITE_CONTENT : {};
+
+        function setTextById(id, text) {
+            const el = document.getElementById(id);
+            if (el && typeof text === 'string') {
+                el.textContent = text;
+            }
+        }
+
+        window.navigateToSection = function(sectionId) {
+            if (currentMainView !== 'public') {
+                switchMainView('public');
+            }
+            setTimeout(() => {
+                const target = document.getElementById(sectionId);
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }, 40);
+        };
+
+        window.askQuestionForEvent = function(qnaCategory) {
+            closeEventDetailModal();
+            if (currentMainView !== 'public') {
+                switchMainView('public');
+            }
+            const catSelect = document.getElementById('questionCategory');
+            if (catSelect && qnaCategory) {
+                catSelect.value = qnaCategory;
+            }
+            const feedFilter = document.getElementById('publicCategoryFilter');
+            if (feedFilter && qnaCategory) {
+                feedFilter.value = qnaCategory;
+                renderPublicView();
+            }
+            setTimeout(() => {
+                const qnaEl = document.getElementById('qnaSection');
+                if (qnaEl) {
+                    qnaEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+                const textEl = document.getElementById('questionText');
+                if (textEl) {
+                    setTimeout(() => textEl.focus({ preventScroll: true }), 450);
+                }
+            }, 60);
+        };
+
+        // ============================================================================
+        // WORKSHOP MYSTERY LOCK STATE (SYNCED VIA FIRESTORE + LOCALSTORAGE)
+        // ============================================================================
+        const LOCK_STORAGE_KEY = 'gsa_event_locks';
+
+        function getDefaultEventLocks() {
+            const defaults = {
+                'event-3': false,
+                'event-4': true,
+                'event-5': true,
+                'event-6': true
+            };
+            if (siteContent && Array.isArray(siteContent.events)) {
+                siteContent.events.forEach(ev => {
+                    if (ev && ev.id) {
+                        defaults[ev.id] = Boolean(ev.defaultLocked);
+                    }
+                });
+            }
+            return defaults;
+        }
+
+        function loadInitialEventLocks() {
+            const base = getDefaultEventLocks();
+            try {
+                const raw = localStorage.getItem(LOCK_STORAGE_KEY);
+                if (raw) {
+                    const parsed = JSON.parse(raw);
+                    if (parsed && typeof parsed === 'object') {
+                        return { ...base, ...parsed };
+                    }
+                }
+            } catch (e) {}
+            return base;
+        }
+
+        let eventLocks = loadInitialEventLocks();
+
+        function isEventLocked(eventOrId) {
+            const id = typeof eventOrId === 'string' ? eventOrId : (eventOrId && eventOrId.id);
+            if (!id) return false;
+            if (Object.prototype.hasOwnProperty.call(eventLocks, id)) {
+                return Boolean(eventLocks[id]);
+            }
+            if (typeof eventOrId === 'object' && eventOrId !== null) {
+                return Boolean(eventOrId.defaultLocked);
+            }
+            return false;
+        }
+
+        function applyRemoteEventLocks(remoteLocks) {
+            eventLocks = { ...getDefaultEventLocks(), ...remoteLocks };
+            try {
+                localStorage.setItem(LOCK_STORAGE_KEY, JSON.stringify(eventLocks));
+            } catch (e) {}
+            syncPublicQnaDropdowns();
+            renderEventLockControls();
+            renderFeaturedWorkshops();
+        }
+
+        async function persistEventLocks() {
+            try {
+                localStorage.setItem(LOCK_STORAGE_KEY, JSON.stringify(eventLocks));
+            } catch (e) {}
+            syncPublicQnaDropdowns();
+            renderEventLockControls();
+            renderFeaturedWorkshops();
+            renderPublicView();
+
+            if (db && isAdminAuthenticated) {
+                try {
+                    const lockDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'question_groups', 'site_event_locks');
+                    await setDoc(lockDocRef, {
+                        locks: eventLocks,
+                        updatedAt: Date.now()
+                    });
+                } catch (err) {
+                    console.warn("Saved lock state locally; Firestore sync note:", err.message || err);
+                }
+            }
+        }
+
+        window.toggleEventLock = async function(eventId) {
+            if (!requireAdminAuth()) return;
+            const safeId = sanitizeId(eventId);
+            const currentlyLocked = isEventLocked(safeId);
+            eventLocks[safeId] = !currentlyLocked;
+            await persistEventLocks();
+
+            const events = Array.isArray(siteContent.events) ? siteContent.events : [];
+            const ev = events.find(item => item.id === safeId);
+            const label = ev ? ev.eventNumber : safeId;
+            showToast(
+                eventLocks[safeId]
+                    ? `🔒 Locked ${label} (text hidden for participants).`
+                    : `🔓 Unlocked ${label} for all participants!`,
+                eventLocks[safeId] ? "info" : "success"
+            );
+        };
+
+        window.setBatchEventLocks = async function(mode) {
+            if (!requireAdminAuth()) return;
+            const events = Array.isArray(siteContent.events) ? siteContent.events : [];
+            events.forEach((ev, idx) => {
+                if (!ev || !ev.id) return;
+                if (mode === 'unlock_all') {
+                    eventLocks[ev.id] = false;
+                } else if (mode === 'lock_4_to_6') {
+                    eventLocks[ev.id] = idx >= 1; // Keep Event 3 unlocked, lock Events 4–6
+                }
+            });
+            await persistEventLocks();
+            showToast(
+                mode === 'unlock_all'
+                    ? "🔓 Unlocked all workshops (Events 3–6)!"
+                    : "🔒 Locked Events 4–6 (Event 3 remains unlocked).",
+                "success"
+            );
+        };
+
+        function renderEventLockControls() {
+            const events = Array.isArray(siteContent.events) ? siteContent.events : [];
+            const buttonsHTML = events.map(ev => {
+                const safeId = sanitizeId(ev.id);
+                const locked = isEventLocked(ev);
+                return `
+                    <button type="button" onclick="toggleEventLock('${safeId}')" class="px-3 py-1.5 rounded-xl text-xs font-semibold border transition flex items-center gap-1.5 cursor-pointer ${
+                        locked
+                            ? 'bg-amber-500/15 hover:bg-amber-500/25 text-amber-600 dark:text-amber-300 border-amber-500/40'
+                            : 'bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-700 dark:text-emerald-300 border-emerald-500/40'
+                    }">
+                        <i class="fa-solid ${locked ? 'fa-lock' : 'fa-lock-open'} text-[11px]"></i>
+                        <span>${escapeHTML(ev.eventNumber)}: ${locked ? 'Locked' : 'Unlocked'}</span>
+                    </button>
+                `;
+            }).join('') + `
+                <button type="button" onclick="setBatchEventLocks('unlock_all')" class="px-2.5 py-1.5 rounded-xl text-[11px] font-semibold bg-slate-200/80 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition cursor-pointer">
+                    Unlock All
+                </button>
+                <button type="button" onclick="setBatchEventLocks('lock_4_to_6')" class="px-2.5 py-1.5 rounded-xl text-[11px] font-semibold bg-slate-200/80 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition cursor-pointer">
+                    Lock 4–6
+                </button>
+            `;
+
+            const publicBarBtns = document.getElementById('publicAdminLockButtons');
+            if (publicBarBtns) publicBarBtns.innerHTML = buttonsHTML;
+
+            const adminStudioBtns = document.getElementById('adminStudioLockButtons');
+            if (adminStudioBtns) adminStudioBtns.innerHTML = buttonsHTML;
+        }
+
+        function syncPublicQnaDropdowns() {
+            if (!Array.isArray(siteContent.events) || siteContent.events.length === 0) return;
+            const generalLabel = (siteContent.qnaSection && siteContent.qnaSection.generalCategoryOption)
+                ? siteContent.qnaSection.generalCategoryOption
+                : '🌐 General Series Questions';
+            const allCatLabel = (siteContent.qnaSection && siteContent.qnaSection.allCategoriesFilterLabel)
+                ? siteContent.qnaSection.allCategoriesFilterLabel
+                : 'All Workshops';
+
+            // Public dropdowns only list unlocked workshops so locked workshop names stay secret
+            const unlockedOptionsHTML = siteContent.events
+                .filter(ev => !isEventLocked(ev))
+                .map(ev => {
+                    const catVal = ALLOWED_CATEGORIES.includes(ev.qnaCategory) ? ev.qnaCategory : 'General';
+                    const label = ev.shortDropdownLabel || `${ev.eventNumber} - ${ev.title}`;
+                    return `<option value="${escapeHTML(catVal)}">${escapeHTML(label)}</option>`;
+                }).join('');
+
+            // Admin dropdowns always list all workshops
+            const allAdminOptionsHTML = siteContent.events.map(ev => {
+                const catVal = ALLOWED_CATEGORIES.includes(ev.qnaCategory) ? ev.qnaCategory : 'General';
+                const label = ev.shortDropdownLabel || `${ev.eventNumber} - ${ev.title}`;
+                return `<option value="${escapeHTML(catVal)}">${escapeHTML(label)}</option>`;
+            }).join('');
+
+            const qCategorySelect = document.getElementById('questionCategory');
+            if (qCategorySelect) {
+                const prevVal = qCategorySelect.value;
+                qCategorySelect.innerHTML = `<option value="General">${escapeHTML(generalLabel)}</option>` + unlockedOptionsHTML;
+                if ([...qCategorySelect.options].some(o => o.value === prevVal)) {
+                    qCategorySelect.value = prevVal;
+                }
+            }
+
+            const pubFilter = document.getElementById('publicCategoryFilter');
+            if (pubFilter) {
+                const prevVal = pubFilter.value;
+                pubFilter.innerHTML = `<option value="ALL">${escapeHTML(allCatLabel)}</option><option value="General">${escapeHTML(generalLabel)}</option>` + unlockedOptionsHTML;
+                if ([...pubFilter.options].some(o => o.value === prevVal)) {
+                    pubFilter.value = prevVal;
+                }
+            }
+
+            ['adminCategoryFilter', 'exportCategorySelect'].forEach(selectId => {
+                const sel = document.getElementById(selectId);
+                if (sel) {
+                    const prevVal = sel.value;
+                    sel.innerHTML = `<option value="ALL">${escapeHTML(allCatLabel)}</option><option value="General">${escapeHTML(generalLabel)}</option>` + allAdminOptionsHTML;
+                    if ([...sel.options].some(o => o.value === prevVal)) {
+                        sel.value = prevVal;
+                    }
+                }
+            });
+        }
+
+        function getThemeStylesForEvent(colorTheme) {
+            const palettes = {
+                red: {
+                    cardBorder: 'border-rose-200/80 dark:border-rose-900/50 hover:border-rose-300 dark:hover:border-rose-700',
+                    topBar: 'from-rose-500 via-red-500 to-orange-400',
+                    badge: 'bg-rose-50 dark:bg-rose-950/70 text-rose-800 dark:text-rose-300 border-rose-200 dark:border-rose-800/60',
+                    iconBox: 'from-rose-50 to-orange-50/70 dark:from-rose-950/60 dark:to-orange-950/40 border-rose-200/80 dark:border-rose-800/60',
+                    accentText: 'text-rose-600 dark:text-rose-400',
+                    lockedCardBg: 'bg-gradient-to-br from-rose-50/90 via-white to-orange-50/80 dark:from-rose-950/35 dark:via-[#131B2E] dark:to-orange-950/30',
+                    lockedGlow: 'bg-rose-400/25 dark:bg-rose-500/20',
+                    lockBadge: 'bg-rose-600 text-white'
+                },
+                blue: {
+                    cardBorder: 'border-blue-200/80 dark:border-blue-900/50 hover:border-blue-300 dark:hover:border-blue-700',
+                    topBar: 'from-blue-500 via-indigo-500 to-cyan-400',
+                    badge: 'bg-blue-50 dark:bg-blue-950/70 text-blue-800 dark:text-blue-300 border-blue-200 dark:border-blue-800/60',
+                    iconBox: 'from-blue-50 to-indigo-50/70 dark:from-blue-950/60 dark:to-indigo-950/40 border-blue-200/80 dark:border-blue-800/60',
+                    accentText: 'text-gblue dark:text-blue-400',
+                    lockedCardBg: 'bg-gradient-to-br from-blue-50/90 via-white to-indigo-50/80 dark:from-blue-950/40 dark:via-[#131B2E] dark:to-indigo-950/35',
+                    lockedGlow: 'bg-blue-400/25 dark:bg-blue-500/20',
+                    lockBadge: 'bg-blue-600 text-white'
+                },
+                purple: {
+                    cardBorder: 'border-purple-200/80 dark:border-purple-900/50 hover:border-purple-300 dark:hover:border-purple-700',
+                    topBar: 'from-purple-500 via-fuchsia-500 to-indigo-500',
+                    badge: 'bg-purple-50 dark:bg-purple-950/70 text-purple-800 dark:text-purple-300 border-purple-200 dark:border-purple-800/60',
+                    iconBox: 'from-purple-50 to-fuchsia-50/70 dark:from-purple-950/60 dark:to-fuchsia-950/40 border-purple-200/80 dark:border-purple-800/60',
+                    accentText: 'text-purple-600 dark:text-purple-400',
+                    lockedCardBg: 'bg-gradient-to-br from-purple-50/90 via-white to-fuchsia-50/80 dark:from-purple-950/40 dark:via-[#131B2E] dark:to-fuchsia-950/35',
+                    lockedGlow: 'bg-purple-400/25 dark:bg-purple-500/20',
+                    lockBadge: 'bg-purple-600 text-white'
+                },
+                amber: {
+                    cardBorder: 'border-amber-200/80 dark:border-amber-900/50 hover:border-amber-300 dark:hover:border-amber-700',
+                    topBar: 'from-amber-500 via-yellow-500 to-emerald-500',
+                    badge: 'bg-amber-50 dark:bg-amber-950/70 text-amber-900 dark:text-amber-300 border-amber-200 dark:border-amber-800/60',
+                    iconBox: 'from-amber-50 to-yellow-50/70 dark:from-amber-950/60 dark:to-yellow-950/40 border-amber-200/80 dark:border-amber-800/60',
+                    accentText: 'text-amber-600 dark:text-amber-400',
+                    lockedCardBg: 'bg-gradient-to-br from-amber-50/90 via-white to-emerald-50/80 dark:from-amber-950/35 dark:via-[#131B2E] dark:to-emerald-950/30',
+                    lockedGlow: 'bg-amber-400/25 dark:bg-amber-500/20',
+                    lockBadge: 'bg-amber-500 text-white'
+                }
+            };
+            return palettes[colorTheme] || palettes.blue;
+        }
+
+        function renderFeaturedWorkshops() {
+            const grid = document.getElementById('featuredWorkshopsGrid');
+            if (!grid) return;
+            const events = Array.isArray(siteContent.events) ? siteContent.events : [];
+            if (events.length === 0) return;
+
+            grid.innerHTML = events.map(ev => {
+                const safeId = sanitizeId(ev.id);
+                const safeCat = ALLOWED_CATEGORIES.includes(ev.qnaCategory) ? ev.qnaCategory : 'General';
+                const theme = getThemeStylesForEvent(ev.colorTheme);
+                const locked = isEventLocked(ev);
+
+                // ============================================================
+                // LOCKED STATE: ZERO TEXT VISIBLE — ONLY ICON, LOCK & COLOR
+                // ============================================================
+                if (locked) {
+                    const adminClickAttr = isAdminAuthenticated
+                        ? `onclick="toggleEventLock('${safeId}')" title="Admin: Click to unlock"`
+                        : '';
+                    return `
+                        <article ${adminClickAttr} class="${theme.lockedCardBg} rounded-2xl border ${theme.cardBorder} shadow-2xs transition-all duration-300 overflow-hidden flex flex-col justify-between relative min-h-[210px] sm:min-h-[225px] select-none group ${isAdminAuthenticated ? 'cursor-pointer hover:shadow-md' : 'cursor-default'}">
+                            <!-- Top Signature Color Gradient Strip -->
+                            <div class="h-1.5 w-full bg-gradient-to-r ${theme.topBar}"></div>
+
+                            ${isAdminAuthenticated ? `
+                                <button type="button" onclick="event.stopPropagation(); toggleEventLock('${safeId}')" aria-label="Unlock Workshop" class="absolute top-3.5 right-3.5 z-20 w-8 h-8 rounded-xl bg-slate-900/80 hover:bg-emerald-600 text-white flex items-center justify-center shadow-sm transition cursor-pointer">
+                                    <i class="fa-solid fa-lock-open text-xs"></i>
+                                </button>
+                            ` : ''}
+
+                            <!-- Centered 3D Icon & Color Glow Only (Zero Text) -->
+                            <div class="flex-1 flex items-center justify-center p-8 relative">
+                                <div class="w-36 h-36 rounded-full blur-2xl ${theme.lockedGlow} absolute pointer-events-none transition-transform duration-500 group-hover:scale-110"></div>
+
+                                <div class="relative w-20 h-20 sm:w-24 sm:h-24 rounded-3xl bg-white/85 dark:bg-[#0D1527]/85 backdrop-blur-xs border ${theme.cardBorder} shadow-md flex items-center justify-center p-3.5 transition-transform duration-300 group-hover:scale-105">
+                                    <img src="${escapeHTML(ev.stickerImage || 'assets/gsa/star-google.png')}" alt="" class="w-13 h-13 sm:w-16 sm:h-16 object-contain gsa-sticker-shadow pointer-events-none">
+                                    <div class="absolute -bottom-2 -right-2 w-8 h-8 rounded-full ${theme.lockBadge} shadow-md flex items-center justify-center border-2 border-white dark:border-[#131B2E]">
+                                        <i class="fa-solid fa-lock text-xs"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                    `;
+                }
+
+                // ============================================================
+                // UNLOCKED STATE: FULL WORKSHOP CARD
+                // ============================================================
+                const eventQuestionsCount = rawQuestions.filter(q => q.category === safeCat).length;
+                const eventAnswersCount = questionGroups.filter(g => g.category === safeCat && g.answer && g.answer.trim().length > 0).length;
+
+                return `
+                    <article class="bg-white dark:bg-[#131B2E] rounded-2xl border ${theme.cardBorder} shadow-2xs hover:shadow-md transition-all duration-200 overflow-hidden flex flex-col justify-between group relative">
+                        <div>
+                            <!-- Top Gradient Accent Strip -->
+                            <div class="h-1.5 w-full bg-gradient-to-r ${theme.topBar}"></div>
+
+                            <div class="p-4 sm:p-5 space-y-3">
+                                <!-- Card Header: Single Pill + Title + Compact 3D Sticker -->
+                                <div class="flex items-start justify-between gap-3">
+                                    <div class="space-y-1.5 min-w-0">
+                                        <div class="flex flex-wrap items-center gap-1.5">
+                                            <span class="px-2.5 py-0.5 rounded-full text-[11px] font-extrabold border ${theme.badge}">
+                                                ${escapeHTML(ev.eventNumber)} • ${escapeHTML(ev.toolName)}
+                                            </span>
+                                            ${isAdminAuthenticated ? `
+                                                <button type="button" onclick="event.stopPropagation(); toggleEventLock('${safeId}')" class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 dark:bg-slate-800 hover:bg-amber-100 dark:hover:bg-amber-950/70 text-slate-600 dark:text-slate-300 hover:text-amber-700 dark:hover:text-amber-300 border border-slate-200 dark:border-slate-700 transition inline-flex items-center gap-1 cursor-pointer" title="Admin: Lock this workshop">
+                                                    <i class="fa-solid fa-lock-open text-[9px]"></i>
+                                                    <span>Lock</span>
+                                                </button>
+                                            ` : ''}
+                                        </div>
+                                        <h4 class="font-display font-bold text-base sm:text-lg text-slate-900 dark:text-white leading-snug group-hover:text-gblue dark:group-hover:text-blue-400 transition-colors cursor-pointer" onclick="openEventDetailModal('${safeId}')">
+                                            ${escapeHTML(ev.title)}
+                                        </h4>
+                                    </div>
+
+                                    <div class="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br ${theme.iconBox} border flex items-center justify-center p-1.5 shrink-0 group-hover:scale-105 transition-transform cursor-pointer" onclick="openEventDetailModal('${safeId}')">
+                                        <img src="${escapeHTML(ev.stickerImage || 'assets/gsa/star-google.png')}" alt="${escapeHTML(ev.toolName)}" class="w-8 h-8 sm:w-9 sm:h-9 object-contain gsa-sticker-shadow">
+                                    </div>
+                                </div>
+
+                                <!-- Compact Single-Line Logistics Meta -->
+                                <div class="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-slate-600 dark:text-slate-300 bg-slate-50 dark:bg-[#0D1527] px-3 py-2 rounded-xl border border-slate-200/60 dark:border-slate-800">
+                                    <span class="inline-flex items-center gap-1.5 font-semibold">
+                                        <i class="fa-regular fa-calendar ${theme.accentText}"></i>
+                                        ${escapeHTML(ev.date)}
+                                    </span>
+                                    <span class="text-slate-300 dark:text-slate-700">•</span>
+                                    <span class="inline-flex items-center gap-1.5">
+                                        <i class="fa-regular fa-clock ${theme.accentText}"></i>
+                                        ${escapeHTML(ev.time)}
+                                    </span>
+                                    <span class="text-slate-300 dark:text-slate-700">•</span>
+                                    <span class="inline-flex items-center gap-1.5 font-medium">
+                                        <i class="fa-solid fa-location-dot ${theme.accentText}"></i>
+                                        ${escapeHTML(ev.room)}
+                                    </span>
+                                </div>
+
+                                <!-- Concise Workshop Summary -->
+                                <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed line-clamp-2">
+                                    ${escapeHTML(ev.summary)}
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Card Footer Actions -->
+                        <div class="px-4 sm:px-5 py-3 bg-slate-50/60 dark:bg-[#0D1527]/60 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between gap-2">
+                            <button onclick="openEventDetailModal('${safeId}')" class="px-3 py-1.5 rounded-lg bg-white dark:bg-[#131B2E] hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 text-xs font-semibold transition flex items-center gap-1.5">
+                                <i class="fa-solid fa-book-open ${theme.accentText}"></i>
+                                <span>Details &amp; Syllabus</span>
+                            </button>
+
+                            <button onclick="askQuestionForEvent('${safeCat}')" class="px-3 py-1.5 rounded-lg bg-gblue hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-500 text-white text-xs font-semibold transition flex items-center gap-1.5">
+                                <i class="fa-regular fa-comment-dots"></i>
+                                <span>Q&amp;A</span>
+                                <span class="px-1.5 py-0.2 rounded-full text-[10px] bg-white/20 text-white font-bold">${eventAnswersCount > 0 ? `${eventAnswersCount}` : `${eventQuestionsCount}`}</span>
+                            </button>
+                        </div>
+                    </article>
+                `;
+            }).join('');
+        }
+
+        function renderFoundationEvents() {
+            const grid = document.getElementById('foundationEventsGrid');
+            if (!grid) return;
+            const foundationEvents = siteContent.foundationSection && Array.isArray(siteContent.foundationSection.events)
+                ? siteContent.foundationSection.events
+                : [];
+
+            grid.innerHTML = foundationEvents.map(fe => `
+                <div class="bg-slate-50/90 dark:bg-[#0D1527] rounded-xl border border-slate-200/80 dark:border-slate-800 p-4 space-y-1.5">
+                    <div class="flex flex-wrap items-center justify-between gap-2">
+                        <div class="flex items-center gap-1.5">
+                            <span class="px-2 py-0.5 rounded-md text-[11px] font-bold bg-slate-200 dark:bg-slate-800 text-slate-800 dark:text-slate-200">
+                                ${escapeHTML(fe.eventNumber)}
+                            </span>
+                            <span class="px-2 py-0.5 rounded-md text-[10px] font-semibold bg-emerald-100 dark:bg-emerald-950/70 text-emerald-800 dark:text-emerald-300">
+                                <i class="fa-solid fa-check mr-1"></i>${escapeHTML(fe.status || 'Completed')}
+                            </span>
+                        </div>
+                        <span class="text-[11px] font-medium text-slate-500 dark:text-slate-400">
+                            ${escapeHTML(fe.date)} • ${escapeHTML(fe.location)}
+                        </span>
+                    </div>
+                    <h5 class="font-display font-bold text-sm text-slate-900 dark:text-white">
+                        ${escapeHTML(fe.title)}
+                    </h5>
+                    <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                        ${escapeHTML(fe.summary)}
+                    </p>
+                </div>
+            `).join('');
+        }
+
+        window.openEventDetailModal = function(eventId) {
+            const events = Array.isArray(siteContent.events) ? siteContent.events : [];
+            const ev = events.find(item => item.id === eventId);
+            if (!ev || isEventLocked(ev)) return;
+
+            const modal = document.getElementById('eventDetailModal');
+            const contentEl = document.getElementById('eventDetailModalContent');
+            if (!modal || !contentEl) return;
+
+            const theme = getThemeStylesForEvent(ev.colorTheme);
+            const safeCat = ALLOWED_CATEGORIES.includes(ev.qnaCategory) ? ev.qnaCategory : 'General';
+            const discussList = Array.isArray(ev.whatToDiscuss) ? ev.whatToDiscuss : [];
+            const benefitsList = Array.isArray(ev.benefits) ? ev.benefits : [];
+
+            contentEl.innerHTML = `
+                <!-- Modal Header -->
+                <div class="flex items-start justify-between gap-4 pb-4 border-b border-slate-200 dark:border-slate-800">
+                    <div class="flex items-start gap-4">
+                        <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-br ${theme.iconBox} border flex items-center justify-center p-2 shrink-0 shadow-xs">
+                            <img src="${escapeHTML(ev.stickerImage || 'assets/gsa/star-google.png')}" alt="${escapeHTML(ev.toolName)}" class="w-12 h-12 object-contain gsa-sticker-shadow">
+                        </div>
+                        <div class="space-y-1.5">
+                            <div class="flex flex-wrap items-center gap-2">
+                                <span class="px-2.5 py-0.5 rounded-full text-xs font-extrabold border ${theme.badge}">${escapeHTML(ev.eventNumber)}</span>
+                                <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-slate-100 dark:bg-[#0D1527] text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-800">${escapeHTML(ev.badgeText || '')}</span>
+                            </div>
+                            <h3 class="font-display font-extrabold text-xl sm:text-2xl text-slate-900 dark:text-white leading-snug">
+                                ${escapeHTML(ev.title)}
+                            </h3>
+                        </div>
+                    </div>
+                    <button onclick="closeEventDetailModal()" class="w-9 h-9 rounded-xl text-slate-400 hover:text-slate-700 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center justify-center shrink-0">
+                        <i class="fa-solid fa-xmark text-base"></i>
+                    </button>
+                </div>
+
+                <!-- Full Logistics Banner -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 bg-slate-50 dark:bg-[#0D1527] p-4 rounded-2xl border border-slate-200/80 dark:border-slate-800 text-xs">
+                    <div>
+                        <div class="text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">Date</div>
+                        <div class="font-bold text-slate-900 dark:text-white mt-0.5">${escapeHTML(ev.date)}</div>
+                    </div>
+                    <div>
+                        <div class="text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">Time &amp; Duration</div>
+                        <div class="font-bold text-slate-900 dark:text-white mt-0.5">${escapeHTML(ev.time)} (${escapeHTML(ev.duration)})</div>
+                    </div>
+                    <div>
+                        <div class="text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">Room &amp; Venue</div>
+                        <div class="font-bold text-slate-900 dark:text-white mt-0.5">${escapeHTML(ev.room)}, ${escapeHTML(ev.venue)}</div>
+                    </div>
+                    <div>
+                        <div class="text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">Capacity &amp; Format</div>
+                        <div class="font-bold text-slate-900 dark:text-white mt-0.5">${escapeHTML(ev.capacity)} • ${escapeHTML(ev.format)}</div>
+                    </div>
+                </div>
+
+                <!-- General Overview & Background -->
+                <div class="space-y-4 text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+                    <div>
+                        <h4 class="font-display font-bold text-xs uppercase tracking-wider text-gblue dark:text-blue-400 mb-1">Workshop Overview</h4>
+                        <p class="font-medium text-slate-900 dark:text-slate-100">${escapeHTML(ev.overview)}</p>
+                    </div>
+                    <div>
+                        <h4 class="font-display font-bold text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">Background &amp; Why This Matters</h4>
+                        <p>${escapeHTML(ev.background)}</p>
+                    </div>
+                </div>
+
+                <!-- Two-Column Syllabus: What We'll Discuss + Key Takeaways -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="bg-slate-50 dark:bg-[#0D1527] rounded-2xl p-4 border border-slate-200/80 dark:border-slate-800 space-y-2.5">
+                        <h4 class="font-display font-bold text-xs uppercase tracking-wider ${theme.accentText} flex items-center gap-1.5">
+                            <i class="fa-solid fa-list-check"></i>
+                            <span>Session Agenda &amp; Topics Covered</span>
+                        </h4>
+                        <ul class="space-y-2 text-xs text-slate-700 dark:text-slate-300">
+                            ${discussList.map(item => `
+                                <li class="flex items-start gap-2">
+                                    <i class="fa-solid fa-circle-check text-[11px] mt-0.5 ${theme.accentText}"></i>
+                                    <span>${escapeHTML(item)}</span>
+                                </li>
+                            `).join('')}
+                        </ul>
+                    </div>
+
+                    <div class="bg-emerald-50/50 dark:bg-emerald-950/20 rounded-2xl p-4 border border-emerald-200/70 dark:border-emerald-800/50 space-y-2.5">
+                        <h4 class="font-display font-bold text-xs uppercase tracking-wider text-emerald-700 dark:text-emerald-400 flex items-center gap-1.5">
+                            <i class="fa-solid fa-trophy"></i>
+                            <span>Key Outcomes &amp; Student Benefits</span>
+                        </h4>
+                        <ul class="space-y-2 text-xs text-slate-700 dark:text-slate-300">
+                            ${benefitsList.map(item => `
+                                <li class="flex items-start gap-2">
+                                    <i class="fa-solid fa-star text-[11px] mt-0.5 text-emerald-600 dark:text-emerald-400"></i>
+                                    <span>${escapeHTML(item)}</span>
+                                </li>
+                            `).join('')}
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Target Audience & Prerequisites -->
+                <div class="bg-blue-50/50 dark:bg-blue-950/25 rounded-2xl p-4 border border-blue-200/70 dark:border-blue-800/50 space-y-2 text-xs">
+                    <div>
+                        <strong class="text-slate-900 dark:text-white">Who Should Attend:</strong>
+                        <span class="text-slate-600 dark:text-slate-300 ml-1">${escapeHTML(ev.targetAudience)}</span>
+                    </div>
+                    <div>
+                        <strong class="text-slate-900 dark:text-white">What to Bring:</strong>
+                        <span class="text-slate-600 dark:text-slate-300 ml-1">${escapeHTML(ev.prerequisites || 'Bring your laptop and a Google account.')}</span>
+                    </div>
+                </div>
+
+                <!-- Modal Footer Actions -->
+                <div class="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-slate-200 dark:border-slate-800">
+                    ${ev.toolUrl ? `
+                        <a href="${escapeHTML(ev.toolUrl)}" target="_blank" rel="noopener noreferrer" class="px-4 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 text-xs font-semibold transition flex items-center gap-2">
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                            <span>Open ${escapeHTML(ev.toolName)}</span>
+                        </a>
+                    ` : '<div></div>'}
+
+                    <div class="flex items-center gap-2.5">
+                        <button onclick="closeEventDetailModal()" class="px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 text-xs font-semibold">
+                            Close
+                        </button>
+                        <button onclick="askQuestionForEvent('${safeCat}')" class="px-5 py-2.5 rounded-xl bg-gblue hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-500 text-white text-xs sm:text-sm font-semibold shadow-sm transition flex items-center gap-2">
+                            <i class="fa-solid fa-comments"></i>
+                            <span>Ask a Question for ${escapeHTML(ev.eventNumber)}</span>
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            modal.classList.remove('hidden');
+        };
+
+        window.closeEventDetailModal = function() {
+            const modal = document.getElementById('eventDetailModal');
+            if (modal) modal.classList.add('hidden');
+        };
+
+        function applySiteContent() {
+            if (!siteContent) return;
+
+            // 1. Brand & Navigation
+            if (siteContent.brand) {
+                if (siteContent.brand.siteTitle) document.title = siteContent.brand.siteTitle;
+                setTextById('navBrandTitle', siteContent.brand.navbarTitle);
+                setTextById('navBrandBadge', siteContent.brand.navbarBadge);
+                setTextById('navBrandSubtitle', siteContent.brand.navbarSubtitle);
+                setTextById('venueSummaryBadge', `${siteContent.brand.universityName} • ${siteContent.brand.campusBuilding}`);
+            }
+            if (siteContent.nav) {
+                setTextById('navEventsLabel', siteContent.nav.eventsLabel);
+                setTextById('navRoadmapLabel', siteContent.nav.roadmapLabel);
+                setTextById('navQnaLabel', siteContent.nav.qnaLabel);
+            }
+
+            // 2. Hero Banner
+            if (siteContent.hero) {
+                setTextById('heroBadgePrimary', siteContent.hero.badgePrimary);
+                setTextById('heroBadgeSecondary', siteContent.hero.badgeSecondary);
+                setTextById('heroHeadlinePrefix', siteContent.hero.headlinePrefix);
+                setTextById('heroHeadlineHighlight', siteContent.hero.headlineHighlight);
+                setTextById('heroDescription', siteContent.hero.description);
+                setTextById('heroPrimaryCta', siteContent.hero.primaryCtaText);
+                setTextById('heroSecondaryCta', siteContent.hero.secondaryCtaText);
+
+                const highlightsEl = document.getElementById('heroHighlightsGrid');
+                if (highlightsEl && Array.isArray(siteContent.hero.highlights)) {
+                    highlightsEl.innerHTML = siteContent.hero.highlights.map(h => `
+                        <div class="flex items-center gap-3 bg-white/80 dark:bg-[#0D1527]/90 border border-slate-200/80 dark:border-slate-800 rounded-2xl px-4 py-3 shadow-2xs">
+                            <div class="w-9 h-9 rounded-xl bg-blue-50 dark:bg-blue-950/70 text-gblue dark:text-blue-400 flex items-center justify-center shrink-0">
+                                <i class="${escapeHTML(h.icon || 'fa-solid fa-star')} text-sm"></i>
+                            </div>
+                            <div class="min-w-0">
+                                <div class="text-xs font-bold text-slate-900 dark:text-white truncate">${escapeHTML(h.label)}</div>
+                                <div class="text-[11px] text-slate-500 dark:text-slate-400 truncate">${escapeHTML(h.detail)}</div>
+                            </div>
+                        </div>
+                    `).join('');
+                }
+            }
+
+            // Hero Workshop Quick Pills
+            const pillsEl = document.getElementById('heroWorkshopPills');
+            if (pillsEl && Array.isArray(siteContent.events)) {
+                pillsEl.innerHTML = siteContent.events.map(ev => {
+                    const safeId = sanitizeId(ev.id);
+                    return `
+                        <button type="button" onclick="openEventDetailModal('${safeId}')" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-white dark:bg-[#0D1527] hover:bg-blue-50 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-700/80 text-slate-700 dark:text-slate-300 shadow-2xs transition cursor-pointer">
+                            <img src="${escapeHTML(ev.stickerImage || 'assets/gsa/star-google.png')}" alt="" class="w-3.5 h-3.5 object-contain">
+                            <span>${escapeHTML(ev.eventNumber)}: ${escapeHTML(ev.toolName)}</span>
+                        </button>
+                    `;
+                }).join('');
+            }
+
+            // 3. Featured Workshops Section Headings
+            if (siteContent.featuredSection) {
+                setTextById('featuredSectionBadge', siteContent.featuredSection.badge);
+                setTextById('featuredSectionTitle', siteContent.featuredSection.title);
+                setTextById('featuredSectionSubtitle', siteContent.featuredSection.subtitle);
+            }
+
+            // 4. Curriculum & Host Overview
+            if (siteContent.seriesOverview) {
+                setTextById('seriesOverviewBadge', siteContent.seriesOverview.sectionBadge);
+                setTextById('seriesOverviewTitle', siteContent.seriesOverview.sectionTitle);
+                setTextById('seriesOverviewDescription', siteContent.seriesOverview.sectionDescription);
+                if (siteContent.seriesOverview.hostCard) {
+                    setTextById('hostCardLabel', siteContent.seriesOverview.hostCard.title);
+                    setTextById('hostCardName', siteContent.seriesOverview.hostCard.name);
+                    setTextById('hostCardRole', siteContent.seriesOverview.hostCard.role);
+                    setTextById('hostCardQuote', siteContent.seriesOverview.hostCard.quote);
+                }
+            }
+
+            // 5. Foundation Section
+            if (siteContent.foundationSection) {
+                setTextById('foundationBadge', siteContent.foundationSection.badge);
+                setTextById('foundationTitle', siteContent.foundationSection.title);
+                setTextById('foundationSubtitle', siteContent.foundationSection.subtitle);
+            }
+
+            // 6. Q&A Section Texts & Dynamic Dropdown Options
+            if (siteContent.qnaSection) {
+                setTextById('qnaSectionBadge', siteContent.qnaSection.sectionBadge);
+                setTextById('qnaSectionTitle', siteContent.qnaSection.sectionTitle);
+                setTextById('qnaSectionSubtitle', siteContent.qnaSection.sectionSubtitle);
+                setTextById('qnaFormTitle', siteContent.qnaSection.formTitle);
+                setTextById('qnaFormSubtitle', siteContent.qnaSection.formSubtitle);
+                setTextById('qnaCategoryLabel', siteContent.qnaSection.categoryLabel);
+                setTextById('qnaNameLabel', siteContent.qnaSection.nameLabel);
+                setTextById('qnaNameOptionalHint', siteContent.qnaSection.nameOptionalHint);
+                setTextById('qnaQuestionLabel', siteContent.qnaSection.questionLabel);
+                setTextById('qnaSubmitButtonText', siteContent.qnaSection.submitButtonText);
+                setTextById('qnaAiHelperNote', siteContent.qnaSection.aiHelperNote);
+                setTextById('qnaTabAnsweredLabel', siteContent.qnaSection.tabAnsweredLabel);
+                setTextById('qnaTabAllLabel', siteContent.qnaSection.tabAllQuestionsLabel);
+
+                const nameInput = document.getElementById('attendeeName');
+                if (nameInput && siteContent.qnaSection.namePlaceholder) {
+                    nameInput.placeholder = siteContent.qnaSection.namePlaceholder;
+                }
+                const qInput = document.getElementById('questionText');
+                if (qInput && siteContent.qnaSection.questionPlaceholder) {
+                    qInput.placeholder = siteContent.qnaSection.questionPlaceholder;
+                }
+            }
+
+            // Populate Event Dropdowns from siteContent.events (respecting locked workshops)
+            syncPublicQnaDropdowns();
+
+            // 7. Footer
+            if (siteContent.footer) {
+                setTextById('footerOrgLine', siteContent.footer.organizationLine);
+                setTextById('footerCreditLine', siteContent.footer.organizerCredit);
+                setTextById('footerPoweredByLine', siteContent.footer.poweredByLine);
+            }
+
+            renderEventLockControls();
+            renderFeaturedWorkshops();
+            renderFoundationEvents();
+        }
+
         function formatCategoryLabel(cat) {
+            if (cat === 'General') {
+                return (siteContent.qnaSection && siteContent.qnaSection.generalCategoryOption)
+                    ? siteContent.qnaSection.generalCategoryOption
+                    : '🌐 General Questions';
+            }
+            if (Array.isArray(siteContent.events)) {
+                const matched = siteContent.events.find(e => e.qnaCategory === cat);
+                if (matched) {
+                    if (isEventLocked(matched) && !isAdminAuthenticated) {
+                        return '🔒 Locked Workshop';
+                    }
+                    return matched.shortDropdownLabel || `${matched.eventNumber} - ${matched.title}`;
+                }
+            }
             const map = {
                 'General': '🌐 General Questions',
-                'Event 1': '🔵 Event 3 - Your Personal Research Assistant: Hands-on with Gemini Notebook',
-                'Event 2': '🔴 Event 4 - Prototyping Made Easy: Exploring Google AI Studio',
-                'Event 3': '🟡 Event 5 - Weaving Workflows: Practical Applications of Stitch',
-                'Event 4': '🟢 Event 6 - Defying Limits: Advanced Implementations with Antigravity'
+                'Event 1': '🔵 Event 3: NotebookLM',
+                'Event 2': '🔴 Event 4: Google AI Studio',
+                'Event 3': '🟡 Event 5: Google Stitch',
+                'Event 4': '🟢 Event 6: Google Antigravity'
             };
             return map[cat] || cat;
         }
 
         function getCategoryBadgeHTML(cat) {
-            const icons = {
-                'General': 'assets/gsa/globe-green.png',
-                'Event 1': 'assets/gsa/books-red.png',
-                'Event 2': 'assets/gsa/laptop-silver.png',
-                'Event 3': 'assets/gsa/flag-hologram.png',
-                'Event 4': 'assets/gsa/star-google.png'
-            };
+            let icon = 'assets/gsa/star-google.png';
+            if (cat === 'General') {
+                icon = 'assets/gsa/globe-green.png';
+            } else if (Array.isArray(siteContent.events)) {
+                const matched = siteContent.events.find(e => e.qnaCategory === cat);
+                if (matched && matched.stickerImage) icon = matched.stickerImage;
+            }
             const styles = {
                 'General': 'bg-emerald-50 dark:bg-emerald-950/60 text-emerald-900 dark:text-emerald-300 border-emerald-200/80 dark:border-emerald-800/60',
                 'Event 1': 'bg-red-50 dark:bg-red-950/60 text-red-900 dark:text-red-300 border-red-200/80 dark:border-red-800/60',
@@ -2083,9 +2850,8 @@ For each cluster:
                 'Event 3': 'bg-purple-50 dark:bg-purple-950/60 text-purple-900 dark:text-purple-300 border-purple-200/80 dark:border-purple-800/60',
                 'Event 4': 'bg-amber-50 dark:bg-amber-950/60 text-amber-900 dark:text-amber-300 border-amber-200/80 dark:border-amber-800/60'
             };
-            const icon = icons[cat] || 'assets/gsa/star-google.png';
             const cls = styles[cat] || 'bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 border-slate-300 dark:border-slate-700';
-            return `<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold border shadow-2xs ${cls}"><img src="${icon}" class="w-3.5 h-3.5 object-contain shrink-0 gsa-sticker-shadow" alt=""><span>${escapeHTML(formatCategoryLabel(cat))}</span></span>`;
+            return `<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold border shadow-2xs ${cls}"><img src="${escapeHTML(icon)}" class="w-3.5 h-3.5 object-contain shrink-0 gsa-sticker-shadow" alt=""><span>${escapeHTML(formatCategoryLabel(cat))}</span></span>`;
         }
 
         // ============================================================================
@@ -2173,6 +2939,7 @@ For each cluster:
 
         // Start Application on Window Load
         window.onload = function() {
+            applySiteContent();
             initApp();
             updateThemeUI(document.documentElement.classList.contains('dark'));
         };
